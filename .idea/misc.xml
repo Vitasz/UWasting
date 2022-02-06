@@ -3,7 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/UWasting/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/drawable/button.xml" value="0.3675" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/drawable/edit_text_cursor.xml" value="0.3675" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/drawable/ic_resource_final.xml" value="0.3675" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/layout/fragment_email.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/layout/fragment_name.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/layout/fragment_password.xml" value="0.35260416666666666" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/layout/fragment_start.xml" value="0.33" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/layout/fragment_verify_email.xml" value="0.36666666666666664" />
+        <entry key="..\:/UWasting/app/src/main/res/layout/activity_main.xml" value="0.18" />
       </map>
     </option>
   </component>

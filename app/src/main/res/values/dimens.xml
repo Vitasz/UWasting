@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="logo_size">200dp</dimen>
+    <dimen name="button_rounding_radius">5dp</dimen>
+    <dimen name="button_height">55dp</dimen>
+    <dimen name="default_margin">25dp</dimen>
+    <dimen name="text_size">18sp</dimen>
+    <dimen name="header_size">25sp</dimen>
+</resources>

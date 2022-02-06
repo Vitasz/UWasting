@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sign_in">Вход</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="welcome">Добро пожаловать в UWasting!</string>
+    <string name="enter_email">Введите ваш адрес электронной почты.</string>
+    <string name="email_using">Он будет использоваться для входа в ваш аккаунт.</string>
+    <string name="next">Далее</string>
+    <string name="privacy_policy"><u>Политикой Конфиденциальности</u></string>
+    <string name="agreement">Нажимая Далее, вы соглашаетесь с</string>
+    <string name="name">Имя</string>
+    <string name="surname">Фамилия</string>
+    <string name="come_up_with_pswrd">Придумайте надежный пароль.</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="verify_email">Пожалуйста, подтвердите ваш адрес эл. почты, пройдя по ссылке в нашем письме.\n
+                                После этого вы можете зайти в ваш аккаунт..
+    </string>
+</resources>
