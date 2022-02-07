@@ -1,32 +1,36 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Visual Studio folder\\Database\\Database\\Database.csproj": {}
+    "D:\\UWasting\\Db\\Database\\Database\\Database.csproj": {}
   },
   "projects": {
-    "D:\\Visual Studio folder\\Database\\Database\\Database.csproj": {
+    "D:\\UWasting\\Db\\Database\\Database\\Database.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Visual Studio folder\\Database\\Database\\Database.csproj",
+        "projectUniqueName": "D:\\UWasting\\Db\\Database\\Database\\Database.csproj",
         "projectName": "Database",
-        "projectPath": "D:\\Visual Studio folder\\Database\\Database\\Database.csproj",
-        "packagesPath": "C:\\Users\\monst\\.nuget\\packages\\",
-        "outputPath": "D:\\Visual Studio folder\\Database\\Database\\obj\\",
+        "projectPath": "D:\\UWasting\\Db\\Database\\Database\\Database.csproj",
+        "packagesPath": "C:\\Users\\vital\\.nuget\\packages\\",
+        "outputPath": "D:\\UWasting\\Db\\Database\\Database\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\monst\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\vital\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "net5.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
+          "net5.0": {
+            "targetAlias": "net5.0",
             "projectReferences": {}
           }
         },
@@ -37,12 +41,12 @@
         }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net5.0": {
+          "targetAlias": "net5.0",
           "dependencies": {
             "System.Data.OleDb": {
               "target": "Package",
-              "version": "[6.0.0, )"
+              "version": "[5.0.0, )"
             }
           },
           "imports": [
@@ -60,7 +64,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }

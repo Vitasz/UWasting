@@ -8,7 +8,6 @@ namespace Database
 {
     static class Globaldata
     {
-        public static string connect = "Provider=Microsoft.JET.OLEDB.4.0; Data Source = db\\Uwaste.mdb";
-        public static int userID;
+        public static string connect = "Provider=Microsoft.ACE.OLEDB.12.0; Data Source = db\\Uwaste.mdb";
     }
 }
