@@ -11,6 +11,9 @@
         android:theme="@style/Theme.Light">
         <activity
             android:name=".activities.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.StartingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

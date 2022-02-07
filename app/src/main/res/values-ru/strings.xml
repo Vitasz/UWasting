@@ -16,4 +16,14 @@
     <string name="verify_email">Пожалуйста, подтвердите ваш адрес эл. почты, пройдя по ссылке в нашем письме.\n
                                 После этого вы можете зайти в ваш аккаунт..
     </string>
+    <string name="password">Пароль</string>
+    <string name="settings">Настройки</string>
+    <string name="language">Язык</string>
+    <string name="currency">Валюта</string>
+    <string name="account">Аккаунт</string>
+    <string name="change_email">Сменить почту</string>
+    <string name="change_password">Сменить пароль</string>
+    <string name="sign_out">Выйти из аккаунта</string>
+    <string name="incomes">Доходы</string>
+    <string name="expenses">Expenses</string>
 </resources>

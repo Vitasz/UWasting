@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import com.example.uwasting.R
-import com.example.uwasting.activities.MainActivity
+import com.example.uwasting.activities.StartingActivity
 import com.google.android.material.appbar.MaterialToolbar
 
 
@@ -19,17 +18,17 @@ class PasswordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_password, container, false)
-        val mainActivity = activity as MainActivity
+        val startingActivity = activity as StartingActivity
 
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
         val nextBtn = view.findViewById<Button>(R.id.next_btn)
 
         nextBtn.setOnClickListener {
-            mainActivity.setFragment(VerifyEmailFragment())
+            startingActivity.setFragment(VerifyEmailFragment())
         }
 
         toolbar.setNavigationOnClickListener {
-            mainActivity.prevFragment()
+            startingActivity.prevFragment()
         }
 
         return view

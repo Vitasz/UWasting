@@ -17,5 +17,14 @@
     <string name="verify_email">Please, verify your email address by following the link we sent.\n
                                 Then you can sign in to your account.
     </string>
-
+    <string name="password">Password</string>
+    <string name="settings">Settings</string>
+    <string name="language">Language</string>
+    <string name="currency">Currency</string>
+    <string name="account">Account</string>
+    <string name="change_email">Change email</string>
+    <string name="change_password">Change password</string>
+    <string name="sign_out">Sign out</string>
+    <string name="incomes">Incomes</string>
+    <string name="expenses">Expenses</string>
 </resources>

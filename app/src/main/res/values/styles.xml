@@ -27,4 +27,8 @@
         <item name="android:textCursorDrawable">@drawable/edit_text_cursor</item>
         <item name="android:backgroundTint">@color/cobalt</item>
     </style>
+
+    <style name="TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/cobalt</item>
+    </style>
 </resources>
