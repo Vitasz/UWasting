@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name" translatable="false">UWasting</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign up</string>
+    <string name="welcome">Welcome to UWasting!</string>
+    <string name="enter_email">Enter your email address.</string>
+    <string name="email_using">It will be used for signing in to your account.</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="next">Next</string>
+    <string name="agreement">By pressing Next, you agree with the</string>
+    <string name="privacy_policy"><u>Privacy Policy</u></string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="come_up_with_pswrd">Come up with a strong password.</string>
+    <string name="enter_password">Enter password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="verify_email">Please, verify your email address by following the link we sent.\n
+                                Then you can sign in to your account.
+    </string>
+    <string name="password">Password</string>
+    <string name="settings">Settings</string>
+    <string name="language">Language</string>
+    <string name="currency">Currency</string>
+    <string name="account">Account</string>
+    <string name="change_email">Change email</string>
+    <string name="change_password">Change password</string>
+    <string name="sign_out">Sign out</string>
+    <string name="incomes">Incomes</string>
+    <string name="expenses">Expenses</string>
+</resources>
