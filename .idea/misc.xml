@@ -3,7 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/UWasting/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/drawable/button.xml" value="0.3675" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/drawable/edit_text_cursor.xml" value="0.3675" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/drawable/ic_resource_final.xml" value="0.3675" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/layout/fragment_email.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/layout/fragment_name.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/layout/fragment_password.xml" value="0.35260416666666666" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/layout/fragment_start.xml" value="0.33" />
+        <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/layout/fragment_verify_email.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/drawable/button.xml" value="0.3675" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/drawable/categories_back.xml" value="0.3675" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/activity_main.xml" value="0.35104166666666664" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/activity_start.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_expences.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_expenses.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_incomes.xml" value="0.33" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_password.xml" value="0.358695652173913" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_sign_in.xml" value="0.358695652173913" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_start.xml" value="0.358695652173913" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_tab.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/layout_navigation_drawer.xml" value="0.30570652173913043" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/navigation_drawe_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/menu/navigation_drawer.xml" value="0.36666666666666664" />
+        <entry key="..\:/UWasting/app/src/main/res/layout/activity_main.xml" value="0.18" />
       </map>
     </option>
   </component>
