@@ -13,18 +13,35 @@
         <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/layout/fragment_start.xml" value="0.33" />
         <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/layout/fragment_verify_email.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/drawable/button.xml" value="0.3675" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/drawable/calendar_white.xml" value="0.307" />
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/drawable/categories_back.xml" value="0.3675" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/drawable/csv_export.xml" value="0.307" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/drawable/delete.xml" value="0.3055" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/drawable/dialog_back.xml" value="0.307" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/drawable/edit.xml" value="0.3055" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/drawable/email.xml" value="0.307" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/drawable/exit.xml" value="0.3055" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/drawable/password.xml" value="0.307" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/drawable/year.xml" value="0.307" />
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/activity_main.xml" value="0.35104166666666664" />
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/activity_start.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/category_view.xml" value="0.33" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/dialog_operation.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/dialog_period.xml" value="0.6074201898188093" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_category.xml" value="0.36787564766839376" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_email.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_expences.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_expenses.xml" value="0.36666666666666664" />
-        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_incomes.xml" value="0.33" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_incomes.xml" value="0.5" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_new_income.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_password.xml" value="0.358695652173913" />
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_sign_in.xml" value="0.358695652173913" />
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_start.xml" value="0.358695652173913" />
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_tab.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/fragment_toolbar.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/layout_navigation_drawer.xml" value="0.30570652173913043" />
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/navigation_drawe_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidProjects/Waste/app/src/main/res/menu-v26/navigation_drawer.xml" value="0.18802083333333333" />
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/menu/navigation_drawer.xml" value="0.36666666666666664" />
         <entry key="..\:/UWasting/app/src/main/res/layout/activity_main.xml" value="0.18" />
       </map>

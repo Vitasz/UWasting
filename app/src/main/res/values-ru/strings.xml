@@ -14,7 +14,7 @@
     <string name="enter_password">Введите пароль</string>
     <string name="repeat_password">Повторите пароль</string>
     <string name="verify_email">Пожалуйста, подтвердите ваш адрес эл. почты, пройдя по ссылке в нашем письме.\n
-                                После этого вы можете зайти в ваш аккаунт..
+                                После этого вы можете зайти в ваш аккаунт.
     </string>
     <string name="password">Пароль</string>
     <string name="settings">Настройки</string>
@@ -26,4 +26,20 @@
     <string name="sign_out">Выйти из аккаунта</string>
     <string name="incomes">Доходы</string>
     <string name="expenses">Expenses</string>
+    <string name="add_income">Внести доход</string>
+    <string name="add_expense">Внести расход</string>
+    <string name="export_to_csv">Экспорт в CSV</string>
+    <string name="categories">Категории</string>
+    <string name="select_period">Выбрать период</string>
+    <string name="month">Месяц</string>
+    <string name="quarter">Квартал</string>
+    <string name="half_year">Полгода</string>
+    <string name="year">Год</string>
+    <string name="financial_analysis">Анализ финансов</string>
+    <string name="monthly_forecast">Прогноз на месяц</string>
+    <string name="operations">Операции</string>
+    <string name="by_date">По дате</string>
+    <string name="by_sum">По сумме</string>
+    <string name="edit_operation">Редактировать операцию</string>
+    <string name="delete_operation">Удалить операцию</string>
 </resources>

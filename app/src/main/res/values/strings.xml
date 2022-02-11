@@ -27,4 +27,20 @@
     <string name="sign_out">Sign out</string>
     <string name="incomes">Incomes</string>
     <string name="expenses">Expenses</string>
+    <string name="add_income">Add an income</string>
+    <string name="add_expense">Add an expense</string>
+    <string name="export_to_csv">Export to CSV</string>
+    <string name="categories">Categories</string>
+    <string name="select_period">Select a period</string>
+    <string name="month">Month</string>
+    <string name="quarter">Quarter</string>
+    <string name="half_year">Half a year</string>
+    <string name="year">Year</string>
+    <string name="financial_analysis">Financial analysis</string>
+    <string name="monthly_forecast">Monthly forecast</string>
+    <string name="operations">Operations</string>
+    <string name="by_date">By date</string>
+    <string name="by_sum">By sum</string>
+    <string name="edit_operation">Edit operation</string>
+    <string name="delete_operation">Delete operation</string>
 </resources>

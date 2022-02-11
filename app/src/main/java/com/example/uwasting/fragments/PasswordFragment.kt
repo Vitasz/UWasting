@@ -24,7 +24,7 @@ class PasswordFragment : Fragment() {
         val nextBtn = view.findViewById<Button>(R.id.next_btn)
 
         nextBtn.setOnClickListener {
-            startingActivity.setFragment(VerifyEmailFragment())
+            startingActivity.setFragment(SignInFragment())
         }
 
         toolbar.setNavigationOnClickListener {
