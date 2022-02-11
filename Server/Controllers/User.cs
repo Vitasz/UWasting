@@ -26,6 +26,7 @@ namespace Server.Controllers
         public string GetByLoginAndPassword(string login, string password)
         {
             int id = Database.Autorization.Join(login, password);
+            Console.WriteLine("Не стучи, заебал");
             return "Запрос пользователя с id: " + id.ToString();
         }
     }
