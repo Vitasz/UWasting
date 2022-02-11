@@ -9,6 +9,7 @@ import com.example.uwasting.R
 import com.example.uwasting.fragments.TabFragment
 import com.google.android.material.appbar.MaterialToolbar
 
+// Главная активность
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,11 +18,13 @@ class MainActivity : AppCompatActivity() {
         setFragment(TabFragment())
     }
 
+    // Переключение фрагмента
     fun setFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).
         addToBackStack(fragment.tag).commit()
     }
 
+    // Предыдущий фрагмент
     fun prevFragment() {
         supportFragmentManager.popBackStack()
     }

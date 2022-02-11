@@ -131,31 +131,30 @@
                     app:layout_constraintStart_toStartOf="@+id/categories_list"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/button"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/add_income_btn"
                     style="@style/ImageTextButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/small_margin"
-                    android:layout_marginEnd="@dimen/small_margin"
-                    android:drawableStart="@drawable/add"
+                    android:fontFamily="sans-serif"
                     android:text="@string/add_income"
+                    android:textAppearance="@style/TextButton"
+                    app:icon="@drawable/add"
+                    app:iconTint="@color/cobalt"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/categories_list" />
 
-                <Button
-                    android:id="@+id/button2"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/export_btn"
                     style="@style/ImageTextButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/small_margin"
-                    android:layout_marginEnd="@dimen/small_margin"
-                    android:drawableStart="@drawable/csv_export"
+                    app:icon="@drawable/csv_export"
                     android:text="@string/export_to_csv"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/button" />
+                    app:layout_constraintTop_toBottomOf="@+id/add_income_btn" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

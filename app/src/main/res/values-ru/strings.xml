@@ -42,4 +42,11 @@
     <string name="by_sum">По сумме</string>
     <string name="edit_operation">Редактировать операцию</string>
     <string name="delete_operation">Удалить операцию</string>
+    <string name="new_income">Новый доход</string>
+    <string name="new_expense">Новый расход</string>
+    <string name="income_title">Название дохода</string>
+    <string name="expense_title">Название расхода</string>
+    <string name="sum">Сумма</string>
+    <string name="commission_date">Дата совершения</string>
+    <string name="category">Категория</string>
 </resources>

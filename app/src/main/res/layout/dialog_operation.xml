@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/button"
-    android:backgroundTint="@color/white"
+
     >
 
     <LinearLayout
@@ -14,22 +13,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/edit_btn"
             style="@style/ImageTextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/small_margin"
-            android:drawableStart="@drawable/edit"
+            android:layout_marginTop="@dimen/small_margin"
+            app:icon="@drawable/edit"
             android:text="@string/edit_operation" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/delete_btn"
             style="@style/ImageTextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/small_margin"
-            android:drawableStart="@drawable/delete"
+            app:icon="@drawable/delete"
+            app:iconTint="@color/red"
+            android:layout_marginBottom="@dimen/small_margin"
             android:text="@string/delete_operation" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.uwasting.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
+// Диалоговое окно редактирования операции
 class OperationDialog(context: Context): BottomSheetDialog(context) {
 
     init {

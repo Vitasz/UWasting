@@ -14,7 +14,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-
+// Фрагмент с переключением доходов/расходов
 class TabFragment : Fragment() {
 
     override fun onCreateView(
@@ -23,19 +23,22 @@ class TabFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_tab, container, false)
 
+        // Получение виджетов
         val viewPager = view.findViewById<ViewPager2>(R.id.view_pager)
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
-
         val drawerLayout = view.findViewById<DrawerLayout>(R.id.drawerLayout)
 
+        // Нажатие на кнопку "Меню"
         toolbar.setNavigationOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
+        // Инициализация адаптера для переключателя
         val viewPagerAdapter = ViewPagerAdapter(this)
         viewPager.adapter = viewPagerAdapter
 
+        // Заголовки переключателя
         val tabLayoutMediator = TabLayoutMediator(tabLayout, viewPager) { tab: TabLayout.Tab, position: Int ->
             when (position) {
                 0 -> tab.text = getString(R.string.incomes)

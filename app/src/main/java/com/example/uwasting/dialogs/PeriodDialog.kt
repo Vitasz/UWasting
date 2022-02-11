@@ -7,13 +7,13 @@ import android.util.Log
 import androidx.fragment.app.DialogFragment
 import com.example.uwasting.R
 
+// Диалоговое окно выбора периода
 class PeriodDialog: DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
         val view = activity?.layoutInflater?.inflate(R.layout.dialog_period, null)
         builder.setView(view)
-        Log.d("fuck", "HSE")
         return builder.create()
     }
 }

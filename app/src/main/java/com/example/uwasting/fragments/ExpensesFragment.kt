@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
 
-
+// Фрагмент с расходами
 class ExpensesFragment : Fragment() {
 
     override fun onCreateView(

@@ -5,6 +5,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.uwasting.fragments.ExpensesFragment
 import com.example.uwasting.fragments.IncomesFragment
 
+// Адаптер для переключения между доходами/расходами
 class ViewPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
     private val NUM_PAGES = 2;
 

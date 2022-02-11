@@ -43,4 +43,13 @@
     <string name="by_sum">By sum</string>
     <string name="edit_operation">Edit operation</string>
     <string name="delete_operation">Delete operation</string>
+    <string name="new_income">New income</string>
+    <string name="new_expense">New expense</string>
+    <string name="income_title">Title</string>
+    <string name="expense_title">Title</string>
+    <string name="sum">Sum</string>
+    <string name="commission_date">Date of commission</string>
+    <string name="category">Category</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

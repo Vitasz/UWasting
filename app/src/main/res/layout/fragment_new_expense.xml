@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.NewIncomeFragment">
+    tools:context=".fragments.NewExpenseFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
                 android:layout_gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="@drawable/back"
-                app:title="@string/new_income"
+                app:title="@string/new_expense"
                 tools:layout_editor_absoluteX="0dp" />
 
             <View
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
 
                 android:background="?android:attr/selectableItemBackground"
-                android:hint="@string/income_title" />
+                android:hint="@string/expense_title" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

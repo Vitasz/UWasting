@@ -112,7 +112,7 @@
             <View
                 android:id="@id/line_vertical"
                 android:layout_width="1dp"
-                android:layout_height="270dp"
+                android:layout_height="300dp"
                 android:background="@color/light_grey"
                 app:layout_constraintEnd_toEndOf="@+id/line_horizontal"
                 app:layout_constraintStart_toStartOf="parent"

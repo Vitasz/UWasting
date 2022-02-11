@@ -34,7 +34,7 @@
             android:layout_marginEnd="@dimen/default_margin"
             android:layout_marginBottom="4dp"
 
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="sans-serif"
             android:text="@string/sign_in"
             app:layout_constraintBottom_toTopOf="@+id/sign_up_btn"
             app:layout_constraintEnd_toEndOf="parent"
