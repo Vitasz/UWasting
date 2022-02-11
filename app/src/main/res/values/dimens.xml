@@ -10,6 +10,8 @@
     <dimen name="diagram_size">225dp</dimen>
     <dimen name="categories_height">200dp</dimen>
     <dimen name="category_img_size">40dp</dimen>
+    <dimen name="pic_size_account">250dp</dimen>
+    <dimen name="button_height">60dp</dimen>
 
     <dimen name="text_size">18sp</dimen>
     <dimen name="header_size">25sp</dimen>

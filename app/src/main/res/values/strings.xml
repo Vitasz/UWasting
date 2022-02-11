@@ -50,6 +50,7 @@
     <string name="sum">Sum</string>
     <string name="commission_date">Date of commission</string>
     <string name="category">Category</string>
+    <string name="save_shanges">Save changes</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

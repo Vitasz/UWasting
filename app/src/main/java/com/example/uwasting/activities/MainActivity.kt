@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.uwasting.R
 import com.example.uwasting.fragments.TabFragment
 import com.google.android.material.appbar.MaterialToolbar
