@@ -35,7 +35,7 @@ class PasswordFragment : Fragment() {
             }
             else {
                 startingActivity.user.password = passwordEdit.text.toString() // Получаем пароль
-                startingActivity.setFragment(VerifyEmailFragment()) // Переходим к странице с подтвержден8ием почты
+                //startingActivity.setFragment(VerifyEmailFragment()) // Переходим к странице с подтвержден8ием почты
             }
         }
 

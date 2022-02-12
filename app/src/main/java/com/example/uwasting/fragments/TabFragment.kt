@@ -14,9 +14,6 @@ import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.activities.StartingActivity
 import android.widget.TextView
-import androidx.viewpager2.widget.ViewPager2
-import com.example.uwasting.R
-import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.adapters.ViewPagerAdapter
 import com.example.uwasting.data.Constants
 import com.google.android.material.appbar.MaterialToolbar
