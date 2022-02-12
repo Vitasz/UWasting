@@ -16,12 +16,12 @@ namespace Database
         /// <param name="login">Логин</param>
         /// <param name="password">Пароль</param>
         /// <returns>Id пользователя</returns>
-        public static int Join(string login, string password)
+        public static (int id, string email, string Name, string Surname) Join(string login, string password)
         {
             using var myCon = new OleDbConnection(Globaldata.connect);
-            
+
             myCon.Open();
-            string query = "SELECT id, Login, Password FROM `Users` WHERE `Login` = @log AND `Password` = @pass";
+            string query = "SELECT id, Login, Name, Surname FROM `Users` WHERE `Login` = @log AND `Password` = @pass";
             DataTable table = new();
             OleDbDataAdapter adapt = new();
             OleDbCommand com = new(query, myCon);
@@ -29,7 +29,6 @@ namespace Database
             com.Parameters.AddWithValue("@pass", password);
             adapt.SelectCommand = com;
             adapt.Fill(table);
-            int UserId = -1;
             if (table.Rows.Count > 0)
             {
                 using OleDbDataReader reader = com.ExecuteReader();
@@ -37,13 +36,14 @@ namespace Database
                 {
                     while (reader.Read())
                     {
-                        UserId = Convert.ToInt32(reader[0]);
-                        return UserId;
+                        int UserId = Convert.ToInt32(reader[0]);
+                        string email = reader[1].ToString(), Name = reader[2].ToString(), Surname = reader[3].ToString();
+                        return (UserId, email, Name, Surname);
                     }
                 }
-                
+
             }
-            return UserId;
+            return (-1, "", "", "");
         }
     }
 }

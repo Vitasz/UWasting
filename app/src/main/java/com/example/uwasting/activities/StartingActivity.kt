@@ -39,7 +39,7 @@ class StartingActivity : AppCompatActivity() {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.0.11:80")
+            .baseUrl("http://192.168.72.13:5000/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -51,7 +51,7 @@ class StartingActivity : AppCompatActivity() {
 
     fun setFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).
-                    addToBackStack(fragment.tag).commit()
+        addToBackStack(fragment.tag).commit()
     }
 
     fun prevFragment() {

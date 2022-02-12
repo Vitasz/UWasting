@@ -8,7 +8,7 @@ namespace Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Operations : Controller
+    public class OperationsController : Controller
     {
         [Route("/AddOperation")]       
         [HttpPost]
