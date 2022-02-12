@@ -57,6 +57,18 @@
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/layout/view_selecting_category.xml" value="0.5" />
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/menu-v26/navigation_drawer.xml" value="0.18802083333333333" />
         <entry key="..\:/AndroidProjects/Waste/app/src/main/res/menu/navigation_drawer.xml" value="0.36666666666666664" />
+        <entry key="..\:/UWasting-frontend/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/UWasting-frontend/app/src/main/res/layout/activity_start.xml" value="0.18" />
+        <entry key="..\:/UWasting-frontend/app/src/main/res/layout/fragment_email.xml" value="0.33" />
+        <entry key="..\:/UWasting-frontend/app/src/main/res/layout/fragment_expenses.xml" value="0.19583333333333333" />
+        <entry key="..\:/UWasting-frontend/app/src/main/res/layout/fragment_incomes.xml" value="0.33" />
+        <entry key="..\:/UWasting-frontend/app/src/main/res/layout/fragment_name.xml" value="0.19583333333333333" />
+        <entry key="..\:/UWasting-frontend/app/src/main/res/layout/fragment_password.xml" value="0.19583333333333333" />
+        <entry key="..\:/UWasting-frontend/app/src/main/res/layout/fragment_sign_in.xml" value="0.33" />
+        <entry key="..\:/UWasting-frontend/app/src/main/res/layout/fragment_start.xml" value="0.19583333333333333" />
+        <entry key="..\:/UWasting-frontend/app/src/main/res/layout/fragment_tab.xml" value="0.25" />
+        <entry key="..\:/UWasting-frontend/app/src/main/res/layout/fragment_verify_email.xml" value="0.19583333333333333" />
+        <entry key="..\:/UWasting-frontend/app/src/main/res/layout/layout_navigation_drawer.xml" value="0.19583333333333333" />
         <entry key="..\:/UWasting/app/src/main/res/layout/activity_main.xml" value="0.18" />
       </map>
     </option>

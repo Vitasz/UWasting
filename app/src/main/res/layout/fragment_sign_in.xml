@@ -48,7 +48,7 @@
             android:layout_marginEnd="@dimen/default_margin"
             android:ems="10"
             android:hint="@string/email"
-            android:inputType="textPassword"
+            android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

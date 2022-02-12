@@ -7,7 +7,7 @@
     <string name="email_using">It will be used for signing in to your account.</string>
     <string name="email" translatable="false">Email</string>
     <string name="next">Next</string>
-    <string name="agreement">By pressing Next, you agree to the</string>
+    <string name="agreement">By pressing Next, you agree with the</string>
     <string name="privacy_policy"><u>Privacy Policy</u></string>
     <string name="name">Name</string>
     <string name="surname">Surname</string>
