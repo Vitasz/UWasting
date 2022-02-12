@@ -29,32 +29,21 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             tools:layout_editor_absoluteX="-16dp" />
 
-        <ImageView
-            android:id="@+id/pick_photo_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/pick_photo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
         <EditText
-            style="@style/EditText"
             android:id="@+id/name_edit"
+            style="@style/EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginTop="12dp"
             android:layout_marginEnd="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
             android:ems="10"
             android:hint="@string/name"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pick_photo_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_line" />
 
         <EditText
             style="@style/EditText"
@@ -75,7 +64,7 @@
         <Button
             android:id="@+id/next_btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/button_height"
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginEnd="@dimen/default_margin"
             android:layout_marginBottom="@dimen/default_margin"
