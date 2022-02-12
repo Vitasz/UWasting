@@ -10,9 +10,15 @@ interface UWastingApi {
     @Headers("Content-Type: application/json")
     fun getUserData(@Query("login") email: String, @Query("password") password: String): Single<User>
 
+    @GET("/FindLoginInDB")
+    @Headers("Content-Type:application/json")
+    fun checkEmail(@Query("login") email: String): Single<Boolean>
 
-    @POST("./RegistrateUser")
-    fun saveUserData(email: String, password: String, name: String, surname: String) {
 
-    }
+    @GET("/RegistrateUser")
+    @Headers("Content-Type: application/json")
+    fun RegistrateUser(@Query("login") email:String,
+                            @Query("password") password:String,
+                            @Query("name") name:String,
+                            @Query("surname")surname:String): Single<Boolean>
 }

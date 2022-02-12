@@ -11,21 +11,17 @@ namespace Server.Controllers
     public class UserController : Controller
     {
         [Route("/RegistrateUser")]
-        [HttpPost]
-        public string RegistrateUser(string login, string password, string name, string surname, int age)
+        [HttpGet]
+        public bool RegistrateUser(string login, string password, string name, string surname)
         {
-            if (Database.Registration.Registrate(login, password, name, surname, age))
-            {
-                return "Регистрация успешна";
-            }
-            else return "Регистрация завершилась с ошибкой";
+            return Database.Registration.Registrate(login, password, name, surname, 0);
         }
 
         [Route("/GetByLoginAndPassword")]
         [HttpGet]
         public IActionResult GetByLoginAndPassword(string login, string password)
         {
-            (int id, string name, string surname, string email) tmp = Database.Autorization.Join(login, password);
+            (int id, string email, string name, string surname) tmp = Database.Autorization.Join(login, password);
             //Console.WriteLine("Не стучи, заебал");
             Console.WriteLine(tmp);
             if (tmp.id == -1) return BadRequest();
@@ -35,6 +31,12 @@ namespace Server.Controllers
             user.email = tmp.email;
             user.id = tmp.id;
             return Ok(user);
+        }
+        [Route("/FindLoginInDB")]
+        [HttpGet]
+        public IActionResult FindLoginInDB(string login)
+        {
+            return Ok(Database.Registration.CheckingUser(login));
         }
     }
 }

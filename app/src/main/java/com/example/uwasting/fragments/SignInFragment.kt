@@ -24,11 +24,6 @@ class SignInFragment : Fragment() {
 
     private val compositeDisposable = CompositeDisposable()
 
-    fun onCleared() {
-        compositeDisposable.dispose()
-
-    }
-
     fun tryGet(uwastingApi: UWastingApi?, email: String, password: String) {
         uwastingApi?.let {
             compositeDisposable.add(uwastingApi.getUserData(email, password)

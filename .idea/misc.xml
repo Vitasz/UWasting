@@ -70,6 +70,11 @@
         <entry key="..\:/UWasting-frontend/app/src/main/res/layout/fragment_verify_email.xml" value="0.19583333333333333" />
         <entry key="..\:/UWasting-frontend/app/src/main/res/layout/layout_navigation_drawer.xml" value="0.19583333333333333" />
         <entry key="..\:/UWasting/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/UWasting/app/src/main/res/layout/fragment_account.xml" value="0.2677083333333333" />
+        <entry key="..\:/UWasting/app/src/main/res/layout/fragment_email.xml" value="0.26197916666666665" />
+        <entry key="..\:/UWasting/app/src/main/res/layout/fragment_navigation_header.xml" value="0.2677083333333333" />
+        <entry key="..\:/UWasting/app/src/main/res/layout/fragment_tab.xml" value="0.26197916666666665" />
+        <entry key="..\:/UWasting/app/src/main/res/layout/fragment_verify_password.xml" value="0.2677083333333333" />
       </map>
     </option>
   </component>

@@ -37,7 +37,6 @@ class TabFragment : Fragment() {
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
         val drawerLayout = view.findViewById<DrawerLayout>(R.id.drawerLayout)
         val navigationView = view.findViewById<NavigationView>(R.id.navigation_view)
-        
 
         // Нажатие на кнопку "Меню"
         toolbar.setNavigationOnClickListener {
@@ -56,7 +55,11 @@ class TabFragment : Fragment() {
             }
             true
         }
+        val name_txtView = navigationView.getHeaderView(0).findViewById<TextView>(R.id.name_txt)
+        val email_txtView = navigationView.getHeaderView(0).findViewById<TextView>(R.id.email_txt)
 
+        name_txtView.text = mainActivity.user.name+' '+mainActivity.user.surname
+        email_txtView.text = mainActivity.user.email
         // Переход на фрагмент аккаунта
         navigationView.getHeaderView(0).setOnClickListener {
             mainActivity.setFragment(AccountFragment())
