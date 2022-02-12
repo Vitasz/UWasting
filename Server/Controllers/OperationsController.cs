@@ -21,10 +21,18 @@ namespace Server.Controllers
         [HttpGet]
         public string GetOperations(int UserId)
         {
-            var ans = Database.Operations.LoadOperations(UserId);
-            Console.WriteLine(ans.Count);
-            foreach ((int, string, DateTime) a in ans) Console.WriteLine(a.Item1.ToString()+ a.Item2+ a.Item3.ToString());
-            return JsonConvert.SerializeObject(ans);
+            List<(int id, int Value, string Category, DateTime date)> ans = Database.Operations.LoadOperations(UserId);
+            List<Operation> toret = new List<Operation>();
+            foreach((int id, int Value, string Category, DateTime date) a in ans)
+            {
+                Operation tmp = new Operation();
+                tmp.Id = a.id;
+                tmp.Value = a.Value;
+                tmp.Category = a.Category;
+                tmp.date = a.date;
+                toret.Add(tmp);
+            }
+            return JsonConvert.SerializeObject(toret);
         }
     }
 }

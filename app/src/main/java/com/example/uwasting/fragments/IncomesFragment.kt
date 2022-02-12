@@ -1,5 +1,6 @@
 package com.example.uwasting.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.google.android.material.button.MaterialButton
 // Фрагмент с доходами
 class IncomesFragment : Fragment() {
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,7 +30,8 @@ class IncomesFragment : Fragment() {
         val dateTxt = view.findViewById<TextView>(R.id.date_txt)
         val listLayout = view.findViewById<ConstraintLayout>(R.id.list_layout)
         val addIncomeBtn = view.findViewById<MaterialButton>(R.id.add_income_btn)
-
+        val totalIncomesTxt = view.findViewById<TextView>(R.id.sum_txt)
+        totalIncomesTxt.text = '+'+mainActivity.operations.GetTotalSumIncomes().toString()
         listLayout.setOnClickListener {
             mainActivity.setFragment(CategoryFragment())
         }

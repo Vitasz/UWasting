@@ -1,5 +1,6 @@
 package com.example.uwasting.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +25,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 // Фрагмент с переключением доходов/расходов
 class TabFragment : Fragment() {
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

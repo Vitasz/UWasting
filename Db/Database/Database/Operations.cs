@@ -25,20 +25,20 @@ namespace Database
             adapt.SelectCommand = com;
             adapt.Fill(table);
         }
-        public static List<(int Value, string Category, DateTime Date)> LoadOperations(int UserId)
+        public static List<(int id, int Value, string Category, DateTime Date)> LoadOperations(int UserId)
         {
             using var myCon = new OleDbConnection(Globaldata.connect);
             myCon.Open();
-            string query = "SELECT Value, Category, Date FROM `Operations` WHERE `User_id` = @id";
+            string query = "SELECT Id, Value, Category, Date FROM `Operations` WHERE `User_id` = @id";
             OleDbCommand com = new(query, myCon);
             com.Parameters.AddWithValue("@id", UserId);
             OleDbDataReader reader = com.ExecuteReader();
-            List<(int Value, string Category, DateTime Date)> ans = new();
+            List<(int id, int Value, string Category, DateTime Date)> ans = new();
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    ans.Add(((int)reader[0], (string)reader[1], (DateTime)reader[2]));
+                    ans.Add(((int)reader[0], (int)reader[1], (string)reader[2], (DateTime)reader[3]));
                 }
             }
             reader.Close();

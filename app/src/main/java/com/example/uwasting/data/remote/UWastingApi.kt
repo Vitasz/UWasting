@@ -1,5 +1,6 @@
 package com.example.uwasting.data.remote
 
+import com.example.uwasting.data.Operation
 import com.example.uwasting.data.User
 import com.example.uwasting.fragments.ChangePasswordFragment
 import io.reactivex.Single
@@ -38,4 +39,8 @@ interface UWastingApi {
     @Headers("Content-Type: application/json")
     fun ChangePassword(@Query("id") id:Int,
                           @Query("password") password:String): Single<Boolean>
+
+    @GET("/GetOperations")
+    @Headers("Content-Type: application/json")
+    fun GetOperations(@Query("UserId")id:Int):Single<List<Operation>>
 }
