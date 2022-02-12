@@ -35,9 +35,17 @@ class SignInFragment : Fragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                           Log.d("TAG", it)
+                    Log.e("USER: ", it.toString())
+                    val startingActivity = activity as StartingActivity
+                    val intent = Intent(startingActivity, MainActivity::class.java)
+                    intent.putExtra("UserName", it.name)
+                    intent.putExtra("UserSurName", it.surname)
+                    intent.putExtra("UserId", it.id)
+                    intent.putExtra("UserEmail", it.email)
+                    startingActivity.startActivity(intent)
                 }, {
-
+                    //TODO("ДОБАВИТЬ ОШИБКУ: ПОЛЬЗОВАТЕЛЬ НЕ НАЙДЕН")
+                    Log.d("tag", "пользователь не найден")
                 }))
         }
     }
@@ -63,8 +71,7 @@ class SignInFragment : Fragment() {
                 startingActivity.user.password = passwordEdit.text.toString() // Получаем пароль
                 startingActivity.user.email = emailEdit.text.toString() // Получаем мыло
                 tryGet(startingActivity.uwastingApi, startingActivity.user.email, startingActivity.user.password)
-                val intent = Intent(startingActivity, MainActivity::class.java)
-                startingActivity.startActivity(intent)
+
             }
 
             toolbar.setNavigationOnClickListener {
