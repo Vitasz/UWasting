@@ -1,19 +1,19 @@
 package com.example.uwasting.fragments
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2
-import com.example.uwasting.AccountFragment
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
+import com.example.uwasting.activities.StartingActivity
 import com.example.uwasting.adapters.ViewPagerAdapter
+import com.example.uwasting.data.Constants
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
@@ -43,10 +43,19 @@ class TabFragment : Fragment() {
         }
 
         navigationView.setNavigationItemSelectedListener {
-            mainActivity.setFragment(AccountFragment())
+            when (it.itemId) {
+                R.id.change_email -> mainActivity.setFragment(VerifyPasswordFragment(Constants.CHANGE_EMAIl))
+                R.id.change_password -> mainActivity.setFragment(VerifyPasswordFragment(Constants.CHANGE_PASSWORD))
+                // Выход из аккаунта
+                R.id.sign_out -> {
+                    val intent = Intent(mainActivity, StartingActivity::class.java)
+                    startActivity(intent)
+                }
+            }
             true
         }
 
+        // Переход на фрагмент аккаунта
         navigationView.getHeaderView(0).setOnClickListener {
             mainActivity.setFragment(AccountFragment())
         }

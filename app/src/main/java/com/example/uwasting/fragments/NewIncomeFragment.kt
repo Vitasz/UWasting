@@ -13,6 +13,7 @@ import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.dialogs.PeriodDialog
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 
 // Фрагмент добавления дохода
 class NewIncomeFragment : Fragment() {
@@ -24,11 +25,20 @@ class NewIncomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_new_income, container, false)
         val mainActivity = activity as MainActivity
 
+        // Получение виджетов
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+        val categoryEdit = view.findViewById<TextInputEditText>(R.id.category_edit)
 
+        // перемещение на предыдущий фрагмент
         toolbar.setNavigationOnClickListener {
             mainActivity.prevFragment()
         }
+
+        // Выбор категории
+        categoryEdit.setOnFocusChangeListener { view, focused ->  if (focused) {
+            view.clearFocus()
+            mainActivity.setFragment(SelectCategoryFragment())
+        } }
 
         return view
     }

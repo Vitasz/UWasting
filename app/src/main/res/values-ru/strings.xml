@@ -50,4 +50,13 @@
     <string name="commission_date">Дата совершения</string>
     <string name="category">Категория</string>
     <string name="save_shanges">Сохранить изменения</string>
+    <string name="new_pswrd">Новый пароль</string>
+    <string name="current_email">Текущая почта</string>
+    <string name="new_email">Новая почта</string>
+    <string name="enter_your_pswrd">Чтобы продолжить, введите текущий пароль</string>
+    <string name="add">Добавить</string>
+    <string name="select_category">Выберите категорию</string>
+    <string name="new_category">Новая категория</string>
+    <string name="confirm_selecting">Выбрать категорию</string>
+    <string name="category_name">Название категории</string>
 </resources>
