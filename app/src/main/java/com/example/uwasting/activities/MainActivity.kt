@@ -8,13 +8,21 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.uwasting.R
+import com.example.uwasting.data.Constants
 import com.example.uwasting.data.User
+import com.example.uwasting.data.remote.UWastingApi
 import com.example.uwasting.fragments.TabFragment
 import com.google.android.material.appbar.MaterialToolbar
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 // Главная активность
 class MainActivity : AppCompatActivity() {
     val user: User = User()
+    lateinit var uwastingApi: UWastingApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,11 +33,28 @@ class MainActivity : AppCompatActivity() {
             user.email = it.getString("UserEmail", "NOT FOUND")
             user.id = it.getInt("UserId", -1)
         }
-
+        configureRetrofit()
 
         setFragment(TabFragment())
     }
+    private fun configureRetrofit() {
+        val httpLoggingInterceptor = HttpLoggingInterceptor()
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(httpLoggingInterceptor)
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Constants.APIurl)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+
+        uwastingApi = retrofit.create(UWastingApi::class.java)
+
+    }
     // Переключение фрагмента
     fun setFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).

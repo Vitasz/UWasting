@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.uwasting.R
+import com.example.uwasting.data.Constants
 import com.example.uwasting.data.User
 import com.example.uwasting.data.remote.UWastingApi
 import com.example.uwasting.fragments.StartFragment
@@ -39,7 +40,7 @@ class StartingActivity : AppCompatActivity() {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.72.13:5000/")
+            .baseUrl(Constants.APIurl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

@@ -38,5 +38,24 @@ namespace Server.Controllers
         {
             return Ok(Database.Registration.CheckingUser(login));
         }
+        [Route("/СhangeNameSurname")]
+        [HttpGet]
+        public IActionResult СhangeNameSurname(int id, string name, string surname)
+        {
+            return Ok(Database.Registration.ChangeNameSurname(id, name, surname));
+        }
+        [Route("/ChangeLogin")]
+        [HttpGet]
+        public IActionResult ChangeLogin(int id, string login)
+        {
+            if (Database.Registration.CheckingUser(login)) return BadRequest();
+            return Ok(Database.Registration.ChangeLogin(id, login));
+        }
+        [Route("/ChangePassword")]
+        [HttpGet]
+        public IActionResult ChangePassword(int id, string password)
+        {
+            return Ok(Database.Registration.ChangePassword(id, password));
+        }
     }
 }
