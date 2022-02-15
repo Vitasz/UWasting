@@ -43,5 +43,47 @@ namespace Database
             com.ExecuteNonQuery();
             return true;
         }
+        public static bool ChangeNameSurname(int id, string name, string surname)
+        {
+            using var myCon = new OleDbConnection(Globaldata.connect);
+
+            myCon.Open();
+            string query = "UPDATE `Users` SET `Name` = @name, `Surname` = @surname WHERE [id] = @id";
+            OleDbCommand com = new(query, myCon);
+            
+            com.Parameters.AddWithValue("@name", name);
+            com.Parameters.AddWithValue("@surname", surname);
+            com.Parameters.AddWithValue("@id", id);
+            com.ExecuteNonQuery();
+            return true;
+        }
+        public static bool ChangeLogin(int id, string login)
+        {
+            using var myCon = new OleDbConnection(Globaldata.connect);
+
+            myCon.Open();
+            string query = "UPDATE `Users` SET `Login` = @login WHERE [id] = @id";
+            OleDbCommand com = new(query, myCon);
+            
+            com.Parameters.AddWithValue("@login", login);
+            com.Parameters.AddWithValue("@id", id);
+
+            com.ExecuteNonQuery();
+            return true;
+        }
+        public static bool ChangePassword(int id, string password)
+        {
+            using var myCon = new OleDbConnection(Globaldata.connect);
+
+            myCon.Open();
+            string query = "UPDATE `Users` SET `Password` = @password WHERE [id] = @id";
+            OleDbCommand com = new(query, myCon);
+            
+            com.Parameters.AddWithValue("@password", password);
+            com.Parameters.AddWithValue("@id", id);
+
+            com.ExecuteNonQuery();
+            return true;
+        }
     }
 }

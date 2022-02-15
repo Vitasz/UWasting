@@ -1,5 +1,6 @@
 package com.example.uwasting.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,10 +13,37 @@ import android.widget.TextView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.activities.StartingActivity
+import com.example.uwasting.data.remote.UWastingApi
 import com.google.android.material.appbar.MaterialToolbar
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 
 class EmailFragment : Fragment() {
+
+    private val compositeDisposable = CompositeDisposable()
+
+    private fun checkMail(uwastingApi: UWastingApi?, email: String) {
+        uwastingApi?.let {
+            compositeDisposable.add(uwastingApi.checkEmail(email)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it){
+                        //TODO("ДОБАВИТЬ ОШИБКУ: ЛОГИН НЕ ДОСТУПЕН")
+                        Log.d("tag", "ЛОГИН НЕ ДОСТУПЕН")
+                    }
+                    else{
+                        val startingActivity = activity as StartingActivity
+                        startingActivity.setFragment(NameFragment()) // Переход на страницу с вводом имени и фамилии
+                    }
+                }, {
+
+                }))
+        }
+    }
+
 
 
     override fun onCreateView(
@@ -35,8 +63,8 @@ class EmailFragment : Fragment() {
                 // TODO("ДОБАВИТЬ ОШИБКУ О ПУСТЫХ ПОЛЯХ")
             }
             else {
-                startingActivity.user.email = emailEdit.text.toString() // Получаем мыло
-                startingActivity.setFragment(NameFragment()) // Переход на страницу с вводом имени и фамилии
+                startingActivity.user.email = emailEdit.text.toString() // Получаем логин
+                checkMail(startingActivity.uwastingApi, startingActivity.user.email)//Проверка доступности логина
             }
         }
 

@@ -24,11 +24,19 @@
                 android:icon="@drawable/email"
                 android:title="@string/change_email" />
             <item
-                android:id="@+id/password"
+                android:id="@+id/change_password"
                 android:icon="@drawable/password"
                 android:title="@string/change_password" />
+            <item
+                android:id="@+id/sign_out"
+                android:icon="@drawable/sign_out"
+                android:title="@string/sign_out"
+                android:iconTint="@color/red"
+                />
         </menu>
     </item>
+
+
 
 
 </menu>

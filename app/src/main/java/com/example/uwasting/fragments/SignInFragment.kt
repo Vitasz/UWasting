@@ -1,6 +1,7 @@
 package com.example.uwasting.fragments
 
 import android.content.Intent
+import android.content.SearchRecentSuggestionsProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,10 +13,37 @@ import android.widget.EditText
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.activities.StartingActivity
+import com.example.uwasting.data.remote.UWastingApi
 import com.google.android.material.appbar.MaterialToolbar
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 
 class SignInFragment : Fragment() {
+
+    private val compositeDisposable = CompositeDisposable()
+
+    fun tryGet(uwastingApi: UWastingApi?, email: String, password: String) {
+        uwastingApi?.let {
+            compositeDisposable.add(uwastingApi.getUserData(email, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Log.e("USER: ", it.toString())
+                    val startingActivity = activity as StartingActivity
+                    val intent = Intent(startingActivity, MainActivity::class.java)
+                    intent.putExtra("UserName", it.name)
+                    intent.putExtra("UserSurName", it.surname)
+                    intent.putExtra("UserId", it.id)
+                    intent.putExtra("UserEmail", it.email)
+                    startingActivity.startActivity(intent)
+                }, {
+                    //TODO("ДОБАВИТЬ ОШИБКУ: ПОЛЬЗОВАТЕЛЬ НЕ НАЙДЕН")
+                    Log.d("tag", "пользователь не найден")
+                }))
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,18 +57,16 @@ class SignInFragment : Fragment() {
         val signInBtn = view.findViewById<Button>(R.id.sign_in_btn)
 
         signInBtn.setOnClickListener {
+
             if ((passwordEdit.text.toString() contentEquals "") or (emailEdit.text.toString() contentEquals "")) {
                 // TODO("ДОБАВИТЬ ОШИБКУ О ПУСТЫХ ПОЛЯХ")
             }
-            /* else if (!(passwordEdit.text.toString() contentEquals startingActivity.user.password) or
-                !(emailEdit.text.toString() contentEquals startingActivity.user.email)) {
-                // TODO("ДОБАВИТЬ ОШИБКУ О ТОМ, ЧТО ВВЕДЕНЫ НЕКОРРЕКТНЫЕ ДАННЫЕ")
-            }
-             */ // Здесь должна быть проверка на совпадение данных из бд и данных, что ввёл пользователь
+
             else {
+                startingActivity.user.password = passwordEdit.text.toString() // Получаем пароль
                 startingActivity.user.email = emailEdit.text.toString() // Получаем мыло
-                val intent = Intent(startingActivity, MainActivity::class.java)
-                startingActivity.startActivity(intent)
+                tryGet(startingActivity.uwastingApi, startingActivity.user.email, startingActivity.user.password)
+
             }
 
             toolbar.setNavigationOnClickListener {
