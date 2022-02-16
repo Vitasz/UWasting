@@ -16,6 +16,13 @@
     <string name="verify_email">Пожалуйста, подтвердите ваш адрес эл. почты, пройдя по ссылке в нашем письме.\n
                                 После этого вы можете зайти в ваш аккаунт.
     </string>
+    <string name="name_error">Не удалось сменить имя или фамилию</string>
+    <string name="impossible_to_change_password">Невозможно сменить пароль!</string>
+    <string name="registration_error">Ошибка регистрации.</string>
+    <string name="user_not_found">Пользователь не найден!</string>
+    <string name="passwords_dont_match">Пароли не совпадают!</string>
+    <string name="email_is_used">Эта почта уже используется!</string>
+    <string name="field_is_empty">Вы оставили какие-то поля пустыми!</string>
     <string name="password">Пароль</string>
     <string name="settings">Настройки</string>
     <string name="language">Язык</string>
