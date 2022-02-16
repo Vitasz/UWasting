@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\Database",
-    "\\Database\\bin"
+    "\\Database\\bin",
+    "\\Database\\bin\\Debug",
+    "\\Database\\bin\\Release"
   ],
-  "SelectedNode": "\\Database\\Operations.cs",
   "PreviewInSolutionExplorer": false
 }

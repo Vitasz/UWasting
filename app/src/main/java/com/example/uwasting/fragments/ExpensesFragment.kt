@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
+import com.example.uwasting.data.CategoryRecyclerView
 
 // Фрагмент с расходами
 class ExpensesFragment : Fragment() {
@@ -29,6 +31,11 @@ class ExpensesFragment : Fragment() {
         val addExpenseBtn = view.findViewById<Button>(R.id.add_expense_btn)
         val totalExpensesTxt = view.findViewById<TextView>(R.id.totalExpenses)
         totalExpensesTxt.text = mainActivity.operations.GetTotalSumExpenses().toString()
+        //Список с категориями
+        val recyclerView = view.findViewById<RecyclerView>(R.id.categories_list)
+        recyclerView.layoutManager = LinearLayoutManager(mainActivity)
+        recyclerView.adapter = CategoryRecyclerView(mainActivity.operations.CombineByCategoryExpenses())
+
         // переход на фрагмент с категориями
         categoriesList.setOnClickListener {
             mainActivity.setFragment(CategoryFragment())

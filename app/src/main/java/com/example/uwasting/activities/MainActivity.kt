@@ -32,6 +32,19 @@ class MainActivity : AppCompatActivity() {
     private val compositeDisposable = CompositeDisposable()
     lateinit var uwastingApi: UWastingApi
     lateinit var operations: OperationsList
+    fun GetOperations(){
+        uwastingApi?.let {
+            compositeDisposable.add(uwastingApi.GetOperations(user.id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    operations=OperationsList(it)
+
+                    setFragment(TabFragment())
+                }, {
+                }))
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,16 +56,7 @@ class MainActivity : AppCompatActivity() {
             user.id = it.getInt("UserId", -1)
         }
         configureRetrofit()
-        uwastingApi?.let {
-            compositeDisposable.add(uwastingApi.GetOperations(user.id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    operations=OperationsList(it)
-                    setFragment(TabFragment())
-                }, {
-                }))
-        }
+        GetOperations()
 
     }
 

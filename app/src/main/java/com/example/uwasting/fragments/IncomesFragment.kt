@@ -10,13 +10,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
+import com.example.uwasting.data.CategoryRecyclerView
 import com.example.uwasting.dialogs.PeriodDialog
 import com.google.android.material.button.MaterialButton
 
 // Фрагмент с доходами
 class IncomesFragment : Fragment() {
+
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -35,6 +39,10 @@ class IncomesFragment : Fragment() {
         listLayout.setOnClickListener {
             mainActivity.setFragment(CategoryFragment())
         }
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.categories_list)
+        recyclerView.layoutManager = LinearLayoutManager(mainActivity)
+        recyclerView.adapter = CategoryRecyclerView(mainActivity.operations.CombineByCategoryIncomes())
 
         // Нажатие на период
         periodLayout.setOnClickListener {
