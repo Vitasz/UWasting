@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
-using System.Data.OleDb;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
 
 namespace Database
 {
@@ -18,20 +18,16 @@ namespace Database
         /// <returns>Id пользователя</returns>
         public static (int id, string email, string Name, string Surname) Join(string login, string password)
         {
-            using var myCon = new OleDbConnection(Globaldata.connect);
+            using var myCon = new SqliteConnection(Globaldata.connect);
 
             myCon.Open();
-            string query = "SELECT id, Login, Name, Surname FROM `Users` WHERE `Login` = @log AND `Password` = @pass";
-            DataTable table = new();
-            OleDbDataAdapter adapt = new();
-            OleDbCommand com = new(query, myCon);
-            com.Parameters.AddWithValue("@log", login);
-            com.Parameters.AddWithValue("@pass", password);
-            adapt.SelectCommand = com;
-            adapt.Fill(table);
-            if (table.Rows.Count > 0)
+            string query = "SELECT id, Login, Name, Surname FROM `Users` WHERE `Login` = $log AND `Password` = $pass";
+            var command = myCon.CreateCommand();
+            command.CommandText = query;
+            command.Parameters.AddWithValue("$log", login);
+            command.Parameters.AddWithValue("$pass", password);
+            using (var reader = command.ExecuteReader())
             {
-                using OleDbDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
                     while (reader.Read())

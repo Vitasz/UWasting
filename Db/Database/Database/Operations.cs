@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
-using System.Data.OleDb;
+using Microsoft.Data.Sqlite;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,36 +12,38 @@ namespace Database
     {
         public static void SaveOperation(int value, string category, DateTime date, int UserId)
         {
-            using var myCon = new OleDbConnection(Globaldata.connect);
-            DataTable table = new();
-            OleDbDataAdapter adapt = new();
+            using var myCon = new SqliteConnection(Globaldata.connect);
+            var command = myCon.CreateCommand();
             myCon.Open();
-            string query = "INSERT INTO `Operations` (`Value`, `Category`, `Date`, `User_id`) VALUES (@sum, @cat, @date, @id)";
-            OleDbCommand com = new(query, myCon);
-            com.Parameters.AddWithValue("@sum", value);
-            com.Parameters.AddWithValue("@cat", category);
-            com.Parameters.AddWithValue("@date", date);
-            com.Parameters.AddWithValue("@id", UserId);
-            adapt.SelectCommand = com;
-            adapt.Fill(table);
+            string query = "INSERT INTO `Operations` (`Value`, `Category`, `Date`, `User_id`) VALUES ($sum, $cat, $date, $id)";
+            command.CommandText = query;
+            command.Parameters.AddWithValue("$sum", value);
+            command.Parameters.AddWithValue("$cat", category);
+            command.Parameters.AddWithValue("$date", date);
+            command.Parameters.AddWithValue("$id", UserId);
+            command.ExecuteNonQuery();
         }
         public static List<(int id, int Value, string Category, DateTime Date)> LoadOperations(int UserId)
         {
-            using var myCon = new OleDbConnection(Globaldata.connect);
+            using var myCon = new SqliteConnection(Globaldata.connect);
             myCon.Open();
-            string query = "SELECT Id, Value, Category, Date FROM `Operations` WHERE `User_id` = @id";
-            OleDbCommand com = new(query, myCon);
-            com.Parameters.AddWithValue("@id", UserId);
-            OleDbDataReader reader = com.ExecuteReader();
+            var command = myCon.CreateCommand();
+
+            string query = "SELECT Id, Value, Category, Date FROM `Operations` WHERE `User_id` = $id";
+            command.CommandText = query;
+
+            command.Parameters.AddWithValue("$id", UserId);
             List<(int id, int Value, string Category, DateTime Date)> ans = new();
-            if (reader.HasRows)
+            using (var reader = command.ExecuteReader())
             {
-                while (reader.Read())
+                if (reader.HasRows)
                 {
-                    ans.Add(((int)reader[0], (int)reader[1], (string)reader[2], (DateTime)reader[3]));
+                    while (reader.Read())
+                    {
+                        ans.Add(((int)reader[0], (int)reader[1], (string)reader[2], (DateTime)reader[3]));
+                    }
                 }
             }
-            reader.Close();
             return ans;
         }
 
