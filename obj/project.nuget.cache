@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "g3p60iu4cjnZxEiLm4bt1N94VWgrvHcVpHoVuDMt2vC3J3T5ZbmRR/cyl+meih+f+jrTvxHSNhbb6aoWOGpr3Q==",
+  "dgSpecHash": "iY3PqWhmyT45M4Isdpaloq4DTYepbiqSDsok8GLgBdwJ3zUwFn7/9jZdd/0iyA8lb2hRNQhLtKqrSkbR5pzNhA==",
   "success": true,
-  "projectFilePath": "D:\\UWasting\\Server\\Server.csproj",
+  "projectFilePath": "D:\\UWasting\\Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vital\\.nuget\\packages\\microsoft.data.sqlite\\6.0.2\\microsoft.data.sqlite.6.0.2.nupkg.sha512",
     "C:\\Users\\vital\\.nuget\\packages\\microsoft.data.sqlite.core\\6.0.2\\microsoft.data.sqlite.core.6.0.2.nupkg.sha512",
