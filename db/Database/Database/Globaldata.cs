@@ -8,6 +8,6 @@ namespace Database
 {
     static class Globaldata
     {
-        public static string connect = "Data Source = db\\Uwaste.sqlite";
+        public static string connect = "Data Source = "+Environment.GetEnvironmentVariable("DATABASE_URL");
     }
 }
