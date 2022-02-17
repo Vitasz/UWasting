@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.example.uwasting.R
 import com.example.uwasting.activities.StartingActivity
 import com.google.android.material.appbar.MaterialToolbar
@@ -29,7 +30,9 @@ class NameFragment : Fragment() {
 
         nextBtn.setOnClickListener {
             if ((nameEdit.text.toString() contentEquals "") or (surnameEdit.text.toString() contentEquals "")) {
-                // TODO("ДОБАВИТЬ ОШИБКУ О ПУСТЫХ ПОЛЯХ")
+                val text = getString(R.string.field_is_empty)
+                val t = Toast.makeText(startingActivity, text, Toast.LENGTH_LONG)
+                t.show()
             }
             else {
                 startingActivity.user.name = nameEdit.text.toString() // Получаем имя

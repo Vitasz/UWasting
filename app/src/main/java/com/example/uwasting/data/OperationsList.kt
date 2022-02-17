@@ -1,8 +1,5 @@
 package com.example.uwasting.data
 
-import android.util.Log
-import com.example.uwasting.R
-
 class OperationsList(var item: List<Operation>) {
     var list = item
 
@@ -21,40 +18,4 @@ class OperationsList(var item: List<Operation>) {
         }
         return tmp
     }
-    fun CombineByCategoryIncomes():ArrayList<Triple<Category, String,String>>{
-        var res = ArrayList<Triple<Category, String,String>>()
-        var tmp: MutableMap<String, Pair<Int, Int>> = mutableMapOf()
-        for(i in list){
-            if (i.amount>0) {
-                if (!tmp.containsKey(i.category))
-                    tmp.put(i.category, Pair(1, i.amount))
-                else {
-                    tmp[i.category] = Pair(tmp[i.category]!!.first + 1, tmp[i.category]!!.second+i.amount)
-                }
-            }
-        }
-        var categories = Categories()
-        for (i in tmp){
-            res.add(Triple(categories.hasInCommon(i.key), "Всего операций: ${i.value.first}", "+${i.value.second}"))
-        }
-        return ArrayList((res.sortedBy{it.third.toInt()}).reversed())
-    }
-    fun CombineByCategoryExpenses():ArrayList<Triple<Category, String, String>>{
-        var res = ArrayList<Triple<Category, String, String>>()
-        var tmp: MutableMap<String, Pair<Int, Int>> = mutableMapOf()
-        for(i in list){
-            if (i.amount<0) {
-                if (!tmp.containsKey(i.category))
-                    tmp.put(i.category, Pair(1, i.amount))
-                else
-                    tmp[i.category] = Pair(tmp[i.category]!!.first + 1, tmp[i.category]!!.second+i.amount)
-            }
-        }
-        var categories = Categories()
-        for (i in tmp){
-            res.add(Triple(categories.hasInCommon(i.key), "Всего операций: ${i.value.first}", "${i.value.second}"))
-        }
-        return ArrayList(res.sortedBy{it.third.toInt()})
-    }
-
 }

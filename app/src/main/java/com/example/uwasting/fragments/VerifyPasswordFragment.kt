@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.data.Constants
@@ -22,21 +23,21 @@ import io.reactivex.schedulers.Schedulers
 class VerifyPasswordFragment(mode: Int) : Fragment() {
     private var mode: Int = mode
     private val compositeDisposable = CompositeDisposable()
-    fun tryLogin(uwastingApi: UWastingApi, login:String, password:String){
-
+    private fun tryLogin(uwastingApi: UWastingApi, login:String, password:String){
+        val mainActivity = activity as MainActivity
         uwastingApi?.let {
             compositeDisposable.add(uwastingApi.getUserData(login, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    val mainActivity = activity as MainActivity
                     when (mode) {
                         Constants.CHANGE_EMAIl -> mainActivity.setFragment(ChangeEmailFragment())
                         Constants.CHANGE_PASSWORD -> mainActivity.setFragment(ChangePasswordFragment())
                     }
                 }, {
-                    //TODO("ДОБАВИТЬ ОШИБКУ: НЕВЕРНЫЙ ПАРОЛЬ")
-                    Log.d("tag", "НЕВЕРНЫЙ ПАРОЛЬ")
+                    val text = getString(R.string.passwords_dont_match)
+                    val t = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
+                    t.show()
                 }))
         }
 

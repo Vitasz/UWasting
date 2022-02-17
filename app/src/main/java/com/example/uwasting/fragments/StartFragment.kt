@@ -16,6 +16,7 @@ class StartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_start, container, false)
 
         val startingActivity: StartingActivity = activity as StartingActivity

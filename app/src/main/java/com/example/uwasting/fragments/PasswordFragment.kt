@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
@@ -24,7 +25,7 @@ import io.reactivex.schedulers.Schedulers
 class PasswordFragment : Fragment() {
 
     private val compositeDisposable = CompositeDisposable()
-    fun TryRegistrateUser(uwastingApi: UWastingApi, user: User){
+    private fun TryRegistrateUser(uwastingApi: UWastingApi, user: User){
         val startingActivity = activity as StartingActivity
         uwastingApi?.let {
             compositeDisposable.add(uwastingApi.RegistrateUser(user.email,user.password, user.name, user.surname)
@@ -39,8 +40,9 @@ class PasswordFragment : Fragment() {
                     intent.putExtra("UserEmail", user.email)
                     startingActivity.startActivity(intent)
                 }, {
-                    //TODO("ДОБАВИТЬ ОШИБКУ: ОШИБКА РЕГИСТРАЦИИ")
-                    Log.d("tag", "ОШИБКА РЕГИСТРАЦИИ")
+                    val text = getString(R.string.registration_error)
+                    val t = Toast.makeText(startingActivity, text, Toast.LENGTH_LONG)
+                    t.show()
                 }))
         }
 
@@ -58,10 +60,14 @@ class PasswordFragment : Fragment() {
 
         nextBtn.setOnClickListener {
             if ((passwordEdit.text.toString() contentEquals "") or (repPasswordEdit.text.toString() contentEquals "")) {
-                // TODO("ДОБАВИТЬ ОШИБКУ О ПУСТЫХ ПОЛЯХ")
+                val text = getString(R.string.field_is_empty)
+                val t = Toast.makeText(startingActivity, text, Toast.LENGTH_LONG)
+                t.show()
             }
             else if (!(passwordEdit.text.toString() contentEquals repPasswordEdit.text.toString())) {
-                // TODO("ДОБАВИТЬ ОШИБКУ О ТОМ, ЧТО ПАРОЛИ НЕ СОВПАДАЮТ")
+                val text = getString(R.string.passwords_dont_match)
+                val t = Toast.makeText(startingActivity, text, Toast.LENGTH_LONG)
+                t.show()
             }
             else {
                 startingActivity.user.password = passwordEdit.text.toString() // Получаем пароль

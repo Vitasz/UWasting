@@ -1,10 +1,14 @@
 package com.example.uwasting.activities
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -32,19 +36,6 @@ class MainActivity : AppCompatActivity() {
     private val compositeDisposable = CompositeDisposable()
     lateinit var uwastingApi: UWastingApi
     lateinit var operations: OperationsList
-    fun GetOperations(){
-        uwastingApi?.let {
-            compositeDisposable.add(uwastingApi.GetOperations(user.id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    operations=OperationsList(it)
-
-                    setFragment(TabFragment())
-                }, {
-                }))
-        }
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -56,11 +47,25 @@ class MainActivity : AppCompatActivity() {
             user.id = it.getInt("UserId", -1)
         }
         configureRetrofit()
-        GetOperations()
+        uwastingApi?.let {
+            compositeDisposable.add(uwastingApi.GetOperations(user.id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    operations=OperationsList(it)
+                    setFragment(TabFragment())
+                }, {
+                }))
+        }
 
     }
 
-
+    fun checkPermission(permission: String, requestCode: Int) {
+        if (ContextCompat.checkSelfPermission(this@MainActivity, permission) == PackageManager.PERMISSION_DENIED) {
+            // Requesting the permission
+            ActivityCompat.requestPermissions(this@MainActivity, arrayOf(permission), requestCode)
+        }
+    }
 
     private fun configureRetrofit() {
         val httpLoggingInterceptor = HttpLoggingInterceptor()

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.data.remote.UWastingApi
@@ -29,8 +30,9 @@ class ChangeEmailFragment : Fragment() {
                     mainActivity.user.email = login
                     mainActivity.setFragment(TabFragment())
                 }, {
-                    //TODO("ДОБАВИТЬ ОШИБКУ: ЛОГИН УЖЕ СУЩЕСТВУЕТ")
-                    Log.d("tag", "ОШИБКА ЛОГИНА")
+                    val text = getString(R.string.email_is_used)
+                    val t = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
+                    t.show()
                 }))
         }
 
@@ -54,7 +56,9 @@ class ChangeEmailFragment : Fragment() {
                 ChangeEmail(mainActivity.uwastingApi, newEmailTextView.text.toString())
             }
             else{
-                //TODO ДОБАВИТЬ ОШИБКУ ПУСТОГО ПОЛЯ ВВОДА
+                val text = getString(R.string.field_is_empty)
+                val t = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
+                t.show()
             }
         }
         // Переход на предыдущий фрагмент

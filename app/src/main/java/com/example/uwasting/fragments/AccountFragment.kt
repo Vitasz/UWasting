@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.activities.StartingActivity
@@ -20,21 +21,21 @@ import io.reactivex.schedulers.Schedulers
 
 // Фрагмент аккаунта
 class AccountFragment : Fragment() {
-
+    val mainActivity = activity as MainActivity
     private val compositeDisposable = CompositeDisposable()
-    fun tryChange(uwastingApi: UWastingApi?, id:Int, name:String, surname:String) {
+    private fun tryChange(uwastingApi: UWastingApi?, id:Int, name:String, surname:String) {
         uwastingApi?.let {
             compositeDisposable.add(uwastingApi.ChangeNameSurname(id, name, surname)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    val mainActivity = activity as MainActivity
                     mainActivity.user.name = name
-                    mainActivity.user.surname=surname
+                    mainActivity.user.surname = surname
                     mainActivity.prevFragment()
                 }, {
-                    //TODO("ДОБАВИТЬ ОШИБКУ: НЕ УДАЛОСЬ ИЗМЕНИТЬ ИМЯ")
-                    Log.d("tag", "пользователь не найден")
+                    val text = getString(R.string.name_error)
+                    val t = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
+                    t.show()
                 }))
         }
     }
@@ -45,14 +46,16 @@ class AccountFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_account, container, false)
         val mainActivity = activity as MainActivity
-        val SaveChangesBtn = view.findViewById<Button>(R.id.add_btn)
+        val saveChangesBtn = view.findViewById<Button>(R.id.add_btn)
         val nameTextView = view.findViewById<TextView>(R.id.name_edit)
         val surnameTextView = view.findViewById<TextView>(R.id.surname_edit)
         //Нажатие на кнопку сохранить изменения
-        SaveChangesBtn.setOnClickListener(){
+        saveChangesBtn.setOnClickListener(){
             if (nameTextView.text.toString()=="" || surnameTextView.text.toString()==""){
 
-                //TODO ДОБАВИТЬ ОШИБКУ О ПУСТЫХ ПОЛЯХ
+                val text = getString(R.string.field_is_empty)
+                val t = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
+                t.show()
             }
             else{
                 tryChange(mainActivity.uwastingApi,mainActivity.user.id, nameTextView.text.toString(), surnameTextView.text.toString())

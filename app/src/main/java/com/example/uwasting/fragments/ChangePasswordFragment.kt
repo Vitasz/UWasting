@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.data.remote.UWastingApi
@@ -29,8 +30,9 @@ class ChangePasswordFragment : Fragment() {
                 .subscribe({
                     mainActivity.setFragment(TabFragment())
                 }, {
-                    //TODO("ДОБАВИТЬ ОШИБКУ: НЕВОЗМОЖНО ИЗМЕНИТЬ ПАРОЛЬ")
-                    Log.d("tag", "НЕВОЗМОЖНО ИЗМЕНИТЬ ПАРОЛЬ")
+                    val text = getString(R.string.impossible_to_change_password)
+                    val t = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
+                    t.show()
                 }))
         }
 
@@ -53,10 +55,14 @@ class ChangePasswordFragment : Fragment() {
                 ChangePassword(mainActivity.uwastingApi, pswrdTextView.text.toString())
             }
             else if (pswrdTextView.text.toString()!=""){
-                //TODO ДОБАВИТЬ ОШИБКУ ПУСТОГО ПОЛЯ
+                val text = getString(R.string.field_is_empty)
+                val t = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
+                t.show()
             }
             else{
-                //TODO ДОБАВИТЬ ОШИБКУ "ПАРОЛИ НЕ СОВПАДАЮТ"
+                val text = getString(R.string.passwords_dont_match)
+                val t = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
+                t.show()
             }
         }
         // Переход на предыдущий фрагмент

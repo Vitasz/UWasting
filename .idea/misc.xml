@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProjects/UWasting-main/app/src/main/res/layout/fragment_email.xml" value="0.33" />
+        <entry key="..\:/AndroidProjects/UWasting-main/app/src/main/res/layout/fragment_expenses.xml" value="0.11197916666666667" />
+        <entry key="..\:/AndroidProjects/UWasting-main/app/src/main/res/layout/fragment_incomes.xml" value="0.25" />
+        <entry key="..\:/AndroidProjects/UWasting-main/app/src/main/res/layout/fragment_password.xml" value="0.18802083333333333" />
+        <entry key="..\:/AndroidProjects/UWasting-main/app/src/main/res/layout/fragment_sign_in.xml" value="0.33" />
+        <entry key="..\:/AndroidProjects/UWasting-main/app/src/main/res/layout/fragment_start.xml" value="0.21" />
+        <entry key="..\:/AndroidProjects/UWasting-main/app/src/main/res/layout/fragment_verify_password.xml" value="0.18802083333333333" />
         <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/drawable/button.xml" value="0.3675" />
         <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/drawable/edit_text_cursor.xml" value="0.3675" />
         <entry key="..\:/AndroidProjects/UWasting/app/src/main/res/drawable/ic_resource_final.xml" value="0.3675" />
@@ -69,11 +76,6 @@
         <entry key="..\:/UWasting-frontend/app/src/main/res/layout/fragment_tab.xml" value="0.25" />
         <entry key="..\:/UWasting-frontend/app/src/main/res/layout/fragment_verify_email.xml" value="0.19583333333333333" />
         <entry key="..\:/UWasting-frontend/app/src/main/res/layout/layout_navigation_drawer.xml" value="0.19583333333333333" />
-        <entry key="..\:/UWasting/app/src/main/res/drawable/add.xml" value="0.1" />
-        <entry key="..\:/UWasting/app/src/main/res/drawable/clothes.xml" value="0.2695" />
-        <entry key="..\:/UWasting/app/src/main/res/drawable/income.xml" value="0.2695" />
-        <entry key="..\:/UWasting/app/src/main/res/drawable/other.xml" value="0.1135" />
-        <entry key="..\:/UWasting/app/src/main/res/drawable/products.xml" value="0.1135" />
         <entry key="..\:/UWasting/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/UWasting/app/src/main/res/layout/dialog_period.xml" value="0.2296875" />
         <entry key="..\:/UWasting/app/src/main/res/layout/fragment_account.xml" value="0.2677083333333333" />
@@ -81,16 +83,12 @@
         <entry key="..\:/UWasting/app/src/main/res/layout/fragment_change_email.xml" value="0.33" />
         <entry key="..\:/UWasting/app/src/main/res/layout/fragment_change_password.xml" value="0.20609884332281808" />
         <entry key="..\:/UWasting/app/src/main/res/layout/fragment_email.xml" value="0.26197916666666665" />
-        <entry key="..\:/UWasting/app/src/main/res/layout/fragment_expenses.xml" value="0.25" />
-        <entry key="..\:/UWasting/app/src/main/res/layout/fragment_incomes.xml" value="0.33" />
+        <entry key="..\:/UWasting/app/src/main/res/layout/fragment_expenses.xml" value="0.17395833333333333" />
+        <entry key="..\:/UWasting/app/src/main/res/layout/fragment_incomes.xml" value="0.17395833333333333" />
         <entry key="..\:/UWasting/app/src/main/res/layout/fragment_navigation_header.xml" value="0.2677083333333333" />
         <entry key="..\:/UWasting/app/src/main/res/layout/fragment_password.xml" value="0.33" />
         <entry key="..\:/UWasting/app/src/main/res/layout/fragment_tab.xml" value="0.26197916666666665" />
         <entry key="..\:/UWasting/app/src/main/res/layout/fragment_verify_password.xml" value="0.2677083333333333" />
-        <entry key="..\:/UWasting/app/src/main/res/layout/recyclerview_item.xml" value="0.25" />
-        <entry key="..\:/UWasting/app/src/main/res/layout/view_category.xml" value="0.22" />
-        <entry key="..\:/UWasting/app/src/main/res/layout/view_operation.xml" value="0.22" />
-        <entry key="..\:/UWasting/app/src/main/res/layout/view_selecting_category.xml" value="0.33" />
       </map>
     </option>
   </component>
