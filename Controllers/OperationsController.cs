@@ -12,12 +12,19 @@ namespace Server.Controllers
     public class OperationsController : Controller
     {
         [Route("/AddOperation")]       
-        [HttpPost]
-        public void AddOperation(int value, string category, DateTime date, int id)
+        [HttpGet]
+        public IActionResult AddOperation(int value, string category, DateTime date, int id)
         {
-            Database.Operations.SaveOperation(value, category, date, id);
+            if (Database.Operations.AddOperation(value, category, date, id)) return Ok(true);
+            else return BadRequest();
         }
-
+        [Route("/DeleteOperation")]
+        [HttpGet]
+        public IActionResult AddOperation(int id)
+        {
+            if (Database.Operations.DeleteOperation(id)) return Ok(true);
+            else return BadRequest();
+        }
         [Route("/GetOperations")]
         [HttpGet]
         public string GetOperations(int UserId)

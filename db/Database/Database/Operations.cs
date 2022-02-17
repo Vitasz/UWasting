@@ -10,7 +10,7 @@ namespace Database
 {
     public static class Operations
     {
-        public static void SaveOperation(int value, string category, DateTime date, int UserId)
+        public static bool AddOperation(int value, string category, DateTime date, int UserId)
         {
             using var myCon = new NpgsqlConnection(Globaldata.connect);
             myCon.Open();
@@ -27,6 +27,24 @@ namespace Database
             };
 
             cmd.ExecuteNonQuery();
+            return true;
+        }
+        public static bool DeleteOperation(int OperationId)
+        {
+            using var myCon = new NpgsqlConnection(Globaldata.connect);
+            myCon.Open();
+
+            var cmd = new NpgsqlCommand("DELETE FROM \"Operations\" WHERE \"id\" = @id", myCon)
+            {
+                Parameters =
+                {
+
+                    new("@id", OperationId)
+                }
+            };
+
+            cmd.ExecuteNonQuery();
+            return true;
         }
         public static List<(int id, int Value, string Category, DateTime Date)> LoadOperations(int UserId)
         {
