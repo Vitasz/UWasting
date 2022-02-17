@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
+import com.example.uwasting.data.OperationsList
 import com.example.uwasting.dialogs.PeriodDialog
 import com.google.android.material.button.MaterialButton
 import org.apache.commons.csv.CSVFormat
@@ -43,7 +44,7 @@ class IncomesFragment : Fragment() {
         val listLayout = view.findViewById<ConstraintLayout>(R.id.list_layout)
         val addIncomeBtn = view.findViewById<MaterialButton>(R.id.add_income_btn)
         val totalIncomesTxt = view.findViewById<TextView>(R.id.sum_txt)
-        totalIncomesTxt.text = '+' + mainActivity.operations.GetTotalSumIncomes().toString()
+        totalIncomesTxt.text = '+' + mainActivity.currentOperations.GetTotalSumIncomes().toString()
 
         listLayout.setOnClickListener {
             mainActivity.setFragment(CategoryFragment())
@@ -53,6 +54,8 @@ class IncomesFragment : Fragment() {
         periodLayout.setOnClickListener {
             val dialog = PeriodDialog()
             dialog.show(parentFragmentManager, "period")
+
+
         }
 
         addIncomeBtn.setOnClickListener {
@@ -69,7 +72,7 @@ class IncomesFragment : Fragment() {
             fileOut.createNewFile()
             val stringPath = path.toString()
 
-            val operations = mainActivity.operations
+            val operations = mainActivity.currentOperations
             val writer = Files.newBufferedWriter(Paths.get("$stringPath/$filename"))
             val csvPrinter = CSVPrinter(writer, CSVFormat.DEFAULT
                 .withHeader("OperationId", "Category", "Amount", "Date"))

@@ -38,7 +38,7 @@ class ExpensesFragment : Fragment() {
         val categoriesList = view.findViewById<ConstraintLayout>(R.id.list_layout)
         val addExpenseBtn = view.findViewById<Button>(R.id.add_expense_btn)
         val totalExpensesTxt = view.findViewById<TextView>(R.id.totalExpenses)
-        totalExpensesTxt.text = mainActivity.operations.GetTotalSumExpenses().toString()
+        totalExpensesTxt.text = mainActivity.currentOperations.GetTotalSumExpenses().toString()
 
         // переход на фрагмент с категориями
         categoriesList.setOnClickListener {
@@ -60,7 +60,7 @@ class ExpensesFragment : Fragment() {
             fileOut.createNewFile()
             val stringPath = path.toString()
 
-            val operations = mainActivity.operations
+            val operations = mainActivity.currentOperations
             val writer = Files.newBufferedWriter(Paths.get("$stringPath/$filename"))
             val csvPrinter = CSVPrinter(writer, CSVFormat.DEFAULT
                 .withHeader("OperationId", "Category", "Amount", "Date"))
