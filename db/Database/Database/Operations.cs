@@ -48,7 +48,7 @@ namespace Database
                 {
                     while (reader.Read())
                     {
-                        ans.Add(((int)reader[0], (int)reader[1], (string)reader[2], (DateTime)reader[3]));
+                        ans.Add(((int)reader[0], (int)reader[1], (string)reader[2], Convert.ToDateTime(reader[3])));
                     }
                 }
             }
