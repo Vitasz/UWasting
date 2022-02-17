@@ -143,3 +143,5 @@ D:\UWasting\obj\Debug\net5.0\scopedcss\bundle\Server.styles.css
 D:\UWasting\obj\Debug\net5.0\Server.RazorTargetAssemblyInfo.cache
 D:\UWasting\obj\Debug\net5.0\Server.csproj.CopyComplete
 D:\UWasting\obj\Debug\net5.0\Server.genruntimeconfig.cache
+D:\UWasting\bin\Debug\net5.0\Npgsql.dll
+D:\UWasting\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll

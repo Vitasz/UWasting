@@ -4,7 +4,7 @@ using System.Linq;
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
+using Npgsql;
 
 namespace Database
 {
@@ -18,15 +18,18 @@ namespace Database
         /// <returns>Id пользователя</returns>
         public static (int id, string email, string Name, string Surname) Join(string login, string password)
         {
-            using var myCon = new SqliteConnection(Globaldata.connect);
-
+            using var myCon = new NpgsqlConnection(Globaldata.connect);
             myCon.Open();
-            string query = "SELECT id, Login, Name, Surname FROM `Users` WHERE `Login` = $log AND `Password` = $pass";
-            var command = myCon.CreateCommand();
-            command.CommandText = query;
-            command.Parameters.AddWithValue("$log", login);
-            command.Parameters.AddWithValue("$pass", password);
-            using (var reader = command.ExecuteReader())
+
+            var cmd = new NpgsqlCommand("SELECT \"id\", \"Login\", \"Name\", \"Surname\" FROM \"Users\" WHERE \"Login\" = @log AND \"Password\" = @pass", myCon)
+            {
+                Parameters =
+                {
+                    new("@log", login),
+                    new("@pass", password)
+                }
+            };
+            using (var reader = cmd.ExecuteReader())
             {
                 if (reader.HasRows)
                 {

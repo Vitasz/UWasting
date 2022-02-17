@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\UWasting\\Db\\Database\\Database\\Database.csproj": {}
+    "D:\\UWasting\\db\\Database\\Database\\Database.csproj": {}
   },
   "projects": {
-    "D:\\UWasting\\Db\\Database\\Database\\Database.csproj": {
+    "D:\\UWasting\\db\\Database\\Database\\Database.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\UWasting\\Db\\Database\\Database\\Database.csproj",
+        "projectUniqueName": "D:\\UWasting\\db\\Database\\Database\\Database.csproj",
         "projectName": "Database",
-        "projectPath": "D:\\UWasting\\Db\\Database\\Database\\Database.csproj",
+        "projectPath": "D:\\UWasting\\db\\Database\\Database\\Database.csproj",
         "packagesPath": "C:\\Users\\vital\\.nuget\\packages\\",
-        "outputPath": "D:\\UWasting\\Db\\Database\\Database\\obj\\",
+        "outputPath": "D:\\UWasting\\db\\Database\\Database\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,9 +44,9 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
-            "Microsoft.Data.Sqlite": {
+            "Npgsql": {
               "target": "Package",
-              "version": "[6.0.2, )"
+              "version": "[6.0.3, )"
             }
           },
           "imports": [

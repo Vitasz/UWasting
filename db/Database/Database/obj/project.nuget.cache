@@ -1,16 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "XWgLxKBVH9RZ920DyyXvI2yeLyOaahYrJov9PWhyCAag1swNSZPvd8psv3EaU1hwXLHN0AxUtfKFvfFcKS8gGg==",
+  "dgSpecHash": "PddbJtbdvW5wahF+UiGKZ2/314M0HJtKJpr5IYMQjrAwnTlSFx34ZjEyaFsJDKpoYc7FeEXSBJuHbT+CPBK1ww==",
   "success": true,
-  "projectFilePath": "D:\\UWasting\\Db\\Database\\Database\\Database.csproj",
+  "projectFilePath": "D:\\UWasting\\db\\Database\\Database\\Database.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\vital\\.nuget\\packages\\microsoft.data.sqlite\\6.0.2\\microsoft.data.sqlite.6.0.2.nupkg.sha512",
-    "C:\\Users\\vital\\.nuget\\packages\\microsoft.data.sqlite.core\\6.0.2\\microsoft.data.sqlite.core.6.0.2.nupkg.sha512",
-    "C:\\Users\\vital\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.0.6\\sqlitepclraw.bundle_e_sqlite3.2.0.6.nupkg.sha512",
-    "C:\\Users\\vital\\.nuget\\packages\\sqlitepclraw.core\\2.0.6\\sqlitepclraw.core.2.0.6.nupkg.sha512",
-    "C:\\Users\\vital\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.0.6\\sqlitepclraw.lib.e_sqlite3.2.0.6.nupkg.sha512",
-    "C:\\Users\\vital\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.0.6\\sqlitepclraw.provider.e_sqlite3.2.0.6.nupkg.sha512",
-    "C:\\Users\\vital\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512"
+    "C:\\Users\\vital\\.nuget\\packages\\npgsql\\6.0.3\\npgsql.6.0.3.nupkg.sha512",
+    "C:\\Users\\vital\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }
