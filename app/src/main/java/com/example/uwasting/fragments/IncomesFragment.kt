@@ -2,10 +2,9 @@ package com.example.uwasting.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +12,18 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
-import com.example.uwasting.data.OperationsList
 import com.example.uwasting.dialogs.PeriodDialog
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.button.MaterialButton
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
@@ -25,26 +32,28 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 
-
 // Фрагмент с доходами
 class IncomesFragment : Fragment() {
-
+    private lateinit var pieChart: PieChart
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n", "SdCardPath")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_incomes, container, false)
         val mainActivity = activity as MainActivity
-
+        val view = inflater.inflate(R.layout.fragment_incomes, container, false)
         val exportToCSVBtn = view.findViewById<Button>(R.id.export_btn)
         val periodLayout = view.findViewById<ConstraintLayout>(R.id.period_layout)
         val dateTxt = view.findViewById<TextView>(R.id.date_txt)
         val listLayout = view.findViewById<ConstraintLayout>(R.id.list_layout)
         val addIncomeBtn = view.findViewById<MaterialButton>(R.id.add_income_btn)
         val totalIncomesTxt = view.findViewById<TextView>(R.id.sum_txt)
-        totalIncomesTxt.text = '+' + mainActivity.currentOperations.GetTotalSumIncomes().toString()
+        totalIncomesTxt.text = '+' + mainActivity.operations.GetTotalSumIncomes().toString()
+
+        pieChart = view.findViewById(R.id.diagram_incomes)
+        setupPieChart()
+        loadPieChartData()
 
         listLayout.setOnClickListener {
             mainActivity.setFragment(CategoryFragment())
@@ -54,8 +63,6 @@ class IncomesFragment : Fragment() {
         periodLayout.setOnClickListener {
             val dialog = PeriodDialog()
             dialog.show(parentFragmentManager, "period")
-
-
         }
 
         addIncomeBtn.setOnClickListener {
@@ -66,13 +73,13 @@ class IncomesFragment : Fragment() {
             mainActivity.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, 123)
 
             val filename = "incomes.csv"
-            var path = context?.getExternalFilesDir(null)
-            var fileOut = File(path, filename)
+            val path = context?.getExternalFilesDir(null)
+            val fileOut = File(path, filename)
             fileOut.delete()
             fileOut.createNewFile()
             val stringPath = path.toString()
 
-            val operations = mainActivity.currentOperations
+            val operations = mainActivity.operations
             val writer = Files.newBufferedWriter(Paths.get("$stringPath/$filename"))
             val csvPrinter = CSVPrinter(writer, CSVFormat.DEFAULT
                 .withHeader("OperationId", "Category", "Amount", "Date"))
@@ -92,8 +99,59 @@ class IncomesFragment : Fragment() {
 
         }
 
-
         return view
     }
 
+    private fun setupPieChart() {
+        pieChart.isDrawHoleEnabled = false
+        pieChart.setUsePercentValues(true)
+
+
+        /*pieChart.setEntryLabelTextSize(12F)
+        pieChart.setEntryLabelColor(Color.BLACK)*/
+        pieChart.setDrawEntryLabels(false)
+        pieChart.centerText = ""
+        pieChart.description.isEnabled = false
+
+        var l = pieChart.legend
+        l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+        l.orientation = Legend.LegendOrientation.VERTICAL
+        l.setDrawInside(false)
+        l.isEnabled = true
+    }
+
+    private fun loadPieChartData(){
+        val mainActivity = activity as MainActivity
+        var entries = ArrayList<PieEntry>()
+        var sum = 0
+        var operations = mainActivity.operations.CombineByCategoryIncomes()
+
+
+        for(i in operations) {
+            entries.add(PieEntry(i.third.toFloat(), i.first.name))
+        }
+
+        val colors = ArrayList<Int>()
+        for(color in ColorTemplate.MATERIAL_COLORS) {
+            colors.add(color)
+        }
+
+        for(color in ColorTemplate.VORDIPLOM_COLORS) {
+            colors.add(color)
+        }
+
+        var dataSet = PieDataSet(entries, "")
+        dataSet.colors = colors
+
+        var data = PieData(dataSet)
+        data.setDrawValues(true)
+        data.setValueFormatter(PercentFormatter(pieChart))
+        data.setValueTextSize(10f)
+        data.setValueTextColor(Color.BLACK)
+
+        pieChart.data = data
+        pieChart.invalidate()
+        pieChart.animateY(1000, Easing.EaseInOutQuad)
+    }
 }

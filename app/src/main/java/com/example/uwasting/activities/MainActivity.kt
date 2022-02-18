@@ -2,12 +2,10 @@ package com.example.uwasting.activities
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -37,9 +35,7 @@ class MainActivity : AppCompatActivity() {
     val user: User = User()
     private val compositeDisposable = CompositeDisposable()
     lateinit var uwastingApi: UWastingApi
-    lateinit var totalOperations: OperationsList
-    lateinit var currentOperations: OperationsList
-    @RequiresApi(Build.VERSION_CODES.O)
+    lateinit var operations: OperationsList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -56,8 +52,7 @@ class MainActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    totalOperations=OperationsList(it)
-                    currentOperations=OperationsList(totalOperations.SelectOperations(90))
+                    operations=OperationsList(it)
                     setFragment(TabFragment())
                 }, {
                 }))

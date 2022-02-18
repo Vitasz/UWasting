@@ -17,6 +17,10 @@
     <string name="verify_email">Please, verify your email address by following the link we sent.\n
                                 Then you can sign in to your account.
     </string>
+    <string name="spending_by_category">Spending by Category</string>
+    <string name="income_by_category">Income by Category</string>
+    <string name="expense_category">Expense category</string>
+    <string name="income_category">Income category</string>
     <string name="name_error">Failed to change name or surname</string>
     <string name="impossible_to_change_password">It\'s impossible to change password!</string>
     <string name="registration_error">Registration error.</string>

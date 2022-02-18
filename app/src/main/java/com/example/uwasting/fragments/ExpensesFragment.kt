@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
+//import com.example.uwasting.data.SimpleLinearRegressionModel
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
 import java.io.File
@@ -38,7 +39,7 @@ class ExpensesFragment : Fragment() {
         val categoriesList = view.findViewById<ConstraintLayout>(R.id.list_layout)
         val addExpenseBtn = view.findViewById<Button>(R.id.add_expense_btn)
         val totalExpensesTxt = view.findViewById<TextView>(R.id.totalExpenses)
-        totalExpensesTxt.text = mainActivity.currentOperations.GetTotalSumExpenses().toString()
+        totalExpensesTxt.text = mainActivity.operations.GetTotalSumExpenses().toString()
 
         // переход на фрагмент с категориями
         categoriesList.setOnClickListener {
@@ -48,6 +49,10 @@ class ExpensesFragment : Fragment() {
         // Добавление расхода
         addExpenseBtn.setOnClickListener {
             mainActivity.setFragment(NewExpenseFragment())
+            /*val operationsPerMonth = mainActivity.operations
+            val count = operationsPerMonth.list[0]
+            val sumOperations = operationsPerMonth.list[1]
+            val model = SimpleLinearRegressionModel(count, sumOperations)*/
         }
 
         exportToCSVBtn.setOnClickListener {
@@ -60,7 +65,7 @@ class ExpensesFragment : Fragment() {
             fileOut.createNewFile()
             val stringPath = path.toString()
 
-            val operations = mainActivity.currentOperations
+            val operations = mainActivity.operations
             val writer = Files.newBufferedWriter(Paths.get("$stringPath/$filename"))
             val csvPrinter = CSVPrinter(writer, CSVFormat.DEFAULT
                 .withHeader("OperationId", "Category", "Amount", "Date"))

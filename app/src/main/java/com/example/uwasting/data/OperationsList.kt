@@ -1,15 +1,12 @@
 package com.example.uwasting.data
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
-import kotlin.collections.ArrayList
 
-class OperationsList(var list: List<Operation>) {
+class OperationsList(var item: List<Operation>) {
+    var list = item
 
 
     fun GetTotalSumIncomes():Int{
@@ -26,18 +23,41 @@ class OperationsList(var list: List<Operation>) {
         }
         return tmp
     }
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun SelectOperations(Period:Int):List<Operation>{
-        val now = LocalDateTime.now()
-        var tmp = ArrayList<Operation>()
-        for (i in list) {
-            Log.d("date", i.date)
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-            val t = i.date.replace('T', ' ')
-            val date = LocalDateTime.parse(t, formatter)
-            Log.d("date", date.toString())
-            if (now.minusDays(Period.toLong())<date)tmp.add(i)
+
+    fun CombineByCategoryExpenses():ArrayList<Triple<Category, String, String>>{
+        var res = ArrayList<Triple<Category, String, String>>()
+        var tmp: MutableMap<String, Pair<Int, Int>> = mutableMapOf()
+        for(i in list){
+            if (i.amount<0) {
+                if (!tmp.containsKey(i.category))
+                    tmp.put(i.category, Pair(1, i.amount))
+                else
+                    tmp[i.category] = Pair(tmp[i.category]!!.first + 1, tmp[i.category]!!.second+i.amount)
+            }
         }
-        return tmp
+        var categories = Categories()
+        for (i in tmp){
+            res.add(Triple(categories.hasInCommon(i.key), "Всего операций: ${i.value.first}", "${i.value.second}"))
+        }
+        return ArrayList(res.sortedBy{it.third.toInt()})
+    }
+
+    fun CombineByCategoryIncomes():ArrayList<Triple<Category, String,String>>{
+        var res = ArrayList<Triple<Category, String,String>>()
+        var tmp: MutableMap<String, Pair<Int, Int>> = mutableMapOf()
+        for(i in list){
+            if (i.amount>0) {
+                if (!tmp.containsKey(i.category))
+                    tmp.put(i.category, Pair(1, i.amount))
+                else {
+                    tmp[i.category] = Pair(tmp[i.category]!!.first + 1, tmp[i.category]!!.second+i.amount)
+                }
+            }
+        }
+        var categories = Categories()
+        for (i in tmp){
+            res.add(Triple(categories.hasInCommon(i.key), "Всего операций: ${i.value.first}", "+${i.value.second}"))
+        }
+        return ArrayList((res.sortedBy{it.third.toInt()}).reversed())
     }
 }
