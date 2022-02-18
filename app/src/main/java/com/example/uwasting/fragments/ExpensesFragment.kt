@@ -18,6 +18,12 @@ import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
 
 import com.example.uwasting.data.CategoryRecyclerView
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
@@ -27,7 +33,7 @@ import java.nio.file.Paths
 
 // Фрагмент с расходами
 class ExpensesFragment : Fragment() {
-
+    private lateinit var pieChart: PieChart
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -43,6 +49,10 @@ class ExpensesFragment : Fragment() {
         val addExpenseBtn = view.findViewById<Button>(R.id.add_expense_btn)
         val totalExpensesTxt = view.findViewById<TextView>(R.id.totalExpenses)
         totalExpensesTxt.text = mainActivity.currentOperations.GetTotalSumExpenses().toString()
+
+        pieChart = view.findViewById(R.id.diagram_expenses)
+        setupPieChart()
+        loadPieChartData()
 
         // переход на фрагмент с категориями
         categoriesList.setOnClickListener {
@@ -94,5 +104,54 @@ class ExpensesFragment : Fragment() {
         return view
     }
 
+    private fun setupPieChart() {
+        pieChart.isDrawHoleEnabled = false
+        pieChart.setUsePercentValues(true)
 
+
+        /*pieChart.setEntryLabelTextSize(12F)
+        pieChart.setEntryLabelColor(Color.BLACK)*/
+        pieChart.setDrawEntryLabels(false)
+        pieChart.centerText = ""
+        pieChart.description.isEnabled = false
+
+        var l = pieChart.legend
+        l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+        l.orientation = Legend.LegendOrientation.VERTICAL
+        l.setDrawInside(false)
+        l.isEnabled = false
+    }
+
+    private fun loadPieChartData(){
+        val mainActivity = activity as MainActivity
+        var entries = ArrayList<PieEntry>()
+        var sum = 0
+        var operations = mainActivity.currentOperations.CombineByCategoryExpenses()
+
+        val colors = ArrayList<Int>()
+        for(i in operations) {
+            entries.add(PieEntry(-i.third.toFloat(), i.first.name))
+            colors.add(i.first.color)
+        }
+
+        /*for(color in ColorTemplate.MATERIAL_COLORS) {
+            colors.add(color)
+        }
+
+        for(color in ColorTemplate.VORDIPLOM_COLORS) {
+            colors.add(color)
+        }*/
+
+        var dataSet = PieDataSet(entries, "")
+        dataSet.colors = colors
+
+        var data = PieData(dataSet)
+        data.setDrawValues(false)
+
+        pieChart.data = data
+        pieChart.invalidate()
+        pieChart.animateY(1000, Easing.EaseInOutQuad)
+
+    }
 }

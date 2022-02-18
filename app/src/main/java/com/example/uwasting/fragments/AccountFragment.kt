@@ -21,9 +21,9 @@ import io.reactivex.schedulers.Schedulers
 
 // Фрагмент аккаунта
 class AccountFragment : Fragment() {
-    val mainActivity = activity as MainActivity
     private val compositeDisposable = CompositeDisposable()
     private fun tryChange(uwastingApi: UWastingApi?, id:Int, name:String, surname:String) {
+        val mainActivity = activity as MainActivity
         uwastingApi?.let {
             compositeDisposable.add(uwastingApi.ChangeNameSurname(id, name, surname)
                 .subscribeOn(Schedulers.io())

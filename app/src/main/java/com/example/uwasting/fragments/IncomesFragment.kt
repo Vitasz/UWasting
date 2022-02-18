@@ -129,7 +129,7 @@ class IncomesFragment : Fragment() {
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
         l.orientation = Legend.LegendOrientation.VERTICAL
         l.setDrawInside(false)
-        l.isEnabled = true
+        l.isEnabled = false
     }
 
     private fun loadPieChartData(){
@@ -138,28 +138,25 @@ class IncomesFragment : Fragment() {
         var sum = 0
         var operations = mainActivity.currentOperations.CombineByCategoryIncomes()
 
-
+        val colors = ArrayList<Int>()
         for(i in operations) {
             entries.add(PieEntry(i.third.toFloat(), i.first.name))
+            colors.add(i.first.color)
         }
 
-        val colors = ArrayList<Int>()
-        for(color in ColorTemplate.MATERIAL_COLORS) {
+        /*for(color in ColorTemplate.MATERIAL_COLORS) {
             colors.add(color)
         }
 
         for(color in ColorTemplate.VORDIPLOM_COLORS) {
             colors.add(color)
-        }
+        }*/
 
         var dataSet = PieDataSet(entries, "")
         dataSet.colors = colors
 
         var data = PieData(dataSet)
-        data.setDrawValues(true)
-        data.setValueFormatter(PercentFormatter(pieChart))
-        data.setValueTextSize(10f)
-        data.setValueTextColor(Color.BLACK)
+        data.setDrawValues(false)
 
         pieChart.data = data
         pieChart.invalidate()

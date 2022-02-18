@@ -30,7 +30,7 @@ class CategoryRecyclerView(private val data:ArrayList<Triple<Category, Int, Int>
         holder.CategoryNameTextView.text = data[position].first.name
         holder.TotalTextView.text = "Всего операций: ${data[position].second}"
         if (data[position].third>0) holder.AmountTextView.text = "+${data[position].third}"
-        else holder.AmountTextView.text = "-${data[position].third}"
+        else holder.AmountTextView.text = "${data[position].third}"
         holder.ImageCategory.setImageResource(data[position].first.srcImage)
     }
 

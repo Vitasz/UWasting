@@ -36,7 +36,7 @@
     <string name="change_password">Сменить пароль</string>
     <string name="sign_out">Выйти из аккаунта</string>
     <string name="incomes">Доходы</string>
-    <string name="expenses">Expenses</string>
+    <string name="expenses">Расходы</string>
     <string name="add_income">Внести доход</string>
     <string name="add_expense">Внести расход</string>
     <string name="export_to_csv">Экспорт в CSV</string>
