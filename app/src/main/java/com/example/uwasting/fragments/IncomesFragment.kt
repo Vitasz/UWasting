@@ -12,9 +12,16 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
+
 import androidx.fragment.app.Fragment
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
+
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.uwasting.data.CategoryRecyclerView
+import com.example.uwasting.data.OperationsList
+
 import com.example.uwasting.dialogs.PeriodDialog
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -49,7 +56,7 @@ class IncomesFragment : Fragment() {
         val listLayout = view.findViewById<ConstraintLayout>(R.id.list_layout)
         val addIncomeBtn = view.findViewById<MaterialButton>(R.id.add_income_btn)
         val totalIncomesTxt = view.findViewById<TextView>(R.id.sum_txt)
-        totalIncomesTxt.text = '+' + mainActivity.operations.GetTotalSumIncomes().toString()
+        totalIncomesTxt.text = '+' + mainActivity.currentOperations.GetTotalSumIncomes().toString()
 
         pieChart = view.findViewById(R.id.diagram_incomes)
         setupPieChart()
@@ -68,6 +75,10 @@ class IncomesFragment : Fragment() {
         addIncomeBtn.setOnClickListener {
             mainActivity.setFragment(NewIncomeFragment())
         }
+        //Список с категориями
+        val recyclerView = view.findViewById<RecyclerView>(R.id.categories_list)
+        recyclerView.layoutManager = LinearLayoutManager(mainActivity)
+        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryIncomes())
 
         exportToCSVBtn.setOnClickListener {
             mainActivity.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, 123)
@@ -79,7 +90,7 @@ class IncomesFragment : Fragment() {
             fileOut.createNewFile()
             val stringPath = path.toString()
 
-            val operations = mainActivity.operations
+            val operations = mainActivity.currentOperations
             val writer = Files.newBufferedWriter(Paths.get("$stringPath/$filename"))
             val csvPrinter = CSVPrinter(writer, CSVFormat.DEFAULT
                 .withHeader("OperationId", "Category", "Amount", "Date"))
@@ -125,7 +136,7 @@ class IncomesFragment : Fragment() {
         val mainActivity = activity as MainActivity
         var entries = ArrayList<PieEntry>()
         var sum = 0
-        var operations = mainActivity.operations.CombineByCategoryIncomes()
+        var operations = mainActivity.currentOperations.CombineByCategoryIncomes()
 
 
         for(i in operations) {

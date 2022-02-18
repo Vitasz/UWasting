@@ -108,15 +108,16 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/categories_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/categories_height"
-                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_width="411dp"
+                    android:layout_height="188dp"
                     android:layout_marginEnd="@dimen/small_margin"
                     android:background="@drawable/categories_back"
                     android:elevation="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/header_txt" />
+                    app:layout_constraintTop_toBottomOf="@+id/header_txt"
+                    tools:listitem="@layout/categoryviewrecycler_item" />
 
                 <TextView
                     android:id="@+id/header_txt"

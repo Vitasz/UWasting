@@ -2,10 +2,12 @@ package com.example.uwasting.activities
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -35,7 +37,22 @@ class MainActivity : AppCompatActivity() {
     val user: User = User()
     private val compositeDisposable = CompositeDisposable()
     lateinit var uwastingApi: UWastingApi
-    lateinit var operations: OperationsList
+    lateinit var totalOperations: OperationsList
+    lateinit var currentOperations: OperationsList
+    fun GetOperations(){
+        uwastingApi?.let {
+            compositeDisposable.add(uwastingApi.GetOperations(user.id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    totalOperations=OperationsList(it)
+                    currentOperations = totalOperations
+                    setFragment(TabFragment())
+                }, {
+                }))
+        }
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -47,16 +64,7 @@ class MainActivity : AppCompatActivity() {
             user.id = it.getInt("UserId", -1)
         }
         configureRetrofit()
-        uwastingApi?.let {
-            compositeDisposable.add(uwastingApi.GetOperations(user.id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    operations=OperationsList(it)
-                    setFragment(TabFragment())
-                }, {
-                }))
-        }
+        GetOperations()
 
     }
 
