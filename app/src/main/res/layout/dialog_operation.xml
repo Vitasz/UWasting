@@ -14,15 +14,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/edit_btn"
-            style="@style/ImageTextButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_margin"
-            app:icon="@drawable/edit"
-            android:text="@string/edit_operation" />
-
-        <com.google.android.material.button.MaterialButton
             android:id="@+id/delete_btn"
             style="@style/ImageTextButton"
             android:layout_width="match_parent"

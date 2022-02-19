@@ -68,6 +68,7 @@ class NewExpenseFragment : Fragment() {
             myDay = dayOfMonth
             datetxt.setText("$myMonth-$myDay-$myYear")
         }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,7 +82,7 @@ class NewExpenseFragment : Fragment() {
         val categoryEdit = view.findViewById<TextInputEditText>(R.id.category_edit)
         val addbtn = view.findViewById<Button>(R.id.add_btn)
         val amountxt = view.findViewById<TextInputEditText>(R.id.sum_edit)
-        datetxt = view.findViewById<TextInputEditText>(R.id.cmsn_edit)
+        datetxt = view.findViewById(R.id.cmsn_edit)
 
 
         addbtn.setOnClickListener{

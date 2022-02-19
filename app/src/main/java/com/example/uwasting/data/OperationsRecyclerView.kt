@@ -10,14 +10,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import java.time.LocalDate
 import java.util.Date
-
-class OperationsRecyclerView(private val data:ArrayList<Triple<LocalDate, Category, Int>>):RecyclerView.Adapter<OperationsRecyclerView.MyViewHolder>()  {
+interface OnOperationClickListener{
+    fun onItemClick(item:Triple<LocalDate, Category, Int>)
+}
+class OperationsRecyclerView(private val data:ArrayList<Triple<LocalDate, Category, Int>>, private var onOperationClickListener: OnOperationClickListener):RecyclerView.Adapter<OperationsRecyclerView.MyViewHolder>()  {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var datetxt: TextView = itemView.findViewById(R.id.operation_date)
         var img: ImageView = itemView.findViewById(R.id.operation_img)
         var categorytxt: TextView = itemView.findViewById(R.id.operation_category)
         var amounttxt: TextView = itemView.findViewById(R.id.operation_amount)
+        fun bind(item:Triple<LocalDate, Category, Int>, onOperationClickListener: OnOperationClickListener){
+            itemView.setOnClickListener {
+                onOperationClickListener.onItemClick(item)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -35,6 +42,8 @@ class OperationsRecyclerView(private val data:ArrayList<Triple<LocalDate, Catego
         if (data[position].third>0)
             holder.amounttxt.text = "+${data[position].third}$"
         else holder.amounttxt.text = "${data[position].third}$"
+        var item = data[position]
+        holder.bind(item, onOperationClickListener)
     }
 
     override fun getItemCount(): Int {

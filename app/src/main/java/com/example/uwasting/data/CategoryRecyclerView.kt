@@ -4,18 +4,28 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
-
-class CategoryRecyclerView(private val data:ArrayList<Triple<Category, Int, Int>>):RecyclerView.Adapter<CategoryRecyclerView.MyViewHolder>()  {
+import com.example.uwasting.activities.MainActivity
+interface OnItemClickListener{
+    fun onItemClicked(item: Triple<Category, Int, Int>)
+}
+class CategoryRecyclerView(private val data:ArrayList<Triple<Category, Int, Int>>, private val itemClickListener:OnItemClickListener):RecyclerView.Adapter<CategoryRecyclerView.MyViewHolder>()  {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val CategoryNameTextView: TextView = itemView.findViewById(R.id.CategoryNameTextView)
         val TotalTextView: TextView = itemView.findViewById(R.id.TotalTextView)
         val AmountTextView: TextView = itemView.findViewById(R.id.AmountTextView)
         val ImageCategory: ImageView = itemView.findViewById(R.id.ImageCategory)
+        fun bind(item: Triple<Category, Int, Int>,clickListener: OnItemClickListener)
+        {
+            itemView.setOnClickListener {
+                clickListener.onItemClicked(item)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -32,6 +42,8 @@ class CategoryRecyclerView(private val data:ArrayList<Triple<Category, Int, Int>
         if (data[position].third>0) holder.AmountTextView.text = "+${data[position].third}$"
         else holder.AmountTextView.text = "${data[position].third}$"
         holder.ImageCategory.setImageResource(data[position].first.srcImage)
+        val item = data[position]
+        holder.bind(item, itemClickListener)
     }
 
     override fun getItemCount(): Int {

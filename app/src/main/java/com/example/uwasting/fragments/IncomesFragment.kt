@@ -19,8 +19,7 @@ import com.example.uwasting.activities.MainActivity
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.uwasting.data.CategoryRecyclerView
-import com.example.uwasting.data.OperationsList
+import com.example.uwasting.data.*
 
 import com.example.uwasting.dialogs.PeriodDialog
 import com.github.mikephil.charting.animation.Easing
@@ -40,10 +39,15 @@ import java.nio.file.Paths
 
 
 // Фрагмент с доходами
-class IncomesFragment : Fragment() {
+class IncomesFragment : Fragment(), OnItemClickListener {
     private lateinit var pieChart: PieChart
     private lateinit var totalIncomesTxt:TextView
     private lateinit var recyclerView:RecyclerView
+
+    override fun onItemClicked(item: Triple<Category, Int, Int>){
+        val mainActivity = activity as MainActivity
+        mainActivity.setFragment(CategoryFragment(item.first, true))
+    }
     @SuppressLint("SetTextI18n")
     fun UpdateOperations(){
         val mainActivity = activity as MainActivity
@@ -51,7 +55,7 @@ class IncomesFragment : Fragment() {
         totalIncomesTxt.text = '+' + mainActivity.currentOperations.GetTotalSumIncomes().toString()+"$"
         //Список с категориями
         recyclerView.layoutManager = LinearLayoutManager(mainActivity)
-        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryIncomes())
+        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryIncomes(), this)
         //Диаграмма
         loadPieChartData()
 
@@ -75,9 +79,6 @@ class IncomesFragment : Fragment() {
         pieChart = view.findViewById(R.id.diagram_incomes)
         setupPieChart()
         UpdateOperations()
-        listLayout.setOnClickListener {
-            mainActivity.setFragment(CategoryFragment())
-        }
 
         // Нажатие на период
         periodLayout.setOnClickListener {

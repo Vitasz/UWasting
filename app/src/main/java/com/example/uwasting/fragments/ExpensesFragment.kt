@@ -16,8 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
+import com.example.uwasting.data.Categories
+import com.example.uwasting.data.Category
 
 import com.example.uwasting.data.CategoryRecyclerView
+import com.example.uwasting.data.OnItemClickListener
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
@@ -32,7 +35,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 // Фрагмент с расходами
-class ExpensesFragment : Fragment() {
+class ExpensesFragment : Fragment(), OnItemClickListener {
     private lateinit var pieChart: PieChart
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
@@ -48,20 +51,15 @@ class ExpensesFragment : Fragment() {
         val categoriesList = view.findViewById<ConstraintLayout>(R.id.list_layout)
         val addExpenseBtn = view.findViewById<Button>(R.id.add_expense_btn)
         val totalExpensesTxt = view.findViewById<TextView>(R.id.totalExpenses)
-        totalExpensesTxt.text = mainActivity.currentOperations.GetTotalSumExpenses().toString()
+        totalExpensesTxt.text = mainActivity.currentOperations.GetTotalSumExpenses().toString()+"$"
 
         pieChart = view.findViewById(R.id.diagram_expenses)
         setupPieChart()
         loadPieChartData()
-
-        // переход на фрагмент с категориями
-        categoriesList.setOnClickListener {
-            mainActivity.setFragment(CategoryFragment())
-        }
         //Список с категориями
         val recyclerView = view.findViewById<RecyclerView>(R.id.categories_list)
         recyclerView.layoutManager = LinearLayoutManager(mainActivity)
-        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryExpenses())
+        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryExpenses(), this)
         // Добавление расхода
         addExpenseBtn.setOnClickListener {
             mainActivity.setFragment(NewExpenseFragment())
@@ -153,5 +151,10 @@ class ExpensesFragment : Fragment() {
         pieChart.invalidate()
         pieChart.animateY(1000, Easing.EaseInOutQuad)
 
+    }
+
+    override fun onItemClicked(item: Triple<Category, Int, Int>) {
+        val mainActivity = activity as MainActivity
+        mainActivity.setFragment(CategoryFragment(item.first, false))
     }
 }

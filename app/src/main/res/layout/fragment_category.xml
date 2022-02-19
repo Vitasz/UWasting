@@ -66,12 +66,11 @@
                 tools:src="@tools:sample/avatars" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageView
-            android:id="@+id/diagram_img"
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/operations_barchart"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
-            android:src="@drawable/operation_diagram" />
+            android:layout_height="255dp"
+            android:layout_marginTop="@dimen/default_margin" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/list_layout"
