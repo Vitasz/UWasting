@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
-import com.example.uwasting.data.Category
-import com.example.uwasting.data.CategoryRecyclerView
-import com.example.uwasting.data.OnItemClickListener
+import com.example.uwasting.data.*
+import com.example.uwasting.data.remote.StatBureauApi
+import com.example.uwasting.data.remote.UWastingApi
 import com.example.uwasting.dialogs.PeriodDialog
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -27,8 +28,16 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.google.android.material.button.MaterialButton
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -45,9 +54,42 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
     private lateinit var dateTxt: TextView
     private lateinit var balanceView:TextView
     private lateinit var mainActivity: MainActivity
+    private lateinit var statBureauApi: StatBureauApi
+    private var index: Float = 0f
+    private var compositeDisposable = CompositeDisposable()
     override fun onItemClicked(item: Triple<Category, Int, Int>){
         mainActivity.setFragment(CategoryFragment(item.first, true))
     }
+
+    private fun configureRetrofit() {
+        val httpLoggingInterceptor = HttpLoggingInterceptor()
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(httpLoggingInterceptor)
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Constants.StatBureauUrl)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+
+        statBureauApi = retrofit.create(StatBureauApi::class.java)
+        statBureauApi.getIndex("russia")
+
+        statBureauApi.let {
+            compositeDisposable.add(statBureauApi.getIndex("russia")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                           index = it[0].inflationRate
+                }, {
+                }))
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     fun updateOperations(){
 
@@ -60,9 +102,10 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
 
         val sumIncomes = mainActivity.currentOperations.GetTotalSumIncomes()
         val sumExpenses = mainActivity.currentOperations.GetTotalSumExpenses()
-        val balance = (sumIncomes + sumExpenses) / ((100.99 / 100).pow(mainActivity.Period / 30))
+        val balance = (sumIncomes + sumExpenses) / (((index + 100) / 100).pow(mainActivity.Period / 30))
 
         balanceView.text = mainActivity.getString(R.string.balance) + " " + String.format("%.2f", balance)
+        //TODO(ДОБАВИТЬ СТАТБЮРО КАК ИСТОЧНИК!!!!)
 
     }
     @RequiresApi(Build.VERSION_CODES.O)
@@ -73,6 +116,7 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
     ): View? {
         mainActivity = activity as MainActivity
         val view = inflater.inflate(R.layout.fragment_incomes, container, false)
+        configureRetrofit()
         totalIncomesTxt = view.findViewById(R.id.sum_txt)
         val exportToCSVBtn = view.findViewById<Button>(R.id.export_btn)
         val periodLayout = view.findViewById<ConstraintLayout>(R.id.period_layout)
