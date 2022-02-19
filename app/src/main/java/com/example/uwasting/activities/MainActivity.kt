@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
                 .subscribe({
                     totalOperations=OperationsList(it)
                     UpdateCurrentOperations()
+
                     setFragment(TabFragment())
                 }, {
                 }))

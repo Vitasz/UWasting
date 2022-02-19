@@ -41,39 +41,13 @@ class NewIncomeFragment : Fragment() {
     lateinit var datetxt: TextInputEditText
     var compositeDisposable = CompositeDisposable()
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun SendOperation(amount:Int, category:String, date:String){
-        val mainActivity = activity as MainActivity
-
-
-        mainActivity.uwastingApi?.let {
-            compositeDisposable.add(mainActivity.uwastingApi.AddOperation(-amount, category, date, mainActivity.user.id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    if (it){
-
-                        mainActivity.GetOperations()
-                        mainActivity.prevFragment()
-
-                    }
-                }, {
-                    //TODO ОШИБКА
-                }))
-        }
-    }
-
     @SuppressLint("SetTextI18n")
     var myCallBack =
         DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             myYear = year
             myMonth = monthOfYear
             myDay = dayOfMonth
-            var myDayString = myDay.toString()
-            if (myDay<10) myDayString = "0"+myDayString
-            var myMonthString = myMonth.toString()
-            if (myMonth<10) myMonthString = "0"+myMonthString
-            datetxt.setText("$myMonthString-$myDayString-$myYear")
+            datetxt.setText("$myMonth-$myDay-$myYear")
         }
 
     private lateinit var uwastingApi: UWastingApi
@@ -95,6 +69,7 @@ class NewIncomeFragment : Fragment() {
                 }))
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -107,13 +82,13 @@ class NewIncomeFragment : Fragment() {
         val categoryEdit = view.findViewById<TextInputEditText>(R.id.category_edit)
         val addBtn = view.findViewById<Button>(R.id.add_btn)
         val amountxt = view.findViewById<TextInputEditText>(R.id.sum_edit)
-        datetxt = view.findViewById<TextInputEditText>(R.id.cmsn_edit)
+        datetxt = view.findViewById(R.id.cmsn_edit)
 
 
         addBtn.setOnClickListener{
 
-            if (amountxt.text.toString()!="" && /*categoryEdit.text.toString()!="" &&*/ datetxt.text.toString()!=""){
-                SendOperation(amountxt.text.toString().toInt(), /*categoryEdit.text.toString()*/"Транспорт", datetxt.text.toString())
+            if (amountxt.text.toString()!="" && categoryEdit.text.toString()!="" && datetxt.text.toString()!=""){
+                AddIncome(amountxt.text.toString().toInt(), categoryEdit.text.toString(), datetxt.text.toString())
             }
             else{
                 //TODO ПУСТЫЕ ПОЛЯ

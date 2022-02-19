@@ -39,6 +39,7 @@ class NewExpenseFragment : Fragment() {
     lateinit var datetxt: TextInputEditText
     var compositeDisposable = CompositeDisposable()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun SendOperation(amount:Int, category:String, date:String){
         val mainActivity = activity as MainActivity
 
@@ -49,6 +50,7 @@ class NewExpenseFragment : Fragment() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     if (it){
+                        mainActivity.GetOperations()
                         mainActivity.prevFragment()
 
                     }
@@ -64,7 +66,7 @@ class NewExpenseFragment : Fragment() {
             myYear = year
             myMonth = monthOfYear
             myDay = dayOfMonth
-            datetxt.setText("$myDay-$myMonth-$myYear")
+            datetxt.setText("$myMonth-$myDay-$myYear")
         }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -83,7 +85,6 @@ class NewExpenseFragment : Fragment() {
 
 
         addbtn.setOnClickListener{
-            mainActivity.prevFragment()
             if (amountxt.text.toString()!="" && categoryEdit.text.toString()!="" && datetxt.text.toString()!=""){
                 SendOperation(amountxt.text.toString().toInt(), categoryEdit.text.toString(), datetxt.text.toString())
             }
