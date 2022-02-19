@@ -1,5 +1,6 @@
 package com.example.uwasting.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -20,7 +21,11 @@ import com.example.uwasting.data.Constants
 import com.example.uwasting.data.Operation
 import com.example.uwasting.data.OperationsList
 import com.example.uwasting.data.User
+import com.example.uwasting.data.remote.StatBureauApi
 import com.example.uwasting.data.remote.UWastingApi
+import com.example.uwasting.fragments.ExpensesFragment
+import com.example.uwasting.fragments.IncomesFragment
+import com.example.uwasting.fragments.NewIncomeFragment
 import com.example.uwasting.fragments.TabFragment
 import com.google.android.material.appbar.MaterialToolbar
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,6 +36,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.math.pow
 
 // Главная активность
 class MainActivity : AppCompatActivity() {
@@ -42,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     var Period = 30
     var curr = "$"
     var ue = 1
+    var index = 0f
     @RequiresApi(Build.VERSION_CODES.O)
     fun UpdateCurrentOperations(){
         currentOperations = OperationsList(ArrayList(totalOperations.SelectOperations(Period)))

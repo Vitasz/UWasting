@@ -48,7 +48,7 @@ interface UpdateFragment{
     fun update()
 }
 // Фрагмент с доходами
-class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
+class IncomesFragment() : Fragment(), OnItemClickListener, UpdateFragment {
     private lateinit var pieChart: PieChart
     private lateinit var totalIncomesTxt:TextView
     private lateinit var recyclerView:RecyclerView
@@ -56,12 +56,11 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
     private lateinit var balanceView:TextView
     private lateinit var mainActivity: MainActivity
     private lateinit var statBureauApi: StatBureauApi
-    private var index: Float = 0f
     private var compositeDisposable = CompositeDisposable()
     override fun onItemClicked(item: Triple<Category, Int, Int>){
         mainActivity.setFragment(CategoryFragment(item.first, true))
     }
-
+    @SuppressLint("SetTextI18n")
     private fun configureRetrofit() {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -85,7 +84,12 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                           index = it[0].inflationRate
+                    mainActivity.index = it[0].inflationRate
+                    val sumIncomes = mainActivity.currentOperations.GetTotalSumIncomes()
+                    val sumExpenses = mainActivity.currentOperations.GetTotalSumExpenses()
+                    val balance = (sumIncomes + sumExpenses) / (((mainActivity.index + 100) / 100).pow(mainActivity.Period / 30))
+
+                    balanceView.text = mainActivity.getString(R.string.balance) + " " + String.format("%.2f", balance/mainActivity.ue)+mainActivity.curr
                 }, {
                 }))
         }
@@ -103,9 +107,9 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
 
         val sumIncomes = mainActivity.currentOperations.GetTotalSumIncomes()
         val sumExpenses = mainActivity.currentOperations.GetTotalSumExpenses()
-        val balance = (sumIncomes + sumExpenses) / (((index + 100) / 100).pow(mainActivity.Period / 30))
+        val balance = (sumIncomes + sumExpenses) / (((mainActivity.index + 100) / 100).pow(mainActivity.Period / 30))
 
-        balanceView.text = mainActivity.getString(R.string.balance) + " " + String.format("%.2f", balance)
+        balanceView.text = mainActivity.getString(R.string.balance) + " " + String.format("%.2f", balance/mainActivity.ue)+mainActivity.curr
         //TODO(ДОБАВИТЬ СТАТБЮРО КАК ИСТОЧНИК!!!!)
 
     }
@@ -117,7 +121,7 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
     ): View? {
         mainActivity = activity as MainActivity
         val view = inflater.inflate(R.layout.fragment_incomes, container, false)
-        configureRetrofit()
+        if (mainActivity.index==0f)configureRetrofit()
         totalIncomesTxt = view.findViewById(R.id.sum_txt)
         val exportToCSVBtn = view.findViewById<Button>(R.id.export_btn)
         val periodLayout = view.findViewById<ConstraintLayout>(R.id.period_layout)

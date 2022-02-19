@@ -7,14 +7,21 @@
         <entry key="..\:/UWasting/app/src/main/res/layout/categoryviewrecycler_item.xml" value="0.25" />
         <entry key="..\:/UWasting/app/src/main/res/layout/dialog_operation.xml" value="0.15763546798029557" />
         <entry key="..\:/UWasting/app/src/main/res/layout/dialog_period.xml" value="0.1" />
+        <entry key="..\:/UWasting/app/src/main/res/layout/fragment_account.xml" value="0.17395833333333333" />
         <entry key="..\:/UWasting/app/src/main/res/layout/fragment_category.xml" value="0.2" />
         <entry key="..\:/UWasting/app/src/main/res/layout/fragment_expenses.xml" value="0.33" />
         <entry key="..\:/UWasting/app/src/main/res/layout/fragment_incomes.xml" value="0.33" />
+        <entry key="..\:/UWasting/app/src/main/res/layout/fragment_name.xml" value="0.17395833333333333" />
+        <entry key="..\:/UWasting/app/src/main/res/layout/fragment_navigation_header.xml" value="0.17395833333333333" />
         <entry key="..\:/UWasting/app/src/main/res/layout/fragment_new_category.xml" value="0.18958333333333333" />
         <entry key="..\:/UWasting/app/src/main/res/layout/fragment_new_expense.xml" value="0.16" />
         <entry key="..\:/UWasting/app/src/main/res/layout/fragment_new_income.xml" value="0.18958333333333333" />
         <entry key="..\:/UWasting/app/src/main/res/layout/fragment_select_category.xml" value="0.18958333333333333" />
+        <entry key="..\:/UWasting/app/src/main/res/layout/fragment_tab.xml" value="0.67" />
+        <entry key="..\:/UWasting/app/src/main/res/layout/fragment_verify_password.xml" value="0.25" />
         <entry key="..\:/UWasting/app/src/main/res/layout/operationviewrecycler_item.xml" value="0.33" />
+        <entry key="..\:/UWasting/app/src/main/res/menu-v26/navigation_drawer.xml" value="0.17395833333333333" />
+        <entry key="..\:/UWasting/app/src/main/res/menu/navigation_drawer.xml" value="0.17395833333333333" />
       </map>
     </option>
   </component>

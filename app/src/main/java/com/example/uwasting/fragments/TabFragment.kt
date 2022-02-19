@@ -23,9 +23,9 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 // Фрагмент с переключением доходов/расходов
-class TabFragment : Fragment() {
+class TabFragment() : Fragment() {
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +44,9 @@ class TabFragment : Fragment() {
         toolbar.setNavigationOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
+        // Инициализация адаптера для переключателя
+        val viewPagerAdapter = ViewPagerAdapter(this)
+        viewPager.adapter = viewPagerAdapter
 
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -53,6 +56,13 @@ class TabFragment : Fragment() {
                 R.id.sign_out -> {
                     val intent = Intent(mainActivity, StartingActivity::class.java)
                     startActivity(intent)
+                }
+                R.id.currency ->{
+                    mainActivity.curr = "$"
+                    mainActivity.ue = 1
+                    val viewPagerAdapter = ViewPagerAdapter(this)
+                    viewPager.adapter = viewPagerAdapter
+
                 }
             }
             true
@@ -67,9 +77,7 @@ class TabFragment : Fragment() {
             mainActivity.setFragment(AccountFragment())
         }
 
-        // Инициализация адаптера для переключателя
-        val viewPagerAdapter = ViewPagerAdapter(this)
-        viewPager.adapter = viewPagerAdapter
+
 
         // Заголовки переключателя
         val tabLayoutMediator = TabLayoutMediator(tabLayout, viewPager) { tab: TabLayout.Tab, position: Int ->
