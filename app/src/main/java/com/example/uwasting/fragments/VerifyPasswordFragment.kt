@@ -1,8 +1,6 @@
 package com.example.uwasting.fragments
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,27 +19,10 @@ import io.reactivex.schedulers.Schedulers
 
 // Фрагмент проверки пароля
 class VerifyPasswordFragment(mode: Int) : Fragment() {
+
     private var mode: Int = mode
     private val compositeDisposable = CompositeDisposable()
-    private fun tryLogin(uwastingApi: UWastingApi, login:String, password:String){
-        val mainActivity = activity as MainActivity
-        uwastingApi?.let {
-            compositeDisposable.add(uwastingApi.getUserData(login, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    when (mode) {
-                        Constants.CHANGE_EMAIl -> mainActivity.setFragment(ChangeEmailFragment())
-                        Constants.CHANGE_PASSWORD -> mainActivity.setFragment(ChangePasswordFragment())
-                    }
-                }, {
-                    val text = getString(R.string.passwords_dont_match)
-                    val t = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
-                    t.show()
-                }))
-        }
 
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,6 +45,25 @@ class VerifyPasswordFragment(mode: Int) : Fragment() {
         }
 
         return view
+    }
+
+    private fun tryLogin(uwastingApi: UWastingApi, login:String, password:String){
+        val mainActivity = activity as MainActivity
+        uwastingApi?.let {
+            compositeDisposable.add(uwastingApi.getUserData(login, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    when (mode) {
+                        Constants.CHANGE_EMAIl -> mainActivity.setFragment(ChangeEmailFragment())
+                        Constants.CHANGE_PASSWORD -> mainActivity.setFragment(ChangePasswordFragment())
+                    }
+                }, {
+                    val text = getString(R.string.passwords_dont_match)
+                    val t = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
+                    t.show()
+                }))
+        }
     }
 
 

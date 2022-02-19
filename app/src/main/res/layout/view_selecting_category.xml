@@ -8,12 +8,11 @@
     android:layout_marginEnd="@dimen/small_margin">
 
     <View
-        android:id="@+id/toolbar_line3"
+        android:id="@+id/line"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginTop="12dp"
         android:background="@color/light_grey"
         app:layout_constraintStart_toStartOf="@+id/name_txt"
         app:layout_constraintTop_toBottomOf="@+id/name_txt" />
@@ -22,7 +21,7 @@
         android:id="@+id/category_img"
         android:layout_width="@dimen/category_img_size"
         android:layout_height="@dimen/category_img_size"
-        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginStart="@dimen/small_margin"
         android:layout_marginTop="@dimen/small_margin"
         android:layout_marginBottom="@dimen/small_margin"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,18 +35,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Name"
         app:layout_constraintStart_toEndOf="@+id/category_img"
         app:layout_constraintTop_toTopOf="@+id/category_img" />
 
     <RadioButton
-        android:id="@+id/radioButton"
+        android:id="@+id/selectBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:layout_marginTop="1dp"
         android:layout_marginBottom="3dp"
-        app:layout_constraintBottom_toTopOf="@+id/toolbar_line3"
+        app:layout_constraintBottom_toTopOf="@+id/line"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

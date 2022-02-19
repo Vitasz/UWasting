@@ -1,8 +1,6 @@
 package com.example.uwasting.fragments
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
-import com.example.uwasting.activities.StartingActivity
 import com.example.uwasting.data.remote.UWastingApi
 import com.google.android.material.appbar.MaterialToolbar
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,6 +18,7 @@ import io.reactivex.schedulers.Schedulers
 
 // Фрагмент аккаунта
 class AccountFragment : Fragment() {
+
     private val compositeDisposable = CompositeDisposable()
     private fun tryChange(uwastingApi: UWastingApi?, id:Int, name:String, surname:String) {
         val mainActivity = activity as MainActivity
@@ -34,8 +32,8 @@ class AccountFragment : Fragment() {
                     mainActivity.prevFragment()
                 }, {
                     val text = getString(R.string.name_error)
-                    val t = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
-                    t.show()
+                    val toast = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
+                    toast.show()
                 }))
         }
     }
@@ -54,11 +52,12 @@ class AccountFragment : Fragment() {
             if (nameTextView.text.toString()=="" || surnameTextView.text.toString()==""){
 
                 val text = getString(R.string.field_is_empty)
-                val t = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
-                t.show()
+                val toast = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
+                toast.show()
             }
             else{
-                tryChange(mainActivity.uwastingApi,mainActivity.user.id, nameTextView.text.toString(), surnameTextView.text.toString())
+                tryChange(mainActivity.uwastingApi,mainActivity.user.id, nameTextView.text.toString(),
+                    surnameTextView.text.toString())
             }
         }
 

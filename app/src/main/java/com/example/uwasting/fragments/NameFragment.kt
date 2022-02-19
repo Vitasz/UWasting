@@ -1,7 +1,6 @@
 package com.example.uwasting.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,6 @@ import com.google.android.material.appbar.MaterialToolbar
 
 
 class NameFragment : Fragment() {
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +29,8 @@ class NameFragment : Fragment() {
         nextBtn.setOnClickListener {
             if ((nameEdit.text.toString() contentEquals "") or (surnameEdit.text.toString() contentEquals "")) {
                 val text = getString(R.string.field_is_empty)
-                val t = Toast.makeText(startingActivity, text, Toast.LENGTH_LONG)
-                t.show()
+                val toast = Toast.makeText(startingActivity, text, Toast.LENGTH_LONG)
+                toast.show()
             }
             else {
                 startingActivity.user.name = nameEdit.text.toString() // Получаем имя

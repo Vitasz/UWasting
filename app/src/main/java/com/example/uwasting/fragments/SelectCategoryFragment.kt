@@ -7,8 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
+import com.example.uwasting.data.Categories
+import com.example.uwasting.data.SelectingCategoryRecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 
 // Фрагмент выбора категории
@@ -21,16 +25,20 @@ class SelectCategoryFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_select_category, container, false)
         val mainActivity = activity as MainActivity
         // Получение виджетов
-        val addBtn = view.findViewById<TextView>(R.id.add_btn)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+        var categoriesList = view.findViewById<RecyclerView>(R.id.categories_list)
 
-        // Добавление категории
-        addBtn.setOnClickListener {
-            mainActivity.setFragment(NewCategoryFragment())
-        }
+        val adapter = SelectingCategoryRecyclerView()
+        categoriesList.adapter = adapter
+        categoriesList.layoutManager = LinearLayoutManager(mainActivity)
+
+        val categories = Categories()
+        for (category in categories.common)
+            adapter.addItem(category)
+        adapter.addItem(categories.other)
 
         // Перемещение на предыдущий фрагмент
-        toolbar.setOnClickListener {
+        toolbar.setNavigationOnClickListener {
             mainActivity.prevFragment()
         }
 
