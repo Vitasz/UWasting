@@ -2,7 +2,6 @@ package com.example.uwasting.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,15 +11,14 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
-
 import androidx.fragment.app.Fragment
-import com.example.uwasting.R
-import com.example.uwasting.activities.MainActivity
-
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.uwasting.data.*
-
+import com.example.uwasting.R
+import com.example.uwasting.activities.MainActivity
+import com.example.uwasting.data.Category
+import com.example.uwasting.data.CategoryRecyclerView
+import com.example.uwasting.data.OnItemClickListener
 import com.example.uwasting.dialogs.PeriodDialog
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -28,14 +26,14 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.PercentFormatter
-import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.button.MaterialButton
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
+import kotlin.math.pow
+
 interface UpdateFragment{
     fun update()
 }
@@ -45,13 +43,13 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
     private lateinit var totalIncomesTxt:TextView
     private lateinit var recyclerView:RecyclerView
     private lateinit var dateTxt: TextView
+    private lateinit var balanceView:TextView
+    private lateinit var mainActivity: MainActivity
     override fun onItemClicked(item: Triple<Category, Int, Int>){
-        val mainActivity = activity as MainActivity
         mainActivity.setFragment(CategoryFragment(item.first, true))
     }
     @SuppressLint("SetTextI18n")
-    fun UpdateOperations(){
-        val mainActivity = activity as MainActivity
+    fun updateOperations(){
 
         totalIncomesTxt.text = '+' + mainActivity.currentOperations.GetTotalSumIncomes().toString()+"$"
         //Список с категориями
@@ -60,6 +58,12 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
         //Диаграмма
         loadPieChartData()
 
+        val sumIncomes = mainActivity.currentOperations.GetTotalSumIncomes()
+        val sumExpenses = mainActivity.currentOperations.GetTotalSumExpenses()
+        val balance = (sumIncomes + sumExpenses) / ((100.99 / 100).pow(mainActivity.Period / 30))
+
+        balanceView.text = mainActivity.getString(R.string.balance) + " " + String.format("%.2f", balance)
+
     }
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n", "SdCardPath")
@@ -67,18 +71,19 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val mainActivity = activity as MainActivity
+        mainActivity = activity as MainActivity
         val view = inflater.inflate(R.layout.fragment_incomes, container, false)
-        totalIncomesTxt = view.findViewById<TextView>(R.id.sum_txt)
+        totalIncomesTxt = view.findViewById(R.id.sum_txt)
         val exportToCSVBtn = view.findViewById<Button>(R.id.export_btn)
         val periodLayout = view.findViewById<ConstraintLayout>(R.id.period_layout)
         val addIncomeBtn = view.findViewById<MaterialButton>(R.id.add_income_btn)
-        dateTxt = view.findViewById<TextView>(R.id.date_txt)
+        balanceView = view.findViewById(R.id.balance_inc)
+        dateTxt = view.findViewById(R.id.date_txt)
         dateTxt.text = "Последние ${mainActivity.Period} дней"
-        recyclerView = view.findViewById<RecyclerView>(R.id.categories_list)
+        recyclerView = view.findViewById(R.id.categories_list)
         pieChart = view.findViewById(R.id.diagram_incomes)
         setupPieChart()
-        UpdateOperations()
+        updateOperations()
 
         // Нажатие на период
         periodLayout.setOnClickListener {
@@ -93,7 +98,7 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
 
         exportToCSVBtn.setOnClickListener {
             mainActivity.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, 123)
-            ExportToCSV()
+            exportToCSV()
         }
 
         return view
@@ -103,26 +108,21 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
         pieChart.isDrawHoleEnabled = false
         pieChart.setUsePercentValues(true)
 
-
-        /*pieChart.setEntryLabelTextSize(12F)
-        pieChart.setEntryLabelColor(Color.BLACK)*/
         pieChart.setDrawEntryLabels(false)
         pieChart.centerText = ""
         pieChart.description.isEnabled = false
 
-        var l = pieChart.legend
-        l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-        l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
-        l.orientation = Legend.LegendOrientation.VERTICAL
-        l.setDrawInside(false)
-        l.isEnabled = false
+        val legend = pieChart.legend
+        legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+        legend.orientation = Legend.LegendOrientation.VERTICAL
+        legend.setDrawInside(false)
+        legend.isEnabled = false
     }
 
     private fun loadPieChartData(){
-        val mainActivity = activity as MainActivity
-        var entries = ArrayList<PieEntry>()
-        var sum = 0
-        var operations = mainActivity.currentOperations.CombineByCategoryIncomes()
+        val entries = ArrayList<PieEntry>()
+        val operations = mainActivity.currentOperations.CombineByCategoryIncomes()
 
         val colors = ArrayList<Int>()
         for(i in operations) {
@@ -130,27 +130,19 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
             colors.add(i.first.color)
         }
 
-        /*for(color in ColorTemplate.MATERIAL_COLORS) {
-            colors.add(color)
-        }
-
-        for(color in ColorTemplate.VORDIPLOM_COLORS) {
-            colors.add(color)
-        }*/
-
-        var dataSet = PieDataSet(entries, "")
+        val dataSet = PieDataSet(entries, "")
         dataSet.colors = colors
 
-        var data = PieData(dataSet)
+        val data = PieData(dataSet)
         data.setDrawValues(false)
 
         pieChart.data = data
         pieChart.invalidate()
         pieChart.animateY(1000, Easing.EaseInOutQuad)
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun ExportToCSV(){
-        val mainActivity = activity as MainActivity
+    private fun exportToCSV(){
         val filename = "incomes.csv"
         val path = context?.getExternalFilesDir(null)
         val fileOut = File(path, filename)
@@ -158,12 +150,12 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
         fileOut.createNewFile()
         val stringPath = path.toString()
 
-        val operations = mainActivity.currentOperations
+        val operations = mainActivity.currentOperations.selectOperationsIncomes()
         val writer = Files.newBufferedWriter(Paths.get("$stringPath/$filename"))
         val csvPrinter = CSVPrinter(writer, CSVFormat.DEFAULT
             .withHeader("OperationId", "Category", "Amount", "Date"))
 
-        for (operation in operations.list) {
+        for (operation in operations) {
             val operationData = listOf(
                 operation.id,
                 operation.category,
@@ -177,9 +169,9 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
         csvPrinter.close()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun update() {
-        val mainActivity=activity as MainActivity
         dateTxt.text = "Последние ${mainActivity.Period} дней"
-        UpdateOperations()
+        updateOperations()
     }
 }

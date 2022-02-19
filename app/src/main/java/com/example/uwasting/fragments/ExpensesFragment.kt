@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
-import com.example.uwasting.data.Categories
 import com.example.uwasting.data.Category
 
 import com.example.uwasting.data.CategoryRecyclerView
@@ -42,7 +41,9 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
     private lateinit var dateTxt:TextView
     private lateinit var recyclerView:RecyclerView
     private lateinit var totalExpensesTxt:TextView
-    fun UpdateOperations(){
+    private lateinit var balanceView:TextView
+    @SuppressLint("SetTextI18n")
+    fun updateOperations(){
         loadPieChartData()
         totalExpensesTxt.text = mainActivity.currentOperations.GetTotalSumExpenses().toString()+"$"
 
@@ -63,10 +64,10 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
         val exportToCSVBtn = view.findViewById<Button>(R.id.export_btn)
         val addExpenseBtn = view.findViewById<Button>(R.id.add_expense_btn)
         val periodLayout = view.findViewById<ConstraintLayout>(R.id.period_layout)
-        recyclerView = view.findViewById<RecyclerView>(R.id.categories_list)
+        recyclerView = view.findViewById(R.id.categories_list)
         dateTxt = view.findViewById(R.id.date_txt)
         dateTxt.text = "Последние ${mainActivity.Period} дней"
-        totalExpensesTxt = view.findViewById<TextView>(R.id.totalExpenses)
+        totalExpensesTxt = view.findViewById(R.id.totalExpenses)
         pieChart = view.findViewById(R.id.diagram_expenses)
         setupPieChart()
         // Нажатие на период
@@ -75,10 +76,11 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
             dialog.show(parentFragmentManager, "period")
         }
 
-        UpdateOperations()
+        updateOperations()
         // Добавление расхода
         addExpenseBtn.setOnClickListener {
             mainActivity.setFragment(NewExpenseFragment())
+
             /*val operationsPerMonth = mainActivity.operations
             val count = operationsPerMonth.list[0]
             val sumOperations = operationsPerMonth.list[1]
@@ -89,18 +91,18 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
             mainActivity.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, 123)
 
             val filename = "expenses.csv"
-            var path = context?.getExternalFilesDir(null)
-            var fileOut = File(path, filename)
+            val path: File? = context?.getExternalFilesDir(null)
+            val fileOut = File(path, filename)
             fileOut.delete()
             fileOut.createNewFile()
             val stringPath = path.toString()
 
-            val operations = mainActivity.currentOperations
+            val operations = mainActivity.currentOperations.selectOperationsExpenses()
             val writer = Files.newBufferedWriter(Paths.get("$stringPath/$filename"))
             val csvPrinter = CSVPrinter(writer, CSVFormat.DEFAULT
                 .withHeader("OperationId", "Category", "Amount", "Date"))
 
-            for (operation in operations.list) {
+            for (operation in operations) {
                 val operationData = listOf(
                     operation.id,
                     operation.category,
@@ -122,26 +124,22 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
         pieChart.isDrawHoleEnabled = false
         pieChart.setUsePercentValues(true)
 
-
-        /*pieChart.setEntryLabelTextSize(12F)
-        pieChart.setEntryLabelColor(Color.BLACK)*/
         pieChart.setDrawEntryLabels(false)
         pieChart.centerText = ""
         pieChart.description.isEnabled = false
 
-        var l = pieChart.legend
-        l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-        l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
-        l.orientation = Legend.LegendOrientation.VERTICAL
-        l.setDrawInside(false)
-        l.isEnabled = false
+        val legend = pieChart.legend
+        legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+        legend.orientation = Legend.LegendOrientation.VERTICAL
+        legend.setDrawInside(false)
+        legend.isEnabled = false
     }
 
     private fun loadPieChartData(){
         val mainActivity = activity as MainActivity
-        var entries = ArrayList<PieEntry>()
-        var sum = 0
-        var operations = mainActivity.currentOperations.CombineByCategoryExpenses()
+        val entries = ArrayList<PieEntry>()
+        val operations = mainActivity.currentOperations.CombineByCategoryExpenses()
 
         val colors = ArrayList<Int>()
         for(i in operations) {
@@ -149,10 +147,10 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
             colors.add(i.first.color)
         }
 
-        var dataSet = PieDataSet(entries, "")
+        val dataSet = PieDataSet(entries, "")
         dataSet.colors = colors
 
-        var data = PieData(dataSet)
+        val data = PieData(dataSet)
         data.setDrawValues(false)
 
         pieChart.data = data
@@ -169,6 +167,6 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
     @SuppressLint("SetTextI18n")
     override fun update() {
         dateTxt.text = "Последние ${mainActivity.Period} дней"
-        UpdateOperations()
+        updateOperations()
     }
 }

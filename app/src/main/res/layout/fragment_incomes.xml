@@ -90,11 +90,11 @@
                     app:layout_constraintTop_toTopOf="@+id/diagram_incomes" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/balance_inc"
                     style="@style/Header2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text="@string/balance"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/sum_txt" />

@@ -89,11 +89,11 @@
                     app:layout_constraintTop_toTopOf="@+id/diagram_expenses" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/forecast"
                     style="@style/Header2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text="@string/monthly_forecast"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/totalExpenses" />
@@ -150,8 +150,8 @@
                     style="@style/ImageTextButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:icon="@drawable/csv_export"
                     android:text="@string/export_to_csv"
+                    app:icon="@drawable/csv_export"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/add_expense_btn" />
