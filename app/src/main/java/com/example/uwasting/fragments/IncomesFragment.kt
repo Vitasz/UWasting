@@ -42,6 +42,20 @@ import java.nio.file.Paths
 // Фрагмент с доходами
 class IncomesFragment : Fragment() {
     private lateinit var pieChart: PieChart
+    private lateinit var totalIncomesTxt:TextView
+    private lateinit var recyclerView:RecyclerView
+    @SuppressLint("SetTextI18n")
+    fun UpdateOperations(){
+        val mainActivity = activity as MainActivity
+
+        totalIncomesTxt.text = '+' + mainActivity.currentOperations.GetTotalSumIncomes().toString()+"$"
+        //Список с категориями
+        recyclerView.layoutManager = LinearLayoutManager(mainActivity)
+        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryIncomes())
+        //Диаграмма
+        loadPieChartData()
+
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n", "SdCardPath")
     override fun onCreateView(
@@ -50,18 +64,17 @@ class IncomesFragment : Fragment() {
     ): View? {
         val mainActivity = activity as MainActivity
         val view = inflater.inflate(R.layout.fragment_incomes, container, false)
+        totalIncomesTxt = view.findViewById<TextView>(R.id.sum_txt)
         val exportToCSVBtn = view.findViewById<Button>(R.id.export_btn)
         val periodLayout = view.findViewById<ConstraintLayout>(R.id.period_layout)
         val dateTxt = view.findViewById<TextView>(R.id.date_txt)
         val listLayout = view.findViewById<ConstraintLayout>(R.id.list_layout)
         val addIncomeBtn = view.findViewById<MaterialButton>(R.id.add_income_btn)
-        val totalIncomesTxt = view.findViewById<TextView>(R.id.sum_txt)
-        totalIncomesTxt.text = '+' + mainActivity.currentOperations.GetTotalSumIncomes().toString()
 
+        recyclerView = view.findViewById<RecyclerView>(R.id.categories_list)
         pieChart = view.findViewById(R.id.diagram_incomes)
         setupPieChart()
-        loadPieChartData()
-
+        UpdateOperations()
         listLayout.setOnClickListener {
             mainActivity.setFragment(CategoryFragment())
         }
@@ -75,39 +88,11 @@ class IncomesFragment : Fragment() {
         addIncomeBtn.setOnClickListener {
             mainActivity.setFragment(NewIncomeFragment())
         }
-        //Список с категориями
-        val recyclerView = view.findViewById<RecyclerView>(R.id.categories_list)
-        recyclerView.layoutManager = LinearLayoutManager(mainActivity)
-        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryIncomes())
+
 
         exportToCSVBtn.setOnClickListener {
             mainActivity.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, 123)
-
-            val filename = "incomes.csv"
-            val path = context?.getExternalFilesDir(null)
-            val fileOut = File(path, filename)
-            fileOut.delete()
-            fileOut.createNewFile()
-            val stringPath = path.toString()
-
-            val operations = mainActivity.currentOperations
-            val writer = Files.newBufferedWriter(Paths.get("$stringPath/$filename"))
-            val csvPrinter = CSVPrinter(writer, CSVFormat.DEFAULT
-                .withHeader("OperationId", "Category", "Amount", "Date"))
-
-            for (operation in operations.list) {
-                val operationData = listOf(
-                    operation.id,
-                    operation.category,
-                    operation.amount,
-                    operation.date)
-
-                csvPrinter.printRecord(operationData)
-            }
-
-            csvPrinter.flush()
-            csvPrinter.close()
-
+            ExportToCSV()
         }
 
         return view
@@ -161,5 +146,33 @@ class IncomesFragment : Fragment() {
         pieChart.data = data
         pieChart.invalidate()
         pieChart.animateY(1000, Easing.EaseInOutQuad)
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun ExportToCSV(){
+        val mainActivity = activity as MainActivity
+        val filename = "incomes.csv"
+        val path = context?.getExternalFilesDir(null)
+        val fileOut = File(path, filename)
+        fileOut.delete()
+        fileOut.createNewFile()
+        val stringPath = path.toString()
+
+        val operations = mainActivity.currentOperations
+        val writer = Files.newBufferedWriter(Paths.get("$stringPath/$filename"))
+        val csvPrinter = CSVPrinter(writer, CSVFormat.DEFAULT
+            .withHeader("OperationId", "Category", "Amount", "Date"))
+
+        for (operation in operations.list) {
+            val operationData = listOf(
+                operation.id,
+                operation.category,
+                operation.amount,
+                operation.date)
+
+            csvPrinter.printRecord(operationData)
+        }
+
+        csvPrinter.flush()
+        csvPrinter.close()
     }
 }

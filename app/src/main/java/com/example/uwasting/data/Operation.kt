@@ -9,8 +9,8 @@ class Operation (
     var amount: Int,
     @SerializedName("Category")
     var category: String,
-    @SerializedName("Date")
-    var date:Date,
+    @SerializedName("date")
+    var date:String,
     @SerializedName("Id")
     var id:Int
 )

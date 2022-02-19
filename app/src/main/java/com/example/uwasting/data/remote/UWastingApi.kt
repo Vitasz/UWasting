@@ -5,6 +5,7 @@ import com.example.uwasting.data.User
 import com.example.uwasting.fragments.ChangePasswordFragment
 import io.reactivex.Single
 import retrofit2.http.*
+import java.sql.Date
 
 interface UWastingApi {
 
@@ -43,4 +44,12 @@ interface UWastingApi {
     @GET("/GetOperations")
     @Headers("Content-Type: application/json")
     fun GetOperations(@Query("UserId")id:Int):Single<List<Operation>>
+
+    @GET("/AddOperation")
+    @Headers("Content-Type: application/json")
+    fun AddOperation(@Query("value")value:Int, @Query("category")category: String, @Query("date") date: Date, @Query("id")id:Int):Single<Boolean>
+
+    @GET("/DeleteOperation")
+    @Headers("Content-Type: application/json")
+    fun DeleteOperation(@Query("id")id:Int):Single<Boolean>
 }

@@ -6,8 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
+import com.example.uwasting.data.CategoryRecyclerView
+import com.example.uwasting.data.OperationsRecyclerView
 import com.example.uwasting.dialogs.OperationDialog
 import com.google.android.material.appbar.MaterialToolbar
 
@@ -24,7 +28,9 @@ class CategoryFragment : Fragment() {
 
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
         var listLayout = view.findViewById<ConstraintLayout>(R.id.list_layout)
-
+        var recyclerView = view.findViewById<RecyclerView>(R.id.operations_list)
+        recyclerView.layoutManager = LinearLayoutManager(mainActivity)
+        recyclerView.adapter = OperationsRecyclerView(mainActivity.currentOperations.SortByDate())
         // Нажатие на операцию
         listLayout.setOnClickListener {
             val operationDialog = context?.let { it1 -> OperationDialog(it1) }
