@@ -44,7 +44,7 @@ class NewExpenseFragment : Fragment() {
 
 
         mainActivity.uwastingApi?.let {
-            compositeDisposable.add(mainActivity.uwastingApi.AddOperation(amount, category, date, mainActivity.user.id)
+            compositeDisposable.add(mainActivity.uwastingApi.AddOperation(-amount, category, date, mainActivity.user.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -83,6 +83,7 @@ class NewExpenseFragment : Fragment() {
 
 
         addbtn.setOnClickListener{
+            mainActivity.prevFragment()
             if (amountxt.text.toString()!="" && categoryEdit.text.toString()!="" && datetxt.text.toString()!=""){
                 SendOperation(amountxt.text.toString().toInt(), categoryEdit.text.toString(), datetxt.text.toString())
             }

@@ -39,6 +39,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var uwastingApi: UWastingApi
     lateinit var totalOperations: OperationsList
     lateinit var currentOperations: OperationsList
+    var Period = 30
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun UpdateCurrentOperations(){
+        currentOperations = OperationsList(ArrayList(totalOperations.SelectOperations(Period)))
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
     fun GetOperations(){
         uwastingApi?.let {
             compositeDisposable.add(uwastingApi.GetOperations(user.id)
@@ -46,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     totalOperations=OperationsList(it)
-                    currentOperations = totalOperations
+                    UpdateCurrentOperations()
                     setFragment(TabFragment())
                 }, {
                 }))

@@ -43,7 +43,7 @@ interface UWastingApi {
 
     @GET("/GetOperations")
     @Headers("Content-Type: application/json")
-    fun GetOperations(@Query("UserId")id:Int):Single<List<Operation>>
+    fun GetOperations(@Query("UserId")id:Int):Single<ArrayList<Operation>>
 
     @GET("/AddOperation")
     @Headers("Content-Type: application/json")

@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
-class OperationsList(var item: List<Operation>) {
+class OperationsList(var item: ArrayList<Operation>) {
     var list = item
 
 
@@ -81,5 +81,19 @@ class OperationsList(var item: List<Operation>) {
         //Log.d("TAG",res[0].first.toString())
 
         return ArrayList(res.sortedBy { it.first })
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun SelectOperations(Period:Int):List<Operation>{
+        val now = LocalDateTime.now()
+        var tmp = ArrayList<Operation>()
+        for (i in list) {
+            Log.d("date", i.date)
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            val t = i.date.replace('T', ' ')
+            val date = LocalDateTime.parse(t, formatter)
+            Log.d("date", date.toString())
+            if (now.minusDays(Period.toLong())<date)tmp.add(i)
+        }
+        return tmp
     }
 }

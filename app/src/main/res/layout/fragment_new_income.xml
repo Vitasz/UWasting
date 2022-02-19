@@ -84,6 +84,7 @@
                 android:layout_marginTop="@dimen/default_margin"
                 android:background="?android:attr/selectableItemBackground"
                 android:drawableEnd="@drawable/down"
+                android:focusableInTouchMode="false"
                 android:editable="false"
                 android:hint="@string/commission_date" />
         </com.google.android.material.textfield.TextInputLayout>
