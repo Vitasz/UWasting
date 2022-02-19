@@ -33,6 +33,7 @@ import org.apache.commons.csv.CSVPrinter
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
+import kotlin.math.round
 
 // Фрагмент с расходами
 class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
@@ -45,11 +46,11 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
     @SuppressLint("SetTextI18n")
     fun updateOperations(){
         loadPieChartData()
-        totalExpensesTxt.text = mainActivity.currentOperations.GetTotalSumExpenses().toString()+"$"
+        totalExpensesTxt.text = (round(mainActivity.currentOperations.GetTotalSumExpenses().toFloat()/mainActivity.ue*100)/100.0).toString()+mainActivity.curr
 
 
         recyclerView.layoutManager = LinearLayoutManager(mainActivity)
-        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryExpenses(), this)
+        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryExpenses(), this, mainActivity)
     }
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")

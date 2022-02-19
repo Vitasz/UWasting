@@ -33,6 +33,7 @@ import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.math.pow
+import kotlin.math.round
 
 interface UpdateFragment{
     fun update()
@@ -51,10 +52,10 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
     @SuppressLint("SetTextI18n")
     fun updateOperations(){
 
-        totalIncomesTxt.text = '+' + mainActivity.currentOperations.GetTotalSumIncomes().toString()+"$"
+        totalIncomesTxt.text = '+' + (round(mainActivity.currentOperations.GetTotalSumIncomes().toFloat()/mainActivity.ue*100) /100.0).toString()+mainActivity.curr
         //Список с категориями
         recyclerView.layoutManager = LinearLayoutManager(mainActivity)
-        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryIncomes(), this)
+        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryIncomes(), this, mainActivity)
         //Диаграмма
         loadPieChartData()
 

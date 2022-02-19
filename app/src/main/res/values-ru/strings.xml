@@ -71,4 +71,5 @@
     <string name="confirm_selecting">Выбрать категорию</string>
     <string name="category_name">Название категории</string>
     <string name="balance">Остаток с учётом инфляции: </string>
+    <string name="make_as_base">Назначить базовой</string>
 </resources>

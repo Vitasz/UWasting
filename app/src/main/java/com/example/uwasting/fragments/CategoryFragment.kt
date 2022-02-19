@@ -28,6 +28,10 @@ import com.google.android.material.appbar.MaterialToolbar
 import java.lang.Math.abs
 import java.time.LocalDate
 
+interface onSetBaseOperation{
+    fun onSet()
+}
+
 class valueFormatter(private val xValsDateLabel: ArrayList<LocalDate>) : ValueFormatter() {
 
     override fun getFormattedValue(value: Float): String {
@@ -42,26 +46,37 @@ class valueFormatter(private val xValsDateLabel: ArrayList<LocalDate>) : ValueFo
         }
     }
 }
-// Фрагмент с выбранной категорией
-class CategoryFragment(private var category: Category, private var income:Boolean) : Fragment(), OnOperationClickListener {
-    lateinit var barChart: BarChart
 
+// Фрагмент с выбранной категорией
+class CategoryFragment(private var category: Category, private var income:Boolean) : Fragment(), OnOperationClickListener, onSetBaseOperation {
+    lateinit var barChart: BarChart
+    lateinit var listOperations:OperationsList
+    lateinit var recyclerView:RecyclerView
+    lateinit var mainActivity: MainActivity
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun setValues(){
+        recyclerView.adapter = OperationsRecyclerView(listOperations.SortByDate(), this, mainActivity)
+        val barDataSet = BarDataSet(getEntries(listOperations), "")
+        barDataSet.setColors(listOf(category.color));
+        val barData = BarData(barDataSet);
+        barData.barWidth=0.5f
+        barChart.setData(barData);
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_category, container, false)
-        val mainActivity = activity as MainActivity
+        mainActivity = activity as MainActivity
 
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
-        var listLayout = view.findViewById<ConstraintLayout>(R.id.list_layout)
-        var listOperations = mainActivity.currentOperations.SelectByCategory(category)
+        listOperations = mainActivity.currentOperations.SelectByCategory(category)
         if (income)listOperations=OperationsList(listOperations.selectOperationsIncomes())
         else listOperations=OperationsList(listOperations.selectOperationsExpenses())
-        var recyclerView = view.findViewById<RecyclerView>(R.id.operations_list)
+        recyclerView = view.findViewById(R.id.operations_list)
         recyclerView.layoutManager = LinearLayoutManager(mainActivity)
-        recyclerView.adapter = OperationsRecyclerView(listOperations.SortByDate(), this)
+
 
         //Диаграмма
         barChart = view.findViewById(R.id.operations_barchart);
@@ -72,11 +87,7 @@ class CategoryFragment(private var category: Category, private var income:Boolea
         barChart.legend.isEnabled = false
         barChart.animateY( 300)
         //Загрузка данных
-        val barDataSet = BarDataSet(getEntries(listOperations), "")
-        barDataSet.setColors(listOf(category.color));
-        val barData = BarData(barDataSet);
-        barData.barWidth=0.5f
-        barChart.setData(barData);
+        setValues()
 
 
         // Нажатие на кнопку "Назад"
@@ -113,11 +124,17 @@ class CategoryFragment(private var category: Category, private var income:Boolea
                         item.third,
                         item.second
                     ),
-                    mainActivity
+                    item.third,
+                    mainActivity,
+                    this
                 )
         }
 
         operationDialog?.show()
+    }
+
+    override fun onSet() {
+        setValues()
     }
 
 }

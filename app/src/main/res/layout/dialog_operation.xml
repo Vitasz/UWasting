@@ -14,13 +14,23 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/make_base_btn"
+            style="@style/ImageTextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/edit"
+            app:iconTint="@color/red"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:text="@string/make_as_base" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/delete_btn"
             style="@style/ImageTextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:icon="@drawable/delete"
-            app:iconTint="@color/red"
             android:layout_marginBottom="@dimen/small_margin"
-            android:text="@string/delete_operation" />
+            android:text="@string/delete_operation"
+            app:icon="@drawable/delete"
+            app:iconTint="@color/red" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

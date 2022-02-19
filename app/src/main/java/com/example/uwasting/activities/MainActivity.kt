@@ -40,6 +40,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var totalOperations: OperationsList
     lateinit var currentOperations: OperationsList
     var Period = 30
+    var curr = "$"
+    var ue = 1
     @RequiresApi(Build.VERSION_CODES.O)
     fun UpdateCurrentOperations(){
         currentOperations = OperationsList(ArrayList(totalOperations.SelectOperations(Period)))

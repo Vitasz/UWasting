@@ -8,12 +8,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
+import com.example.uwasting.activities.MainActivity
 import java.time.LocalDate
 import java.util.Date
+import kotlin.math.round
+
 interface OnOperationClickListener{
     fun onItemClick(item:Triple<LocalDate, Category, Int>)
 }
-class OperationsRecyclerView(private val data:ArrayList<Triple<LocalDate, Category, Int>>, private var onOperationClickListener: OnOperationClickListener):RecyclerView.Adapter<OperationsRecyclerView.MyViewHolder>()  {
+class OperationsRecyclerView(private val data:ArrayList<Triple<LocalDate, Category, Int>>, private var onOperationClickListener: OnOperationClickListener, private var mainActivity:MainActivity):RecyclerView.Adapter<OperationsRecyclerView.MyViewHolder>()  {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var datetxt: TextView = itemView.findViewById(R.id.operation_date)
@@ -40,8 +43,8 @@ class OperationsRecyclerView(private val data:ArrayList<Triple<LocalDate, Catego
         holder.img.setImageResource(data[position].second.srcImage)
         holder.categorytxt.text = data[position].second.name
         if (data[position].third>0)
-            holder.amounttxt.text = "+${data[position].third}$"
-        else holder.amounttxt.text = "${data[position].third}$"
+            holder.amounttxt.text = "+${round(data[position].third.toFloat()/mainActivity.ue*100)/100.0}"+mainActivity.curr
+        else holder.amounttxt.text = "${round(data[position].third.toFloat()/mainActivity.ue*100)/100.0}"+mainActivity.curr
         var item = data[position]
         holder.bind(item, onOperationClickListener)
     }

@@ -10,10 +10,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
+import kotlin.math.round
+
 interface OnItemClickListener{
     fun onItemClicked(item: Triple<Category, Int, Int>)
 }
-class CategoryRecyclerView(private val data:ArrayList<Triple<Category, Int, Int>>, private val itemClickListener:OnItemClickListener):RecyclerView.Adapter<CategoryRecyclerView.MyViewHolder>()  {
+class CategoryRecyclerView(private val data:ArrayList<Triple<Category, Int, Int>>, private val itemClickListener:OnItemClickListener, private var mainActivity:MainActivity):RecyclerView.Adapter<CategoryRecyclerView.MyViewHolder>()  {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val CategoryNameTextView: TextView = itemView.findViewById(R.id.CategoryNameTextView)
@@ -39,8 +41,8 @@ class CategoryRecyclerView(private val data:ArrayList<Triple<Category, Int, Int>
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.CategoryNameTextView.text = data[position].first.name
         holder.TotalTextView.text = "Всего операций: ${data[position].second}"
-        if (data[position].third>0) holder.AmountTextView.text = "+${data[position].third}$"
-        else holder.AmountTextView.text = "${data[position].third}$"
+        if (data[position].third>0) holder.AmountTextView.text = "+${round(data[position].third.toFloat()/mainActivity.ue*100)/100.0}"+mainActivity.curr
+        else holder.AmountTextView.text = "${round(data[position].third.toFloat()/mainActivity.ue*100)/100.0}"+mainActivity.curr
         holder.ImageCategory.setImageResource(data[position].first.srcImage)
         val item = data[position]
         holder.bind(item, itemClickListener)
