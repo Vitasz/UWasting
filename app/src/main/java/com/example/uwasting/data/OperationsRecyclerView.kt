@@ -4,37 +4,34 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import java.time.LocalDate
-import java.util.Date
 
-class OperationsRecyclerView(private val data:ArrayList<Triple<LocalDate, Category, Int>>):RecyclerView.Adapter<OperationsRecyclerView.MyViewHolder>()  {
+class OperationsRecyclerView(private val data:ArrayList<Triple<LocalDate, Category, Int>>):
+    RecyclerView.Adapter<OperationsRecyclerView.OperationViewHolder>()  {
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var datetxt: TextView = itemView.findViewById(R.id.operation_date)
-        var img: ImageView = itemView.findViewById(R.id.operation_img)
-        var categorytxt: TextView = itemView.findViewById(R.id.operation_category)
-        var amounttxt: TextView = itemView.findViewById(R.id.operation_amount)
+    class OperationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var dateTxt: TextView = itemView.findViewById(R.id.date_txt)
+        var nameTxt: TextView = itemView.findViewById(R.id.name_txt)
+        var sumTxt: TextView = itemView.findViewById(R.id.sum_txt)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OperationViewHolder {
         val itemView =
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.operationviewrecycler_item, parent, false)
-        return MyViewHolder(itemView)
+                .inflate(R.layout.view_operation, parent, false)
+        return OperationViewHolder(itemView)
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.datetxt.text = data[position].first.toString()
-        holder.img.setImageResource(data[position].second.srcImage)
-        holder.categorytxt.text = data[position].second.name
+    override fun onBindViewHolder(holder: OperationViewHolder, position: Int) {
+        holder.dateTxt.text = data[position].first.toString()
+        holder.nameTxt.text = data[position].second.name
         if (data[position].third>0)
-            holder.amounttxt.text = "+${data[position].third}$"
-        else holder.amounttxt.text = "${data[position].third}$"
+            holder.sumTxt.text = "+${data[position].third}$"
+        else holder.sumTxt.text = "${data[position].third}$"
     }
 
     override fun getItemCount(): Int {

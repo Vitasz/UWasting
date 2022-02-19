@@ -1,10 +1,6 @@
 package com.example.uwasting.fragments
 
-import android.content.Context
-import android.content.Intent
-import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.view.isVisible
 import com.example.uwasting.R
-import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.activities.StartingActivity
 import com.example.uwasting.data.remote.UWastingApi
 import com.google.android.material.appbar.MaterialToolbar
@@ -27,29 +21,6 @@ import io.reactivex.schedulers.Schedulers
 class EmailFragment : Fragment() {
 
     private val compositeDisposable = CompositeDisposable()
-
-    private fun checkMail(uwastingApi: UWastingApi?, email: String) {
-        val startingActivity = activity as StartingActivity
-
-        uwastingApi?.let {
-            compositeDisposable.add(uwastingApi.checkEmail(email)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    if (it){
-                        val text = getString(R.string.email_is_used)
-                        val t = Toast.makeText(startingActivity, text, Toast.LENGTH_LONG)
-                        t.show()
-                    }
-                    else {
-                        startingActivity.setFragment(NameFragment()) // Переход на страницу с вводом имени и фамилии
-                    }
-                }, {
-
-                }))
-        }
-    }
-
 
 
     override fun onCreateView(
@@ -66,12 +37,14 @@ class EmailFragment : Fragment() {
         nextBtn.setOnClickListener {
             if (emailEdit.text.toString() contentEquals "") {
                 val text = getString(R.string.field_is_empty)
-                val t = Toast.makeText(startingActivity, text, Toast.LENGTH_LONG)
-                t.show()
+                val toast = Toast.makeText(startingActivity, text, Toast.LENGTH_LONG)
+                toast.show()
             }
             else {
-                startingActivity.user.email = emailEdit.text.toString() // Получаем логин
-                checkMail(startingActivity.uwastingApi, startingActivity.user.email)//Проверка доступности логина
+                // Получаем логин
+                startingActivity.user.email = emailEdit.text.toString()
+                // Проверка доступности логина
+                checkMail(startingActivity.uwastingApi, startingActivity.user.email)
             }
         }
 
@@ -79,6 +52,28 @@ class EmailFragment : Fragment() {
             startingActivity.prevFragment()
         }
         return view
+    }
+
+    private fun checkMail(uwastingApi: UWastingApi?, email: String) {
+        val startingActivity = activity as StartingActivity
+
+        uwastingApi?.let {
+            compositeDisposable.add(uwastingApi.checkEmail(email)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it){
+                        val text = getString(R.string.email_is_used)
+                        val toast = Toast.makeText(startingActivity, text, Toast.LENGTH_LONG)
+                        toast.show()
+                    }
+                    else {
+                        startingActivity.setFragment(NameFragment()) // Переход на страницу с вводом имени и фамилии
+                    }
+                }, {
+
+                }))
+        }
     }
 
 }

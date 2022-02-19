@@ -2,7 +2,6 @@ package com.example.uwasting.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,7 +19,6 @@ import com.example.uwasting.activities.MainActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.data.CategoryRecyclerView
-import com.example.uwasting.data.OperationsList
 
 import com.example.uwasting.dialogs.PeriodDialog
 import com.github.mikephil.charting.animation.Easing
@@ -29,8 +27,6 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.PercentFormatter
-import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.button.MaterialButton
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
@@ -44,18 +40,7 @@ class IncomesFragment : Fragment() {
     private lateinit var pieChart: PieChart
     private lateinit var totalIncomesTxt:TextView
     private lateinit var recyclerView:RecyclerView
-    @SuppressLint("SetTextI18n")
-    fun UpdateOperations(){
-        val mainActivity = activity as MainActivity
 
-        totalIncomesTxt.text = '+' + mainActivity.currentOperations.GetTotalSumIncomes().toString()+"$"
-        //Список с категориями
-        recyclerView.layoutManager = LinearLayoutManager(mainActivity)
-        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryIncomes())
-        //Диаграмма
-        loadPieChartData()
-
-    }
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n", "SdCardPath")
     override fun onCreateView(
@@ -74,7 +59,7 @@ class IncomesFragment : Fragment() {
         recyclerView = view.findViewById<RecyclerView>(R.id.categories_list)
         pieChart = view.findViewById(R.id.diagram_incomes)
         setupPieChart()
-        UpdateOperations()
+        updateOperations()
         listLayout.setOnClickListener {
             mainActivity.setFragment(CategoryFragment())
         }
@@ -92,36 +77,46 @@ class IncomesFragment : Fragment() {
 
         exportToCSVBtn.setOnClickListener {
             mainActivity.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, 123)
-            ExportToCSV()
+            exportToCSV()
         }
 
         return view
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun updateOperations(){
+        val mainActivity = activity as MainActivity
+
+        totalIncomesTxt.text = '+' + mainActivity.currentOperations.getTotalSumIncomes().toString()+"$"
+        //Список с категориями
+        recyclerView.layoutManager = LinearLayoutManager(mainActivity)
+        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.combineByCategoryIncomes())
+        //Диаграмма
+        loadPieChartData()
+
     }
 
     private fun setupPieChart() {
         pieChart.isDrawHoleEnabled = false
         pieChart.setUsePercentValues(true)
 
-
-        /*pieChart.setEntryLabelTextSize(12F)
-        pieChart.setEntryLabelColor(Color.BLACK)*/
         pieChart.setDrawEntryLabels(false)
         pieChart.centerText = ""
         pieChart.description.isEnabled = false
 
-        var l = pieChart.legend
-        l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-        l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
-        l.orientation = Legend.LegendOrientation.VERTICAL
-        l.setDrawInside(false)
-        l.isEnabled = false
+        var legend = pieChart.legend
+        legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+        legend.orientation = Legend.LegendOrientation.VERTICAL
+        legend.setDrawInside(false)
+        legend.isEnabled = false
     }
 
     private fun loadPieChartData(){
         val mainActivity = activity as MainActivity
         var entries = ArrayList<PieEntry>()
         var sum = 0
-        var operations = mainActivity.currentOperations.CombineByCategoryIncomes()
+        var operations = mainActivity.currentOperations.combineByCategoryIncomes()
 
         val colors = ArrayList<Int>()
         for(i in operations) {
@@ -147,8 +142,9 @@ class IncomesFragment : Fragment() {
         pieChart.invalidate()
         pieChart.animateY(1000, Easing.EaseInOutQuad)
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun ExportToCSV(){
+    private fun exportToCSV(){
         val mainActivity = activity as MainActivity
         val filename = "incomes.csv"
         val path = context?.getExternalFilesDir(null)

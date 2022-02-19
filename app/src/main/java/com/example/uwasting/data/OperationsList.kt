@@ -1,7 +1,6 @@
 package com.example.uwasting.data
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -13,21 +12,23 @@ class OperationsList(var item: ArrayList<Operation>) {
     var list = item
 
 
-    fun GetTotalSumIncomes():Int{
+    fun getTotalSumIncomes():Int{
         var tmp:Int = 0
         for(i in list) {
             if (i.amount>0)tmp+=i.amount
         }
         return tmp
     }
-    fun GetTotalSumExpenses():Int{
+
+    fun getTotalSumExpenses():Int{
         var tmp:Int = 0
         for(i in list) {
             if (i.amount<0)tmp+=i.amount
         }
         return tmp
     }
-    fun CombineByCategoryIncomes():ArrayList<Triple<Category, Int,Int>>{
+
+    fun combineByCategoryIncomes():ArrayList<Triple<Category, Int,Int>>{
         val res = ArrayList<Triple<Category, Int,Int>>()
         val tmp: MutableMap<String, Pair<Int, Int>> = mutableMapOf()
         for(i in list){
@@ -45,7 +46,8 @@ class OperationsList(var item: ArrayList<Operation>) {
         }
         return ArrayList((res.sortedBy{it.third.toInt()}).reversed())
     }
-    fun CombineByCategoryExpenses():ArrayList<Triple<Category, Int, Int>>{
+
+    fun combineByCategoryExpenses():ArrayList<Triple<Category, Int, Int>>{
         val res = ArrayList<Triple<Category, Int, Int>>()
         val tmp: MutableMap<String, Pair<Int, Int>> = mutableMapOf()
         for(i in list){
@@ -62,14 +64,14 @@ class OperationsList(var item: ArrayList<Operation>) {
         }
         return ArrayList(res.sortedBy{it.third})
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    fun SortByDate():ArrayList<Triple<LocalDate, Category, Int>>{
+    fun sortByDate():ArrayList<Triple<LocalDate, Category, Int>>{
         val res = ArrayList<Triple<LocalDate, Category, Int>>()
         val categories = Categories()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
 
         for (i in list) {
-            Log.d("TAG",i.date)
             res.add(
                 Triple(
                     LocalDate.parse(i.date.substring(0, 10), formatter),
@@ -78,20 +80,18 @@ class OperationsList(var item: ArrayList<Operation>) {
                 )
             )
         }
-        //Log.d("TAG",res[0].first.toString())
 
         return ArrayList(res.sortedBy { it.first })
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    fun SelectOperations(Period:Int):List<Operation>{
+    fun selectOperations(Period:Int):List<Operation>{
         val now = LocalDateTime.now()
         var tmp = ArrayList<Operation>()
         for (i in list) {
-            Log.d("date", i.date)
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             val t = i.date.replace('T', ' ')
             val date = LocalDateTime.parse(t, formatter)
-            Log.d("date", date.toString())
             if (now.minusDays(Period.toLong())<date)tmp.add(i)
         }
         return tmp

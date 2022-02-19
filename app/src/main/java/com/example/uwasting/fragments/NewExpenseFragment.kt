@@ -5,14 +5,10 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.uwasting.R
@@ -22,52 +18,26 @@ import com.google.android.material.textfield.TextInputEditText
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.sql.Date
 import java.time.LocalDate
 
 
 // Фрагмент с добавлением расхода
 class NewExpenseFragment : Fragment() {
+
     @RequiresApi(Build.VERSION_CODES.O)
     val time = LocalDate.now()
     @RequiresApi(Build.VERSION_CODES.O)
-    var myYear = time.year
+    var curYear = time.year
     @RequiresApi(Build.VERSION_CODES.O)
-    var myMonth = time.monthValue
+    var curMonth = time.monthValue
     @RequiresApi(Build.VERSION_CODES.O)
-    var myDay = time.dayOfMonth
-    lateinit var datetxt: TextInputEditText
+    var curDay = time.dayOfMonth
+
+    lateinit var dateTxt: TextInputEditText
     var compositeDisposable = CompositeDisposable()
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun SendOperation(amount:Int, category:String, date:String){
-        val mainActivity = activity as MainActivity
 
 
-        mainActivity.uwastingApi?.let {
-            compositeDisposable.add(mainActivity.uwastingApi.AddOperation(-amount, category, date, mainActivity.user.id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    if (it){
-                        mainActivity.GetOperations()
-                        mainActivity.prevFragment()
-
-                    }
-                }, {
-                   //TODO ОШИБКА
-                }))
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    var myCallBack =
-        OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-            myYear = year
-            myMonth = monthOfYear
-            myDay = dayOfMonth
-            datetxt.setText("$myMonth-$myDay-$myYear")
-        }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,25 +49,21 @@ class NewExpenseFragment : Fragment() {
         // Получение виджетов
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
         val categoryEdit = view.findViewById<TextInputEditText>(R.id.category_edit)
-        val addbtn = view.findViewById<Button>(R.id.add_btn)
-        val amountxt = view.findViewById<TextInputEditText>(R.id.sum_edit)
-        datetxt = view.findViewById<TextInputEditText>(R.id.cmsn_edit)
+        val addBtn = view.findViewById<Button>(R.id.add_btn)
+        val amountTxt = view.findViewById<TextInputEditText>(R.id.sum_edit)
+        dateTxt = view.findViewById<TextInputEditText>(R.id.cmsn_edit)
 
-
-        addbtn.setOnClickListener{
-            if (amountxt.text.toString()!="" && categoryEdit.text.toString()!="" && datetxt.text.toString()!=""){
-                SendOperation(amountxt.text.toString().toInt(), categoryEdit.text.toString(), datetxt.text.toString())
+        addBtn.setOnClickListener{
+            if (amountTxt.text.toString()!="" && categoryEdit.text.toString()!="" && dateTxt.text.toString()!=""){
+                sendOperation(amountTxt.text.toString().toInt(), categoryEdit.text.toString(), dateTxt.text.toString())
             }
             else{
                 //TODO ПУСТЫЕ ПОЛЯ
             }
         }
 
-
-        datetxt.setOnClickListener{
-            Log.d("HERE", "HERE")
-            DatePickerDialog(mainActivity, myCallBack,myYear, myMonth,myDay).show()
-
+        dateTxt.setOnClickListener{
+            DatePickerDialog(mainActivity, callBack,curYear, curMonth,curDay).show()
         }
 
         // Перемещение на предыдущий фрагмент
@@ -112,6 +78,34 @@ class NewExpenseFragment : Fragment() {
             mainActivity.setFragment(SelectCategoryFragment())
         } }
         return view
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun sendOperation(amount:Int, category:String, date:String){
+        val mainActivity = activity as MainActivity
+
+        mainActivity.uwastingApi?.let {
+            compositeDisposable.add(mainActivity.uwastingApi.AddOperation(-amount, category, date, mainActivity.user.id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it){
+                        mainActivity.GetOperations()
+                        mainActivity.prevFragment()
+
+                    }
+                }, {
+                    //TODO ОШИБКА
+                }))
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    var callBack = OnDateSetListener {view, year, monthOfYear, dayOfMonth ->
+            curYear = year
+            curMonth = monthOfYear
+            curDay = dayOfMonth
+            dateTxt.setText("$curMonth-$curDay-$curYear")
     }
 
 }

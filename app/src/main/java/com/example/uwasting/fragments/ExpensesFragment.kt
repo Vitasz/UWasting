@@ -34,6 +34,7 @@ import java.nio.file.Paths
 // Фрагмент с расходами
 class ExpensesFragment : Fragment() {
     private lateinit var pieChart: PieChart
+
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -48,7 +49,7 @@ class ExpensesFragment : Fragment() {
         val categoriesList = view.findViewById<ConstraintLayout>(R.id.list_layout)
         val addExpenseBtn = view.findViewById<Button>(R.id.add_expense_btn)
         val totalExpensesTxt = view.findViewById<TextView>(R.id.totalExpenses)
-        totalExpensesTxt.text = mainActivity.currentOperations.GetTotalSumExpenses().toString()
+        totalExpensesTxt.text = mainActivity.currentOperations.getTotalSumExpenses().toString()
 
         pieChart = view.findViewById(R.id.diagram_expenses)
         setupPieChart()
@@ -61,7 +62,7 @@ class ExpensesFragment : Fragment() {
         //Список с категориями
         val recyclerView = view.findViewById<RecyclerView>(R.id.categories_list)
         recyclerView.layoutManager = LinearLayoutManager(mainActivity)
-        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryExpenses())
+        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.combineByCategoryExpenses())
         // Добавление расхода
         addExpenseBtn.setOnClickListener {
             mainActivity.setFragment(NewExpenseFragment())
@@ -115,19 +116,19 @@ class ExpensesFragment : Fragment() {
         pieChart.centerText = ""
         pieChart.description.isEnabled = false
 
-        var l = pieChart.legend
-        l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-        l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
-        l.orientation = Legend.LegendOrientation.VERTICAL
-        l.setDrawInside(false)
-        l.isEnabled = false
+        var legend = pieChart.legend
+        legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+        legend.orientation = Legend.LegendOrientation.VERTICAL
+        legend.setDrawInside(false)
+        legend.isEnabled = false
     }
 
     private fun loadPieChartData(){
         val mainActivity = activity as MainActivity
         var entries = ArrayList<PieEntry>()
         var sum = 0
-        var operations = mainActivity.currentOperations.CombineByCategoryExpenses()
+        var operations = mainActivity.currentOperations.combineByCategoryExpenses()
 
         val colors = ArrayList<Int>()
         for(i in operations) {

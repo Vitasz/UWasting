@@ -89,7 +89,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/header_txt"
-                tools:listitem="@layout/operationviewrecycler_item" />/>
+                tools:listitem="@layout/view_operation" />/>
 
             <TextView
                 android:id="@+id/header_txt"

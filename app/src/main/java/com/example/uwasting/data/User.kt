@@ -1,7 +1,6 @@
 package com.example.uwasting.data
 
-import android.util.Log
-import kotlin.properties.Delegates
+
 class User  {
     lateinit var email: String;
     lateinit var password: String;

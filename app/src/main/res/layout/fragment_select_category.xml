@@ -6,14 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SelectCategoryFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
@@ -22,8 +23,7 @@
                 android:layout_gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="@drawable/back"
-                app:title="@string/select_category"
-                tools:layout_editor_absoluteX="0dp" />
+                app:title="@string/select_category" />
 
             <View
                 android:id="@+id/toolbar_line"
@@ -36,55 +36,39 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/header_txt"
+            style="@style/Header"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginStart="16dp"
+            android:gravity="start"
+            android:text="@string/categories"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
-            <TextView
-                android:id="@+id/header_txt"
-                style="@style/Header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin"
-                android:layout_weight="1"
-                android:gravity="start"
-                android:text="@string/categories" />
-
-            <TextView
-                android:id="@+id/add_btn"
-                style="@style/Text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/small_margin"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:text="@string/add"
-                android:textColor="@color/cobalt" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/select_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_gravity="bottom"
+            android:text="@string/confirm_selecting"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/small_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/categories_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/header_txt"
+            tools:layout_editor_absoluteX="0dp"
+            tools:listitem="@layout/view_selecting_category">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        </androidx.recyclerview.widget.RecyclerView>
 
-            >
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Button
-                android:id="@+id/select_btn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/button_height"
-                android:layout_gravity="bottom"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
-                android:layout_marginBottom="@dimen/default_margin"
-                android:text="@string/confirm_selecting"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
 </FrameLayout>

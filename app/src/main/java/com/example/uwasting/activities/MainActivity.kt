@@ -1,28 +1,19 @@
 package com.example.uwasting.activities
 
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.example.uwasting.R
 import com.example.uwasting.data.Constants
-import com.example.uwasting.data.Operation
 import com.example.uwasting.data.OperationsList
 import com.example.uwasting.data.User
 import com.example.uwasting.data.remote.UWastingApi
 import com.example.uwasting.fragments.TabFragment
-import com.google.android.material.appbar.MaterialToolbar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -42,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     var Period = 30
     @RequiresApi(Build.VERSION_CODES.O)
     fun UpdateCurrentOperations(){
-        currentOperations = OperationsList(ArrayList(totalOperations.SelectOperations(Period)))
+        currentOperations = OperationsList(ArrayList(totalOperations.selectOperations(Period)))
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun GetOperations(){
