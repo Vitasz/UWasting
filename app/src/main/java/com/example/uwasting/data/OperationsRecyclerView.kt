@@ -33,8 +33,8 @@ class OperationsRecyclerView(private val data:ArrayList<Triple<LocalDate, Catego
         holder.img.setImageResource(data[position].second.srcImage)
         holder.categorytxt.text = data[position].second.name
         if (data[position].third>0)
-            holder.amounttxt.text = "+${data[position].third}"
-        else holder.amounttxt.text = "${data[position].third}"
+            holder.amounttxt.text = "+${data[position].third}$"
+        else holder.amounttxt.text = "${data[position].third}$"
     }
 
     override fun getItemCount(): Int {
