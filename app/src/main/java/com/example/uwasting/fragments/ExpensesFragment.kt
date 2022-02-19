@@ -21,6 +21,7 @@ import com.example.uwasting.data.Category
 
 import com.example.uwasting.data.CategoryRecyclerView
 import com.example.uwasting.data.OnItemClickListener
+import com.example.uwasting.dialogs.PeriodDialog
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
@@ -35,8 +36,20 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 // Фрагмент с расходами
-class ExpensesFragment : Fragment(), OnItemClickListener {
+class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
     private lateinit var pieChart: PieChart
+    private lateinit var mainActivity:MainActivity
+    private lateinit var dateTxt:TextView
+    private lateinit var recyclerView:RecyclerView
+    private lateinit var totalExpensesTxt:TextView
+    fun UpdateOperations(){
+        loadPieChartData()
+        totalExpensesTxt.text = mainActivity.currentOperations.GetTotalSumExpenses().toString()+"$"
+
+
+        recyclerView.layoutManager = LinearLayoutManager(mainActivity)
+        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryExpenses(), this)
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -44,22 +57,25 @@ class ExpensesFragment : Fragment(), OnItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_expenses, container, false)
-        val mainActivity = activity as MainActivity
+        mainActivity = activity as MainActivity
 
         // Получение виджетов
         val exportToCSVBtn = view.findViewById<Button>(R.id.export_btn)
-        val categoriesList = view.findViewById<ConstraintLayout>(R.id.list_layout)
         val addExpenseBtn = view.findViewById<Button>(R.id.add_expense_btn)
-        val totalExpensesTxt = view.findViewById<TextView>(R.id.totalExpenses)
-        totalExpensesTxt.text = mainActivity.currentOperations.GetTotalSumExpenses().toString()+"$"
-
+        val periodLayout = view.findViewById<ConstraintLayout>(R.id.period_layout)
+        recyclerView = view.findViewById<RecyclerView>(R.id.categories_list)
+        dateTxt = view.findViewById(R.id.date_txt)
+        dateTxt.text = "Последние ${mainActivity.Period} дней"
+        totalExpensesTxt = view.findViewById<TextView>(R.id.totalExpenses)
         pieChart = view.findViewById(R.id.diagram_expenses)
         setupPieChart()
-        loadPieChartData()
-        //Список с категориями
-        val recyclerView = view.findViewById<RecyclerView>(R.id.categories_list)
-        recyclerView.layoutManager = LinearLayoutManager(mainActivity)
-        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryExpenses(), this)
+        // Нажатие на период
+        periodLayout.setOnClickListener {
+            val dialog = PeriodDialog(mainActivity, this)
+            dialog.show(parentFragmentManager, "period")
+        }
+
+        UpdateOperations()
         // Добавление расхода
         addExpenseBtn.setOnClickListener {
             mainActivity.setFragment(NewExpenseFragment())
@@ -133,14 +149,6 @@ class ExpensesFragment : Fragment(), OnItemClickListener {
             colors.add(i.first.color)
         }
 
-        /*for(color in ColorTemplate.MATERIAL_COLORS) {
-            colors.add(color)
-        }
-
-        for(color in ColorTemplate.VORDIPLOM_COLORS) {
-            colors.add(color)
-        }*/
-
         var dataSet = PieDataSet(entries, "")
         dataSet.colors = colors
 
@@ -156,5 +164,11 @@ class ExpensesFragment : Fragment(), OnItemClickListener {
     override fun onItemClicked(item: Triple<Category, Int, Int>) {
         val mainActivity = activity as MainActivity
         mainActivity.setFragment(CategoryFragment(item.first, false))
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun update() {
+        dateTxt.text = "Последние ${mainActivity.Period} дней"
+        UpdateOperations()
     }
 }

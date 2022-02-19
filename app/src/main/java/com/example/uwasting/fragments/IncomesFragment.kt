@@ -36,14 +36,15 @@ import org.apache.commons.csv.CSVPrinter
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
-
-
+interface UpdateFragment{
+    fun update()
+}
 // Фрагмент с доходами
-class IncomesFragment : Fragment(), OnItemClickListener {
+class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
     private lateinit var pieChart: PieChart
     private lateinit var totalIncomesTxt:TextView
     private lateinit var recyclerView:RecyclerView
-
+    private lateinit var dateTxt: TextView
     override fun onItemClicked(item: Triple<Category, Int, Int>){
         val mainActivity = activity as MainActivity
         mainActivity.setFragment(CategoryFragment(item.first, true))
@@ -71,10 +72,9 @@ class IncomesFragment : Fragment(), OnItemClickListener {
         totalIncomesTxt = view.findViewById<TextView>(R.id.sum_txt)
         val exportToCSVBtn = view.findViewById<Button>(R.id.export_btn)
         val periodLayout = view.findViewById<ConstraintLayout>(R.id.period_layout)
-        val dateTxt = view.findViewById<TextView>(R.id.date_txt)
-        val listLayout = view.findViewById<ConstraintLayout>(R.id.list_layout)
         val addIncomeBtn = view.findViewById<MaterialButton>(R.id.add_income_btn)
-
+        dateTxt = view.findViewById<TextView>(R.id.date_txt)
+        dateTxt.text = "Последние ${mainActivity.Period} дней"
         recyclerView = view.findViewById<RecyclerView>(R.id.categories_list)
         pieChart = view.findViewById(R.id.diagram_incomes)
         setupPieChart()
@@ -82,7 +82,7 @@ class IncomesFragment : Fragment(), OnItemClickListener {
 
         // Нажатие на период
         periodLayout.setOnClickListener {
-            val dialog = PeriodDialog()
+            val dialog = PeriodDialog(mainActivity, this)
             dialog.show(parentFragmentManager, "period")
         }
 
@@ -175,5 +175,11 @@ class IncomesFragment : Fragment(), OnItemClickListener {
 
         csvPrinter.flush()
         csvPrinter.close()
+    }
+
+    override fun update() {
+        val mainActivity=activity as MainActivity
+        dateTxt.text = "Последние ${mainActivity.Period} дней"
+        UpdateOperations()
     }
 }
