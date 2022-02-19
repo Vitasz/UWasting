@@ -13,7 +13,7 @@ class SelectingCategoryRecyclerView: RecyclerView.Adapter<SelectingCategoryRecyc
 
     private val categoriesList: ArrayList<Category> = ArrayList()
     private var selectedCategory: SelectingCategoryViewHolder? = null
-
+    var selectedCategoryName = ""
     class SelectingCategoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var categoryImg: ImageView = itemView.findViewById(R.id.category_img)
         var nameTxt: TextView = itemView.findViewById(R.id.name_txt)
@@ -34,6 +34,7 @@ class SelectingCategoryRecyclerView: RecyclerView.Adapter<SelectingCategoryRecyc
             if (selectedCategory != null)
                 selectedCategory?.selectBtn?.isChecked = false
             selectedCategory = holder
+            selectedCategoryName = categoriesList[position].name
         }
     }
 

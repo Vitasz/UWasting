@@ -20,12 +20,107 @@
       <change beforePath="$PROJECT_DIR$/.gradle/7.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.2/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.2/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.2/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_arch_core_core_runtime_2_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_core_1_4_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_espresso_espresso_core_3_4_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_espresso_espresso_idling_resource_3_4_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_ext_junit_1_1_3_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_monitor_1_4_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_runner_1_4_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_services_storage_1_4_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_code_findbugs_jsr305_2_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_squareup_javawriter_2_1_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_inject_javax_inject_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__junit_junit_4_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_integration_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_library_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/UWasting.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/UWasting.app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/activities/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/activities/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/adapters/ViewPagerAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/adapters/ViewPagerAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/fragments/IncomesFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/fragments/IncomesFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/fragments/TabFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/fragments/TabFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/.vs/ProjectSettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/.vs/VSWorkspaceState.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/.vs/slnx.sqlite" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/Database/bin/Debug/net5.0/Database.deps.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/Database/bin/Debug/net5.0/Database.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/Database/bin/Debug/net5.0/Database.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/Database/bin/Debug/net5.0/ref/Database.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/Database/obj/Debug/net5.0/.NETCoreApp,Version=v5.0.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/Database/obj/Debug/net5.0/Database.AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/Database/obj/Debug/net5.0/Database.AssemblyInfoInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/Database/obj/Debug/net5.0/Database.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/Database/obj/Debug/net5.0/Database.assets.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/Database/obj/Debug/net5.0/Database.csproj.AssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/Database/obj/Debug/net5.0/Database.csproj.CoreCompileInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/Database/obj/Debug/net5.0/Database.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/Database/obj/Debug/net5.0/Database.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/Database/obj/Debug/net5.0/Database.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Db/Database/Database/obj/Debug/net5.0/ref/Database.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.vs/Server/project-colors.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.vs/Server/v17/.futdcache.v1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.vs/Server/v17/.suo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Controllers/OperationsController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Controllers/UserController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Operation.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/User.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net5.0/Server.StaticWebAssets.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/Database.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/Database.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/Microsoft.OpenApi.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/Microsoft.Win32.SystemEvents.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/Newtonsoft.Json.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/Server.deps.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/Server.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/Server.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/Server.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/Server.runtimeconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/Swashbuckle.AspNetCore.Swagger.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/System.Configuration.ConfigurationManager.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/System.Data.OleDb.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/System.Diagnostics.PerformanceCounter.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/System.Drawing.Common.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/System.Security.Cryptography.ProtectedData.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/System.Security.Permissions.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/System.Windows.Extensions.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/appsettings.Development.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/appsettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/ref/Server.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/runtimes/win/lib/netcoreapp2.0/System.Diagnostics.PerformanceCounter.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/runtimes/win/lib/netcoreapp3.0/System.Windows.Extensions.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/runtimes/win/lib/netstandard2.0/System.Data.OleDb.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/net6.0/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/Server.AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/Server.AssemblyInfoInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/Server.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/Server.MvcApplicationPartsAssemblyInfo.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/Server.MvcApplicationPartsAssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/Server.assets.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/Server.csproj.AssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/Server.csproj.CopyComplete" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/Server.csproj.CoreCompileInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/Server.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/Server.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/Server.genruntimeconfig.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/Server.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/apphost.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/ref/Server.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/net6.0/staticwebassets.build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/staticwebassets.pack.sentinel" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/data/SelectingCategoryRecyclerView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/data/SelectingCategoryRecyclerView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/fragments/NewExpenseFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/fragments/NewExpenseFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/fragments/NewIncomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/fragments/NewIncomeFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/fragments/SelectCategoryFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/uwasting/fragments/SelectCategoryFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_new_expense.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_new_expense.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_new_income.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_new_income.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,8 +128,17 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[b0a4e87d]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="BUILD_TARGET_KEY" value="apk" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="ProjectId" id="25KxsjTt0kFdSZaopIVM4DDaWOD" />
   <component name="ProjectViewState">
@@ -42,6 +146,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ApkExportedModule" value="UWasting.app" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
@@ -118,5 +223,17 @@
       <updated>1645289822285</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

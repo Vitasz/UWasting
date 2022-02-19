@@ -27,18 +27,19 @@ import java.time.LocalDate
 
 
 // Фрагмент с добавлением расхода
-class NewExpenseFragment : Fragment() {
+class NewExpenseFragment : Fragment(), SetCategory {
     @RequiresApi(Build.VERSION_CODES.O)
     val time = LocalDate.now()
     @RequiresApi(Build.VERSION_CODES.O)
     var myYear = time.year
     @RequiresApi(Build.VERSION_CODES.O)
-    var myMonth = time.monthValue
+    var myMonth = time.monthValue-1
     @RequiresApi(Build.VERSION_CODES.O)
     var myDay = time.dayOfMonth
     lateinit var datetxt: TextInputEditText
+    lateinit var categoryEdit:TextInputEditText
     var compositeDisposable = CompositeDisposable()
-
+    private var category:String =""
     @RequiresApi(Build.VERSION_CODES.O)
     fun SendOperation(amount:Int, category:String, date:String){
         val mainActivity = activity as MainActivity
@@ -64,7 +65,7 @@ class NewExpenseFragment : Fragment() {
     var myCallBack =
         OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             myYear = year
-            myMonth = monthOfYear
+            myMonth = monthOfYear+1
             myDay = dayOfMonth
             datetxt.setText("$myMonth-$myDay-$myYear")
         }
@@ -79,7 +80,7 @@ class NewExpenseFragment : Fragment() {
         time.year
         // Получение виджетов
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
-        val categoryEdit = view.findViewById<TextInputEditText>(R.id.category_edit)
+        categoryEdit = view.findViewById<TextInputEditText>(R.id.category_edit)
         val addbtn = view.findViewById<Button>(R.id.add_btn)
         val amountxt = view.findViewById<TextInputEditText>(R.id.sum_edit)
         datetxt = view.findViewById(R.id.cmsn_edit)
@@ -108,11 +109,18 @@ class NewExpenseFragment : Fragment() {
         }
 
         // Выбор категории
-        categoryEdit.setOnFocusChangeListener { view, focused ->  if (focused) {
-            view.clearFocus()
-            mainActivity.setFragment(SelectCategoryFragment())
-        } }
+        categoryEdit.setOnClickListener() {
+            mainActivity.setFragment(SelectCategoryFragment(this))
+        }
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        categoryEdit.setText(category)
+    }
+    override fun setCategory(category: String) {
+        this.category = category
     }
 
 }
