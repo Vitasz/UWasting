@@ -73,4 +73,6 @@
     <string name="category_name">Category name</string>
     <string name="balance">Balance adjusted for inflation: </string>
     <string name="make_as_base">Make base</string>
+    <string name="last">Last</string>
+    <string name="days">days</string>
 </resources>

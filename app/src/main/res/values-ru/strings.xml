@@ -72,4 +72,6 @@
     <string name="category_name">Название категории</string>
     <string name="balance">Остаток с учётом инфляции: </string>
     <string name="make_as_base">Назначить базовой</string>
+    <string name="last">Последние</string>
+    <string name="days">дней</string>
 </resources>

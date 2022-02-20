@@ -7,17 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.data.Categories
+import com.example.uwasting.data.Constants
 import com.example.uwasting.data.SelectingCategoryRecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 
 // Фрагмент выбора категории
-class SelectCategoryFragment(private var setCategory: SetCategory) : Fragment() {
+class SelectCategoryFragment(private var setCategory: SetCategory, private var categoriesType: Int) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,14 +33,23 @@ class SelectCategoryFragment(private var setCategory: SetCategory) : Fragment() 
         categoriesList.adapter = adapter
         categoriesList.layoutManager = LinearLayoutManager(mainActivity)
         selectBtn.setOnClickListener{
-            Log.d("tag", adapter.selectedCategoryName)
             setCategory.setCategory(adapter.selectedCategoryName)
             mainActivity.prevFragment()
         }
+
         val categories = Categories()
-        for (category in categories.common)
-            adapter.addItem(category)
-        adapter.addItem(categories.other)
+        when (categoriesType) {
+            Constants.EXPENSES -> {
+                for (category in categories.expenses)
+                    adapter.addItem(category)
+                adapter.addItem(categories.otherExpense)
+            }
+            Constants.INCOMES -> {
+                for (category in categories.incomes)
+                    adapter.addItem(category)
+                adapter.addItem(categories.otherIncome)
+            }
+        }
 
         // Перемещение на предыдущий фрагмент
         toolbar.setNavigationOnClickListener {

@@ -128,7 +128,7 @@ class IncomesFragment() : Fragment(), OnItemClickListener, UpdateFragment {
         val addIncomeBtn = view.findViewById<MaterialButton>(R.id.add_income_btn)
         balanceView = view.findViewById(R.id.balance_inc)
         dateTxt = view.findViewById(R.id.date_txt)
-        dateTxt.text = "Последние ${mainActivity.Period} дней"
+        dateTxt.text = getString(R.string.last) + " " + mainActivity.Period + " " + getString(R.string.days);
         recyclerView = view.findViewById(R.id.categories_list)
         pieChart = view.findViewById(R.id.diagram_incomes)
         setupPieChart()

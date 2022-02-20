@@ -37,24 +37,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/title_edit_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/small_margin"
-            android:layout_marginTop="@dimen/default_margin"
-            android:layout_marginEnd="@dimen/small_margin">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/title_edit"
-                android:layout_width="match_parent"
-
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:hint="@string/expense_title" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/sum_edit_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

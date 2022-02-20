@@ -78,7 +78,7 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
         val periodLayout = view.findViewById<ConstraintLayout>(R.id.period_layout)
         recyclerView = view.findViewById(R.id.categories_list)
         dateTxt = view.findViewById(R.id.date_txt)
-        dateTxt.text = "Последние ${mainActivity.Period} дней"
+        dateTxt.text = getString(R.string.last) + " " + mainActivity.Period + " " + getString(R.string.days);
         totalExpensesTxt = view.findViewById(R.id.totalExpenses)
         forecastView=view.findViewById(R.id.forecast)
         pieChart = view.findViewById(R.id.diagram_expenses)

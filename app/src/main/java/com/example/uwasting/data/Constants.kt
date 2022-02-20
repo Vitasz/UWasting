@@ -6,5 +6,7 @@ class Constants {
         const val CHANGE_PASSWORD = 1
         const val APIurl = "https://uwasting.herokuapp.com/"
         const val StatBureauUrl = "https://www.statbureau.org/"
+        const val EXPENSES = 0;
+        const val INCOMES = 1;
     }
 }

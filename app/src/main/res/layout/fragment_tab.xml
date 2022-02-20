@@ -29,7 +29,7 @@
                     android:layout_height="?attr/actionBarSize"
                     android:background="?android:attr/selectableItemBackground"
                     android:elevation="0dp"
-                    app:title="@string/monthly_forecast"
+                    app:title="@string/financial_analysis"
                     app:navigationIcon="@drawable/menu" />
 
                 <com.google.android.material.tabs.TabLayout

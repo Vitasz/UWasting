@@ -10,19 +10,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
 import java.time.LocalDate
-import java.util.Date
 import kotlin.math.round
 
 interface OnOperationClickListener{
     fun onItemClick(item:Triple<LocalDate, Category, Int>)
 }
-class OperationsRecyclerView(private val data:ArrayList<Triple<LocalDate, Category, Int>>, private var onOperationClickListener: OnOperationClickListener, private var mainActivity:MainActivity):RecyclerView.Adapter<OperationsRecyclerView.MyViewHolder>()  {
+class OperationsRecyclerView(private val data:ArrayList<Triple<LocalDate, Category, Int>>,
+                             private var onOperationClickListener: OnOperationClickListener,
+                             private var mainActivity:MainActivity):
+    RecyclerView.Adapter<OperationsRecyclerView.OperationViewHolder>()  {
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var datetxt: TextView = itemView.findViewById(R.id.operation_date)
-        var img: ImageView = itemView.findViewById(R.id.operation_img)
-        var categorytxt: TextView = itemView.findViewById(R.id.operation_category)
-        var amounttxt: TextView = itemView.findViewById(R.id.operation_amount)
+    class OperationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var dateTxt: TextView = itemView.findViewById(R.id.date_txt)
+        var nameTxt: TextView = itemView.findViewById(R.id.name_txt)
+        var sumTxt: TextView = itemView.findViewById(R.id.sum_txt)
         fun bind(item:Triple<LocalDate, Category, Int>, onOperationClickListener: OnOperationClickListener){
             itemView.setOnClickListener {
                 onOperationClickListener.onItemClick(item)
@@ -30,21 +31,24 @@ class OperationsRecyclerView(private val data:ArrayList<Triple<LocalDate, Catego
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OperationViewHolder {
         val itemView =
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.operationviewrecycler_item, parent, false)
-        return MyViewHolder(itemView)
+                .inflate(R.layout.view_operation, parent, false)
+        return OperationViewHolder(itemView)
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.datetxt.text = data[position].first.toString()
-        holder.img.setImageResource(data[position].second.srcImage)
-        holder.categorytxt.text = data[position].second.name
+    override fun onBindViewHolder(holder: OperationViewHolder, position: Int) {
+        holder.dateTxt.text = data[position].first.toString()
+        holder.nameTxt.text = data[position].second.name
         if (data[position].third>0)
-            holder.amounttxt.text = "+${round(data[position].third.toFloat()/mainActivity.ue*100)/100.0}"+mainActivity.curr
-        else holder.amounttxt.text = "${round(data[position].third.toFloat()/mainActivity.ue*100)/100.0}"+mainActivity.curr
+            holder.sumTxt.text = "+${round(data[position].third.toFloat()/mainActivity.ue*100)/100.0}" +
+                    mainActivity.curr
+        else
+            holder.sumTxt.text = "${round(data[position].third.toFloat()/mainActivity.ue*100)/100.0}" +
+                    mainActivity.curr
+
         var item = data[position]
         holder.bind(item, onOperationClickListener)
     }

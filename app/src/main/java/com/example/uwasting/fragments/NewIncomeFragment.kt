@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
+import com.example.uwasting.data.Constants
 import com.example.uwasting.data.remote.UWastingApi
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputEditText
@@ -72,7 +73,7 @@ class NewIncomeFragment : Fragment(), SetCategory {
 
         // Выбор категории
         categoryText.setOnClickListener {
-                mainActivity.setFragment(SelectCategoryFragment(this))
+                mainActivity.setFragment(SelectCategoryFragment(this, Constants.INCOMES))
         }
 
         // перемещение на предыдущий фрагмент

@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
+import com.example.uwasting.data.Constants
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputEditText
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -110,7 +111,7 @@ class NewExpenseFragment : Fragment(), SetCategory {
 
         // Выбор категории
         categoryEdit.setOnClickListener() {
-            mainActivity.setFragment(SelectCategoryFragment(this))
+            mainActivity.setFragment(SelectCategoryFragment(this, Constants.EXPENSES))
         }
         return view
     }
