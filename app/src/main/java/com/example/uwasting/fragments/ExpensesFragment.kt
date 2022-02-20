@@ -58,7 +58,7 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
 
         val lineReg = LineReg(incomesRight, expensesRight)
         val pred = lineReg.evaluateAlgorithm()
-        forecastView.text = mainActivity.getString(R.string.monthly_forecast)+': '+ String.format("%.2f", pred/mainActivity.ue)+mainActivity.curr
+        forecastView.text = mainActivity.getString(R.string.monthly_forecast)+": "+ String.format("%.2f", pred/mainActivity.ue)+mainActivity.curr
 
         recyclerView.layoutManager = LinearLayoutManager(mainActivity)
         recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryExpenses(), this, mainActivity)
