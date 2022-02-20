@@ -45,10 +45,12 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
     private lateinit var recyclerView:RecyclerView
     private lateinit var totalExpensesTxt:TextView
     private lateinit var forecastView:TextView
+
+    // Обновить операции
     @SuppressLint("SetTextI18n")
     fun updateOperations(){
         loadPieChartData()
-        totalExpensesTxt.text = (round(mainActivity.currentOperations.GetTotalSumExpenses().toFloat()/mainActivity.ue*100)/100.0).toString()+mainActivity.curr
+        totalExpensesTxt.text = (round(mainActivity.currentOperations.getTotalSumExpenses().toFloat()/mainActivity.ue*100)/100.0).toString()+mainActivity.curr
         val expenses = mainActivity.currentOperations.selectOperationsExpenses()
         val expensesRight = ArrayList<Int>()
         for (i in expenses)expensesRight.add(abs(i.amount))
@@ -58,11 +60,12 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
 
         val lineReg = LineReg(incomesRight, expensesRight)
         val pred = lineReg.evaluateAlgorithm()
-        forecastView.text = mainActivity.getString(R.string.monthly_forecast)+": "+ String.format("%.2f", pred/mainActivity.ue)+mainActivity.curr
+        forecastView.text = mainActivity.getString(R.string.monthly_forecast)+": -"+ String.format("%.2f", pred/mainActivity.ue)+mainActivity.curr
 
         recyclerView.layoutManager = LinearLayoutManager(mainActivity)
-        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryExpenses(), this, mainActivity)
+        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.combineByCategoryExpenses(), this, mainActivity)
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -78,7 +81,7 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
         val periodLayout = view.findViewById<ConstraintLayout>(R.id.period_layout)
         recyclerView = view.findViewById(R.id.categories_list)
         dateTxt = view.findViewById(R.id.date_txt)
-        dateTxt.text = getString(R.string.last) + " " + mainActivity.Period + " " + getString(R.string.days);
+        dateTxt.text = getString(R.string.last) + " " + mainActivity.period + " " + getString(R.string.days)
         totalExpensesTxt = view.findViewById(R.id.totalExpenses)
         forecastView=view.findViewById(R.id.forecast)
         pieChart = view.findViewById(R.id.diagram_expenses)
@@ -90,16 +93,13 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
         }
 
         updateOperations()
+
         // Добавление расхода
         addExpenseBtn.setOnClickListener {
             mainActivity.setFragment(NewExpenseFragment())
-
-            /*val operationsPerMonth = mainActivity.operations
-            val count = operationsPerMonth.list[0]
-            val sumOperations = operationsPerMonth.list[1]
-            val model = SimpleLinearRegressionModel(count, sumOperations)*/
         }
 
+        // Экспорт расходов в CSV файл
         exportToCSVBtn.setOnClickListener {
             mainActivity.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, 123)
 
@@ -133,6 +133,7 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
         return view
     }
 
+    // Настройка диаграммы
     private fun setupPieChart() {
         pieChart.isDrawHoleEnabled = false
         pieChart.setUsePercentValues(true)
@@ -149,10 +150,11 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
         legend.isEnabled = false
     }
 
+    // Загрузка данных в диаграмму
     private fun loadPieChartData(){
         val mainActivity = activity as MainActivity
         val entries = ArrayList<PieEntry>()
-        val operations = mainActivity.currentOperations.CombineByCategoryExpenses()
+        val operations = mainActivity.currentOperations.combineByCategoryExpenses()
 
         val colors = ArrayList<Int>()
         for(i in operations) {
@@ -172,6 +174,7 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
 
     }
 
+    // Нажатие на элемент списка категорий
     override fun onItemClicked(item: Triple<Category, Int, Int>) {
         val mainActivity = activity as MainActivity
         mainActivity.setFragment(CategoryFragment(item.first, false))
@@ -179,7 +182,7 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
 
     @SuppressLint("SetTextI18n")
     override fun update() {
-        dateTxt.text = "Последние ${mainActivity.Period} дней"
+        dateTxt.text = "Последние ${mainActivity.period} дней"
         updateOperations()
     }
 }

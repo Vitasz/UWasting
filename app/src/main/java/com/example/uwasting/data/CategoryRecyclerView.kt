@@ -14,6 +14,7 @@ import kotlin.math.round
 interface OnItemClickListener{
     fun onItemClicked(item: Triple<Category, Int, Int>)
 }
+// Список с категориями
 class CategoryRecyclerView(private val data:ArrayList<Triple<Category, Int, Int>>, private val
 itemClickListener:OnItemClickListener, private var mainActivity:MainActivity):
     RecyclerView.Adapter<CategoryRecyclerView.CategoryViewHolder>()  {
@@ -42,18 +43,19 @@ itemClickListener:OnItemClickListener, private var mainActivity:MainActivity):
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.nameTxt.text = data[position].first.name
         holder.operationsAmountTxt.text = "Всего операций: ${data[position].second}"
-        if (data[position].third>0)
+        if (data[position].third > 0)
             holder.sumTxt.text =
-                "+${round(data[position].third.toFloat()/mainActivity.ue*100)/100.0}"+mainActivity.curr
+                "+${round(data[position].third.toFloat() / mainActivity.ue * 100) / 100.0}" + mainActivity.curr
         else
             holder.sumTxt.text =
-                "${round(data[position].third.toFloat()/mainActivity.ue*100)/100.0}"+mainActivity.curr
+                "${round(data[position].third.toFloat() / mainActivity.ue * 100) / 100.0}" + mainActivity.curr
         holder.categoryImg.setImageResource(data[position].first.srcImage)
 
         val item = data[position]
         holder.bind(item, itemClickListener)
     }
 
+    // Полчуение количества страниц
     override fun getItemCount(): Int {
         return data.size
     }

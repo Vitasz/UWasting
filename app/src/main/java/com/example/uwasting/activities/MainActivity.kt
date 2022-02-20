@@ -1,33 +1,19 @@
 package com.example.uwasting.activities
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.example.uwasting.R
 import com.example.uwasting.data.Constants
-import com.example.uwasting.data.Operation
 import com.example.uwasting.data.OperationsList
 import com.example.uwasting.data.User
-import com.example.uwasting.data.remote.StatBureauApi
 import com.example.uwasting.data.remote.UWastingApi
-import com.example.uwasting.fragments.ExpensesFragment
-import com.example.uwasting.fragments.IncomesFragment
-import com.example.uwasting.fragments.NewIncomeFragment
 import com.example.uwasting.fragments.TabFragment
-import com.google.android.material.appbar.MaterialToolbar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -36,7 +22,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.math.pow
 
 // Главная активность
 class MainActivity : AppCompatActivity() {
@@ -45,29 +30,34 @@ class MainActivity : AppCompatActivity() {
     lateinit var uwastingApi: UWastingApi
     lateinit var totalOperations: OperationsList
     lateinit var currentOperations: OperationsList
-    var Period = 30
+    var period = 30
     var curr = "$"
     var ue = 1
     var index = 0f
+
+    // Обновление операций
     @RequiresApi(Build.VERSION_CODES.O)
-    fun UpdateCurrentOperations(){
-        currentOperations = OperationsList(ArrayList(totalOperations.SelectOperations(Period)))
+    fun updateCurrentOperations(){
+        currentOperations = OperationsList(ArrayList(totalOperations.selectOperations(period)))
     }
+
+    // Получение операций пользователя
     @RequiresApi(Build.VERSION_CODES.O)
-    fun GetOperations(){
-        uwastingApi?.let {
-            compositeDisposable.add(uwastingApi.GetOperations(user.id)
+    fun getOperations(){
+        uwastingApi.let {
+            compositeDisposable.add(uwastingApi.getOperations(user.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     totalOperations=OperationsList(it)
-                    UpdateCurrentOperations()
+                    updateCurrentOperations()
 
                     setFragment(TabFragment())
                 }, {
                 }))
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,17 +70,18 @@ class MainActivity : AppCompatActivity() {
             user.id = it.getInt("UserId", -1)
         }
         configureRetrofit()
-        GetOperations()
+        getOperations()
 
     }
 
+    // Получение разрешения на создание файлов в памяти системы
     fun checkPermission(permission: String, requestCode: Int) {
         if (ContextCompat.checkSelfPermission(this@MainActivity, permission) == PackageManager.PERMISSION_DENIED) {
-            // Requesting the permission
             ActivityCompat.requestPermissions(this@MainActivity, arrayOf(permission), requestCode)
         }
     }
 
+    // Натсройка подключения к серверу
     private fun configureRetrofit() {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -100,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(Constants.APIurl)
+            .baseUrl(Constants.APIUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -109,6 +100,7 @@ class MainActivity : AppCompatActivity() {
         uwastingApi = retrofit.create(UWastingApi::class.java)
 
     }
+
     // Переключение фрагмента
     fun setFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).

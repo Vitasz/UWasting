@@ -23,9 +23,11 @@ class StartFragment : Fragment() {
 
         val signInBtn = view.findViewById<Button>(R.id.sign_in_btn)
         val signUpBtn = view.findViewById<Button>(R.id.sign_up_btn)
+
         signInBtn.setOnClickListener {
             startingActivity.setFragment(SignInFragment())
         }
+
         signUpBtn.setOnClickListener {
             startingActivity.setFragment(EmailFragment())
         }

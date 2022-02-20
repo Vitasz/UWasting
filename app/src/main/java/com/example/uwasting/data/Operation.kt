@@ -1,7 +1,6 @@
 package com.example.uwasting.data
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 class Operation (
 

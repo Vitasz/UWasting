@@ -21,16 +21,15 @@ class StartingActivity : AppCompatActivity() {
     lateinit var uwastingApi: UWastingApi
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-
         configureRetrofit()
-
         setContentView(R.layout.activity_start)
-
         setFragment(StartFragment())
 
     }
 
+    // Натсройка подключения к серверу
     private fun configureRetrofit() {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -40,7 +39,7 @@ class StartingActivity : AppCompatActivity() {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(Constants.APIurl)
+            .baseUrl(Constants.APIUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -50,11 +49,13 @@ class StartingActivity : AppCompatActivity() {
 
     }
 
+    // Переключение фрагмента
     fun setFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).
         addToBackStack(fragment.tag).commit()
     }
 
+    // Предыдущий фрагмент
     fun prevFragment() {
         supportFragmentManager.popBackStack()
     }

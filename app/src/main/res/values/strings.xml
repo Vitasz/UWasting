@@ -17,6 +17,7 @@
     <string name="verify_email">Please, verify your email address by following the link we sent.\n
                                 Then you can sign in to your account.
     </string>
+    <string name="add_error">Operation add error!</string>
     <string name="spending_by_category">Spending by Category</string>
     <string name="income_by_category">Income by Category</string>
     <string name="expense_category">Expense category</string>

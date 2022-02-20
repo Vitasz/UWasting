@@ -1,43 +1,43 @@
 package com.example.uwasting.data
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.ArrayList
 
+// Список операций
 class OperationsList(var item: ArrayList<Operation>) {
     var list = item
+
     fun selectOperationsIncomes():ArrayList<Operation>{
-        var tmp = ArrayList<Operation>()
+        val tmp = ArrayList<Operation>()
         for (i in list)
             if (i.amount>0)tmp.add(i)
         return tmp
     }
     fun selectOperationsExpenses():ArrayList<Operation>{
-        var tmp = ArrayList<Operation>()
+        val tmp = ArrayList<Operation>()
         for (i in list)
             if (i.amount<0)tmp.add(i)
         return tmp
     }
-    fun GetTotalSumIncomes():Int{
-        var tmp:Int = 0
+    fun getTotalSumIncomes():Int{
+        var tmp = 0
         for(i in list) {
             if (i.amount>0)tmp+=i.amount
         }
         return tmp
     }
-    fun GetTotalSumExpenses():Int{
-        var tmp:Int = 0
+    fun getTotalSumExpenses():Int{
+        var tmp = 0
         for(i in list) {
             if (i.amount<0)tmp+=i.amount
         }
         return tmp
     }
-    fun CombineByCategoryIncomes():ArrayList<Triple<Category, Int,Int>>{
+    fun combineByCategoryIncomes():ArrayList<Triple<Category, Int,Int>>{
         val res = ArrayList<Triple<Category, Int,Int>>()
         val tmp: MutableMap<String, Pair<Int, Int>> = mutableMapOf()
         for(i in list){
@@ -53,9 +53,9 @@ class OperationsList(var item: ArrayList<Operation>) {
         for (i in tmp){
             res.add(Triple(categories.hasInCommon(i.key), i.value.first, i.value.second))
         }
-        return ArrayList((res.sortedBy{it.third.toInt()}).reversed())
+        return ArrayList((res.sortedBy{it.third}).reversed())
     }
-    fun CombineByCategoryExpenses():ArrayList<Triple<Category, Int, Int>>{
+    fun combineByCategoryExpenses():ArrayList<Triple<Category, Int, Int>>{
         val res = ArrayList<Triple<Category, Int, Int>>()
         val tmp: MutableMap<String, Pair<Int, Int>> = mutableMapOf()
         for(i in list){
@@ -73,13 +73,12 @@ class OperationsList(var item: ArrayList<Operation>) {
         return ArrayList(res.sortedBy{it.third})
     }
     @RequiresApi(Build.VERSION_CODES.O)
-    fun SortByDate():ArrayList<Triple<LocalDate, Category, Int>>{
+    fun sortByDate():ArrayList<Triple<LocalDate, Category, Int>>{
         val res = ArrayList<Triple<LocalDate, Category, Int>>()
         val categories = Categories()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
 
         for (i in list) {
-            Log.d("TAG",i.date)
             res.add(
                 Triple(
                     LocalDate.parse(i.date.substring(0, 10), formatter),
@@ -88,14 +87,13 @@ class OperationsList(var item: ArrayList<Operation>) {
                 )
             )
         }
-        //Log.d("TAG",res[0].first.toString())
 
         return ArrayList((res.sortedBy { it.first }).reversed())
     }
     @RequiresApi(Build.VERSION_CODES.O)
-    fun SelectOperations(Period:Int):List<Operation>{
+    fun selectOperations(Period:Int):List<Operation>{
         val now = LocalDateTime.now()
-        var tmp = ArrayList<Operation>()
+        val tmp = ArrayList<Operation>()
         for (i in list) {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             val t = i.date.replace('T', ' ')
@@ -105,17 +103,17 @@ class OperationsList(var item: ArrayList<Operation>) {
         return tmp
     }
 
-    fun SelectByCategory(category: Category):OperationsList{
-        var tmp = ArrayList<Operation>()
+    fun selectByCategory(category: Category):OperationsList{
+        val tmp = ArrayList<Operation>()
         for (i in list) {
             if (i.category==category.name)tmp.add(i)
         }
         return OperationsList(tmp)
     }
     @RequiresApi(Build.VERSION_CODES.O)
-    fun CombineByDateIncomesAndExpenses():MutableMap<LocalDate, Pair<Int, Int>> {
+    fun combineByDateIncomesAndExpenses():MutableMap<LocalDate, Pair<Int, Int>> {
         val tmp: MutableMap<LocalDate, Pair<Int, Int>> = mutableMapOf()
-        val sortedList = OperationsList(list).SortByDate().reversed()
+        val sortedList = OperationsList(list).sortByDate().reversed()
         for(i in sortedList){
                 if (!tmp.containsKey(i.first)){
                     if (i.third<0)tmp[i.first]=Pair(0, i.third)

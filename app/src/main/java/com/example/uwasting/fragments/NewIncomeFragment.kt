@@ -4,14 +4,13 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.data.Constants
@@ -22,6 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.time.LocalDate
+
 interface SetCategory{
     fun setCategory(category:String)
 }
@@ -52,7 +52,7 @@ class NewIncomeFragment : Fragment(), SetCategory {
 
         // Получение виджетов
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
-        categoryText = view.findViewById<TextInputEditText>(R.id.category_edit)
+        categoryText = view.findViewById(R.id.category_edit)
         val addBtn = view.findViewById<Button>(R.id.add_btn)
         val amountTxt = view.findViewById<TextInputEditText>(R.id.sum_edit)
         dateTxt = view.findViewById(R.id.cmsn_edit)
@@ -63,7 +63,9 @@ class NewIncomeFragment : Fragment(), SetCategory {
                 addIncome(amountTxt.text.toString().toInt(), categoryText.text.toString(), dateTxt.text.toString())
             }
             else{
-                //TODO ПУСТЫЕ ПОЛЯ
+                val text = getString(R.string.field_is_empty)
+                val toast = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
+                toast.show()
             }
         }
 
@@ -93,18 +95,20 @@ class NewIncomeFragment : Fragment(), SetCategory {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun addIncome(amount:Int, category:String, date: String){
-        var mainActivity = activity as MainActivity
-        uwastingApi?.let {
-            compositeDisposable.add(uwastingApi.AddOperation(amount, category, date, mainActivity.user.id)
+        val mainActivity = activity as MainActivity
+        uwastingApi.let {
+            compositeDisposable.add(uwastingApi.addOperation(amount, category, date, mainActivity.user.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     if (it) {
-                        mainActivity.GetOperations()
+                        mainActivity.getOperations()
                         mainActivity.prevFragment()
                     }
                 }, {
-                    //TODO ВОЗНИКЛА ОШИБКА
+                    val text = getString(R.string.add_error)
+                    val toast = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
+                    toast.show()
                 }))
         }
     }

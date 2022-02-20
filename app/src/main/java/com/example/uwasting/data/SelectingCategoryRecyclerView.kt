@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 
+// Выбор категории
 class SelectingCategoryRecyclerView: RecyclerView.Adapter<SelectingCategoryRecyclerView.SelectingCategoryViewHolder>() {
 
     private val categoriesList: ArrayList<Category> = ArrayList()

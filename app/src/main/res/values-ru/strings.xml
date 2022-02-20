@@ -16,6 +16,7 @@
     <string name="verify_email">Пожалуйста, подтвердите ваш адрес эл. почты, пройдя по ссылке в нашем письме.\n
                                 После этого вы можете зайти в ваш аккаунт.
     </string>
+    <string name="add_error">Не удалось добавить операцию!</string>
     <string name="spending_by_category">Траты по категориям</string>
     <string name="income_by_category">Доходы по категориям</string>
     <string name="expense_category">Категория трат</string>

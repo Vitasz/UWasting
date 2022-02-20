@@ -18,9 +18,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 // Фрагмент проверки пароля
-class VerifyPasswordFragment(mode: Int) : Fragment() {
+class VerifyPasswordFragment(private var mode: Int) : Fragment() {
 
-    private var mode: Int = mode
     private val compositeDisposable = CompositeDisposable()
 
     override fun onCreateView(
@@ -47,9 +46,10 @@ class VerifyPasswordFragment(mode: Int) : Fragment() {
         return view
     }
 
+    // Вход в аккаунт
     private fun tryLogin(uwastingApi: UWastingApi, login:String, password:String){
         val mainActivity = activity as MainActivity
-        uwastingApi?.let {
+        uwastingApi.let {
             compositeDisposable.add(uwastingApi.getUserData(login, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

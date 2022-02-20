@@ -60,10 +60,11 @@ class PasswordFragment : Fragment() {
         return view
     }
 
+    // Регстрация пользователя
     private fun tryRegisterUser(uwastingApi: UWastingApi, user: User){
         val startingActivity = activity as StartingActivity
-        uwastingApi?.let {
-            compositeDisposable.add(uwastingApi.RegistrateUser(user.email,user.password, user.name, user.surname)
+        uwastingApi.let {
+            compositeDisposable.add(uwastingApi.registrateUser(user.email,user.password, user.name, user.surname)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

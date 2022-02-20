@@ -26,6 +26,7 @@ class NameFragment : Fragment() {
         val nextBtn = view.findViewById<Button>(R.id.next_btn)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
 
+        // Ввод имени и фамилии
         nextBtn.setOnClickListener {
             if ((nameEdit.text.toString() contentEquals "") or (surnameEdit.text.toString() contentEquals "")) {
                 val text = getString(R.string.field_is_empty)

@@ -2,11 +2,12 @@ package com.example.uwasting.data.remote
 
 import com.example.uwasting.data.Operation
 import com.example.uwasting.data.User
-import com.example.uwasting.fragments.ChangePasswordFragment
 import io.reactivex.Single
-import retrofit2.http.*
-import java.sql.Date
+import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.Query
 
+// API для сервера приложения
 interface UWastingApi {
 
     @GET("/GetByLoginAndPassword")
@@ -20,36 +21,36 @@ interface UWastingApi {
 
     @GET("/RegistrateUser")
     @Headers("Content-Type: application/json")
-    fun RegistrateUser(@Query("login") email:String,
+    fun registrateUser(@Query("login") email:String,
                             @Query("password") password:String,
                             @Query("name") name:String,
                             @Query("surname")surname:String): Single<Boolean>
 
     @GET("/СhangeNameSurname")
     @Headers("Content-Type: application/json")
-    fun ChangeNameSurname(@Query("id") id:Int,
+    fun changeNameSurname(@Query("id") id:Int,
                        @Query("name") newName:String,
                        @Query("surname") newSurname:String): Single<Boolean>
 
     @GET("/ChangeLogin")
     @Headers("Content-Type: application/json")
-    fun ChangeLogin(@Query("id") id:Int,
+    fun changeLogin(@Query("id") id:Int,
                           @Query("login") email:String): Single<Boolean>
 
     @GET("/ChangePassword")
     @Headers("Content-Type: application/json")
-    fun ChangePassword(@Query("id") id:Int,
+    fun changePassword(@Query("id") id:Int,
                           @Query("password") password:String): Single<Boolean>
 
     @GET("/GetOperations")
     @Headers("Content-Type: application/json")
-    fun GetOperations(@Query("UserId")id:Int):Single<ArrayList<Operation>>
+    fun getOperations(@Query("UserId")id:Int):Single<ArrayList<Operation>>
 
     @GET("/AddOperation")
     @Headers("Content-Type: application/json")
-    fun AddOperation(@Query("value")value:Int, @Query("category")category: String, @Query("date") date: String, @Query("id")id:Int):Single<Boolean>
+    fun addOperation(@Query("value")value:Int, @Query("category")category: String, @Query("date") date: String, @Query("id")id:Int):Single<Boolean>
 
     @GET("/DeleteOperation")
     @Headers("Content-Type: application/json")
-    fun DeleteOperation(@Query("id")id:Int):Single<Boolean>
+    fun deleteOperation(@Query("id")id:Int):Single<Boolean>
 }

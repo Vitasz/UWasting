@@ -22,7 +22,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 // Фрагмент с переключением доходов/расходов
-class TabFragment() : Fragment() {
+class TabFragment : Fragment() {
 
     @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     override fun onCreateView(

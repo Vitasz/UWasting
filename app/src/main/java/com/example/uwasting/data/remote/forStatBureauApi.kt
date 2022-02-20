@@ -2,6 +2,7 @@ package com.example.uwasting.data.remote
 
 import com.google.gson.annotations.SerializedName
 
+// Получения данных об ИПЦ с сайта www.statbureau.org
 class StatBureauData(
     @SerializedName("InflationRate")
     var inflationRate: Float,

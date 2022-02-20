@@ -58,10 +58,11 @@ class ChangePasswordFragment : Fragment() {
         return view
     }
 
+    // Изменение пароля
     private fun changePassword(uwastingApi: UWastingApi, password: String){
         val mainActivity = activity as MainActivity
-        uwastingApi?.let {
-            compositeDisposable.add(uwastingApi.ChangePassword(mainActivity.user.id, password)
+        uwastingApi.let {
+            compositeDisposable.add(uwastingApi.changePassword(mainActivity.user.id, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

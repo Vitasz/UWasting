@@ -31,7 +31,7 @@ class EmailFragment : Fragment() {
         val startingActivity = activity as StartingActivity
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
         val nextBtn = view.findViewById<Button>(R.id.next_btn)
-        val privacyPolicyTxt = view.findViewById<TextView>(R.id.pp_txt)
+        view.findViewById<TextView>(R.id.pp_txt)
         val emailEdit = view.findViewById<EditText>(R.id.email_edit)
 
         nextBtn.setOnClickListener {
@@ -48,12 +48,14 @@ class EmailFragment : Fragment() {
             }
         }
 
+        // Переход на предыдущий фрагмент
         toolbar.setNavigationOnClickListener {
             startingActivity.prevFragment()
         }
         return view
     }
 
+    // Проверка почты
     private fun checkMail(uwastingApi: UWastingApi?, email: String) {
         val startingActivity = activity as StartingActivity
 

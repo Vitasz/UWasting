@@ -22,7 +22,6 @@
             android:id="@+id/toolbar_line2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
             android:background="@color/light_grey" />
 
         <com.github.mikephil.charting.charts.BarChart
@@ -47,7 +46,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/header_txt"
-                tools:listitem="@layout/view_operation" />/>
+                tools:listitem="@layout/view_operation" />
 
             <TextView
                 android:id="@+id/header_txt"

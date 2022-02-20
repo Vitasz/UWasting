@@ -1,11 +1,11 @@
 package com.example.uwasting.data.remote
 
-import com.example.uwasting.data.User
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
 
+// API для СтатБюро
 interface StatBureauApi {
     @GET("/get-data-json")
     @Headers("Content-Type: application/json")

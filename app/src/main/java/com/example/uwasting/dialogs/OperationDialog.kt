@@ -6,8 +6,7 @@ import android.widget.Button
 import androidx.annotation.RequiresApi
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
-import com.example.uwasting.data.remote.UWastingApi
-import com.example.uwasting.fragments.onSetBaseOperation
+import com.example.uwasting.fragments.OnSetBaseOperation
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -16,19 +15,19 @@ import kotlin.math.abs
 
 // Диалоговое окно удаления операции
 @RequiresApi(Build.VERSION_CODES.O)
-class OperationDialog(context: Context, private var id: Int, private var amount:Int, private var mainActivity: MainActivity, private var onSetBaseOperation: onSetBaseOperation): BottomSheetDialog(context) {
+class OperationDialog(context: Context, private var id: Int, private var amount:Int, private var mainActivity: MainActivity, private var onSetBaseOperation: OnSetBaseOperation): BottomSheetDialog(context) {
     private var compositeDisposable = CompositeDisposable()
     init {
         setContentView(R.layout.dialog_operation)
         val deleteBtn = findViewById<Button>(R.id.delete_btn)
         val makeBase = findViewById<Button>(R.id.make_base_btn)
         deleteBtn?.setOnClickListener{
-            mainActivity.uwastingApi?.let {
-                compositeDisposable.add(mainActivity.uwastingApi.DeleteOperation(id)
+            mainActivity.uwastingApi.let {
+                compositeDisposable.add(mainActivity.uwastingApi.deleteOperation(id)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        mainActivity.GetOperations()
+                        mainActivity.getOperations()
                         this.dismiss()
                     }, {
                     }))

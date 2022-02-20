@@ -1,12 +1,11 @@
 package com.example.uwasting.fragments
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
@@ -25,9 +24,10 @@ class SelectCategoryFragment(private var setCategory: SetCategory, private var c
     ): View? {
         val view = inflater.inflate(R.layout.fragment_select_category, container, false)
         val mainActivity = activity as MainActivity
+
         // Получение виджетов
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
-        var categoriesList = view.findViewById<RecyclerView>(R.id.categories_list)
+        val categoriesList = view.findViewById<RecyclerView>(R.id.categories_list)
         val selectBtn = view.findViewById<Button>(R.id.select_btn)
         val adapter = SelectingCategoryRecyclerView()
         categoriesList.adapter = adapter
@@ -42,12 +42,10 @@ class SelectCategoryFragment(private var setCategory: SetCategory, private var c
             Constants.EXPENSES -> {
                 for (category in categories.expenses)
                     adapter.addItem(category)
-                adapter.addItem(categories.otherExpense)
             }
             Constants.INCOMES -> {
                 for (category in categories.incomes)
                     adapter.addItem(category)
-                adapter.addItem(categories.otherIncome)
             }
         }
 

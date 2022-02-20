@@ -53,10 +53,11 @@ class ChangeEmailFragment : Fragment() {
         return view
     }
 
+    // Изменение почты
     private fun changeEmail(uwastingApi: UWastingApi, login: String){
         val mainActivity = activity as MainActivity
-        uwastingApi?.let {
-            compositeDisposable.add(uwastingApi.ChangeLogin(mainActivity.user.id, login)
+        uwastingApi.let {
+            compositeDisposable.add(uwastingApi.changeLogin(mainActivity.user.id, login)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
-import com.example.uwasting.data.*
+import com.example.uwasting.data.Category
+import com.example.uwasting.data.CategoryRecyclerView
+import com.example.uwasting.data.Constants
+import com.example.uwasting.data.OnItemClickListener
 import com.example.uwasting.data.remote.StatBureauApi
-import com.example.uwasting.data.remote.UWastingApi
 import com.example.uwasting.dialogs.PeriodDialog
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -48,7 +49,7 @@ interface UpdateFragment{
     fun update()
 }
 // Фрагмент с доходами
-class IncomesFragment() : Fragment(), OnItemClickListener, UpdateFragment {
+class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
     private lateinit var pieChart: PieChart
     private lateinit var totalIncomesTxt:TextView
     private lateinit var recyclerView:RecyclerView
@@ -85,9 +86,9 @@ class IncomesFragment() : Fragment(), OnItemClickListener, UpdateFragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     mainActivity.index = it[0].inflationRate
-                    val sumIncomes = mainActivity.currentOperations.GetTotalSumIncomes()
-                    val sumExpenses = mainActivity.currentOperations.GetTotalSumExpenses()
-                    val balance = (sumIncomes + sumExpenses) / (((mainActivity.index + 100) / 100).pow(mainActivity.Period / 30))
+                    val sumIncomes = mainActivity.currentOperations.getTotalSumIncomes()
+                    val sumExpenses = mainActivity.currentOperations.getTotalSumExpenses()
+                    val balance = (sumIncomes + sumExpenses) / (((mainActivity.index + 100) / 100).pow(mainActivity.period / 30))
 
                     balanceView.text = mainActivity.getString(R.string.balance) + " " + String.format("%.2f", balance/mainActivity.ue)+mainActivity.curr
                 }, {
@@ -98,19 +99,19 @@ class IncomesFragment() : Fragment(), OnItemClickListener, UpdateFragment {
     @SuppressLint("SetTextI18n")
     fun updateOperations(){
 
-        totalIncomesTxt.text = '+' + (round(mainActivity.currentOperations.GetTotalSumIncomes().toFloat()/mainActivity.ue*100) /100.0).toString()+mainActivity.curr
+        totalIncomesTxt.text = '+' + (round(mainActivity.currentOperations.getTotalSumIncomes().toFloat()/mainActivity.ue*100) /100.0).toString()+mainActivity.curr
         //Список с категориями
         recyclerView.layoutManager = LinearLayoutManager(mainActivity)
-        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryIncomes(), this, mainActivity)
+        recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.combineByCategoryIncomes(), this, mainActivity)
+
         //Диаграмма
         loadPieChartData()
 
-        val sumIncomes = mainActivity.currentOperations.GetTotalSumIncomes()
-        val sumExpenses = mainActivity.currentOperations.GetTotalSumExpenses()
-        val balance = (sumIncomes + sumExpenses) / (((mainActivity.index + 100) / 100).pow(mainActivity.Period / 30))
+        val sumIncomes = mainActivity.currentOperations.getTotalSumIncomes()
+        val sumExpenses = mainActivity.currentOperations.getTotalSumExpenses()
+        val balance = (sumIncomes + sumExpenses) / (((mainActivity.index + 100) / 100).pow(mainActivity.period / 30))
 
         balanceView.text = mainActivity.getString(R.string.balance) + " " + String.format("%.2f", balance/mainActivity.ue)+mainActivity.curr
-        //TODO(ДОБАВИТЬ СТАТБЮРО КАК ИСТОЧНИК!!!!)
 
     }
     @RequiresApi(Build.VERSION_CODES.O)
@@ -128,7 +129,7 @@ class IncomesFragment() : Fragment(), OnItemClickListener, UpdateFragment {
         val addIncomeBtn = view.findViewById<MaterialButton>(R.id.add_income_btn)
         balanceView = view.findViewById(R.id.balance_inc)
         dateTxt = view.findViewById(R.id.date_txt)
-        dateTxt.text = getString(R.string.last) + " " + mainActivity.Period + " " + getString(R.string.days);
+        dateTxt.text = getString(R.string.last) + " " + mainActivity.period + " " + getString(R.string.days)
         recyclerView = view.findViewById(R.id.categories_list)
         pieChart = view.findViewById(R.id.diagram_incomes)
         setupPieChart()
@@ -153,6 +154,7 @@ class IncomesFragment() : Fragment(), OnItemClickListener, UpdateFragment {
         return view
     }
 
+    // Настройка отображения диаграммы
     private fun setupPieChart() {
         pieChart.isDrawHoleEnabled = false
         pieChart.setUsePercentValues(true)
@@ -169,9 +171,10 @@ class IncomesFragment() : Fragment(), OnItemClickListener, UpdateFragment {
         legend.isEnabled = false
     }
 
+    // Загрузка информации в диаграмму
     private fun loadPieChartData(){
         val entries = ArrayList<PieEntry>()
-        val operations = mainActivity.currentOperations.CombineByCategoryIncomes()
+        val operations = mainActivity.currentOperations.combineByCategoryIncomes()
 
         val colors = ArrayList<Int>()
         for(i in operations) {
@@ -190,6 +193,7 @@ class IncomesFragment() : Fragment(), OnItemClickListener, UpdateFragment {
         pieChart.animateY(1000, Easing.EaseInOutQuad)
     }
 
+    // Экспорт в CSV
     @RequiresApi(Build.VERSION_CODES.O)
     private fun exportToCSV(){
         val filename = "incomes.csv"
@@ -220,7 +224,7 @@ class IncomesFragment() : Fragment(), OnItemClickListener, UpdateFragment {
 
     @SuppressLint("SetTextI18n")
     override fun update() {
-        dateTxt.text = "Последние ${mainActivity.Period} дней"
+        dateTxt.text = "Последние ${mainActivity.period} дней"
         updateOperations()
     }
 }

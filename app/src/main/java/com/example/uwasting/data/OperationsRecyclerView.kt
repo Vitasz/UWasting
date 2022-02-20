@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
@@ -12,6 +11,7 @@ import com.example.uwasting.activities.MainActivity
 import java.time.LocalDate
 import kotlin.math.round
 
+// Список с операциями
 interface OnOperationClickListener{
     fun onItemClick(item:Triple<LocalDate, Category, Int>)
 }
@@ -49,7 +49,7 @@ class OperationsRecyclerView(private val data:ArrayList<Triple<LocalDate, Catego
             holder.sumTxt.text = "${round(data[position].third.toFloat()/mainActivity.ue*100)/100.0}" +
                     mainActivity.curr
 
-        var item = data[position]
+        val item = data[position]
         holder.bind(item, onOperationClickListener)
     }
 

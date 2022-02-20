@@ -1,6 +1,5 @@
 package com.example.uwasting.fragments
 
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,31 +7,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
-import com.example.uwasting.data.*
+import com.example.uwasting.data.Category
+import com.example.uwasting.data.OnOperationClickListener
+import com.example.uwasting.data.OperationsList
+import com.example.uwasting.data.OperationsRecyclerView
 import com.example.uwasting.dialogs.OperationDialog
-import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.appbar.MaterialToolbar
-import java.lang.Math.abs
 import java.time.LocalDate
 
-interface onSetBaseOperation{
+interface OnSetBaseOperation{
     fun onSet()
 }
 
-class valueFormatter(private val xValsDateLabel: ArrayList<LocalDate>) : ValueFormatter() {
+class ValueFormatter(private val xValsDateLabel: ArrayList<LocalDate>) : ValueFormatter() {
 
     override fun getFormattedValue(value: Float): String {
         return value.toString()
@@ -48,19 +46,21 @@ class valueFormatter(private val xValsDateLabel: ArrayList<LocalDate>) : ValueFo
 }
 
 // Фрагмент с выбранной категорией
-class CategoryFragment(private var category: Category, private var income:Boolean) : Fragment(), OnOperationClickListener, onSetBaseOperation {
+class CategoryFragment(private var category: Category, private var income:Boolean) : Fragment(), OnOperationClickListener, OnSetBaseOperation {
+
     lateinit var barChart: BarChart
     lateinit var listOperations:OperationsList
     lateinit var recyclerView:RecyclerView
     lateinit var mainActivity: MainActivity
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun setValues(){
-        recyclerView.adapter = OperationsRecyclerView(listOperations.SortByDate(), this, mainActivity)
+        recyclerView.adapter = OperationsRecyclerView(listOperations.sortByDate(), this, mainActivity)
         val barDataSet = BarDataSet(getEntries(listOperations), "")
-        barDataSet.setColors(listOf(category.color));
-        val barData = BarData(barDataSet);
-        barData.barWidth=0.5f
-        barChart.setData(barData);
+        barDataSet.colors = listOf(category.color)
+        val barData = BarData(barDataSet)
+        barData.barWidth = 0.5f
+        barChart.data = barData
     }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -71,7 +71,7 @@ class CategoryFragment(private var category: Category, private var income:Boolea
         mainActivity = activity as MainActivity
 
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
-        listOperations = mainActivity.currentOperations.SelectByCategory(category)
+        listOperations = mainActivity.currentOperations.selectByCategory(category)
         if (income)listOperations=OperationsList(listOperations.selectOperationsIncomes())
         else listOperations=OperationsList(listOperations.selectOperationsExpenses())
         recyclerView = view.findViewById(R.id.operations_list)
@@ -79,13 +79,15 @@ class CategoryFragment(private var category: Category, private var income:Boolea
 
 
         //Диаграмма
-        barChart = view.findViewById(R.id.operations_barchart);
+        barChart = view.findViewById(R.id.operations_barchart)
+
         //Настройка диаграммы
         barChart.xAxis.granularity = 1f
-        barChart.getDescription().setEnabled(false);
-        barChart.xAxis.valueFormatter = valueFormatter(ArrayList(listOperations.CombineByDateIncomesAndExpenses().keys))
+        barChart.description.isEnabled = false
+        barChart.xAxis.valueFormatter = ValueFormatter(ArrayList(listOperations.combineByDateIncomesAndExpenses().keys))
         barChart.legend.isEnabled = false
         barChart.animateY( 300)
+
         //Загрузка данных
         setValues()
 
@@ -99,7 +101,7 @@ class CategoryFragment(private var category: Category, private var income:Boolea
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun getEntries(list:OperationsList):ArrayList<BarEntry>{
-        val tmp = list.CombineByDateIncomesAndExpenses()
+        val tmp = list.combineByDateIncomesAndExpenses()
         val dataVals = ArrayList<BarEntry>()
         var cnt=0f
         for (i in tmp){
@@ -111,6 +113,7 @@ class CategoryFragment(private var category: Category, private var income:Boolea
         }
         return dataVals
     }
+
     //Нажатие на операцию
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemClick(item: Triple<LocalDate, Category, Int>) {
@@ -133,6 +136,7 @@ class CategoryFragment(private var category: Category, private var income:Boolea
         operationDialog?.show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onSet() {
         setValues()
     }

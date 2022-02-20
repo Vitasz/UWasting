@@ -36,6 +36,7 @@ class SignInFragment : Fragment() {
         val emailEdit = view.findViewById<EditText>(R.id.email_edit)
         val signInBtn = view.findViewById<Button>(R.id.sign_in_btn)
 
+        // Вход в приложении
         signInBtn.setOnClickListener {
             if ((passwordEdit.text.toString() contentEquals "") or (emailEdit.text.toString() contentEquals "")) {
                 val text = getString(R.string.field_is_empty)
