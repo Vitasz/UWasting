@@ -19,6 +19,7 @@ import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.data.Category
 
 import com.example.uwasting.data.CategoryRecyclerView
+import com.example.uwasting.data.LineReg
 import com.example.uwasting.data.OnItemClickListener
 import com.example.uwasting.dialogs.PeriodDialog
 import com.github.mikephil.charting.animation.Easing
@@ -33,6 +34,7 @@ import org.apache.commons.csv.CSVPrinter
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
+import kotlin.math.abs
 import kotlin.math.round
 
 // Фрагмент с расходами
@@ -42,12 +44,21 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
     private lateinit var dateTxt:TextView
     private lateinit var recyclerView:RecyclerView
     private lateinit var totalExpensesTxt:TextView
-    private lateinit var balanceView:TextView
+    private lateinit var forecastView:TextView
     @SuppressLint("SetTextI18n")
     fun updateOperations(){
         loadPieChartData()
         totalExpensesTxt.text = (round(mainActivity.currentOperations.GetTotalSumExpenses().toFloat()/mainActivity.ue*100)/100.0).toString()+mainActivity.curr
+        val expenses = mainActivity.currentOperations.selectOperationsExpenses()
+        val expensesRight = ArrayList<Int>()
+        for (i in expenses)expensesRight.add(abs(i.amount))
+        val incomes = mainActivity.currentOperations.selectOperationsIncomes()
+        val incomesRight = ArrayList<Int>()
+        for (i in incomes)incomesRight.add(abs(i.amount))
 
+        val lineReg = LineReg(incomesRight, expensesRight)
+        val pred = lineReg.evaluateAlgorithm()
+        forecastView.text = mainActivity.getString(R.string.monthly_forecast)+':'+ String.format("%.2f", pred/mainActivity.ue)+mainActivity.curr
 
         recyclerView.layoutManager = LinearLayoutManager(mainActivity)
         recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.CombineByCategoryExpenses(), this, mainActivity)
@@ -69,6 +80,7 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
         dateTxt = view.findViewById(R.id.date_txt)
         dateTxt.text = "Последние ${mainActivity.Period} дней"
         totalExpensesTxt = view.findViewById(R.id.totalExpenses)
+        forecastView=view.findViewById(R.id.forecast)
         pieChart = view.findViewById(R.id.diagram_expenses)
         setupPieChart()
         // Нажатие на период

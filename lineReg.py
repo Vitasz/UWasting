@@ -79,6 +79,7 @@ def coefficients(dataset):
 def simple_linear_regression(train, test):
     predictions = list()
     b0, b1 = coefficients(train)
+    print(b0, b1)
     for row in test:
         yhat = b0 + b1 * row[0]
         predictions.append(yhat)
