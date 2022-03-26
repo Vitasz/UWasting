@@ -1,6 +1,5 @@
 package com.example.uwasting.data
 
-
 class User  {
     lateinit var email: String
     lateinit var password: String

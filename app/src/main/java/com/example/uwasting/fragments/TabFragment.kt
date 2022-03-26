@@ -18,6 +18,7 @@ import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.activities.StartingActivity
 import com.example.uwasting.adapters.ViewPagerAdapter
 import com.example.uwasting.data.Constants
+import com.example.uwasting.data.User
 import com.example.uwasting.dialogs.LanguageDialog
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
@@ -59,7 +60,14 @@ class TabFragment : Fragment() {
                 // Выход из аккаунта
                 R.id.sign_out -> {
                     val intent = Intent(mainActivity, StartingActivity::class.java)
+                    val tmpUser = User()
+                    tmpUser.id = -1
+                    tmpUser.name = ""
+                    tmpUser.surname = ""
+                    tmpUser.email = ""
+                    mainActivity.myPreference.setUser(tmpUser)
                     startActivity(intent)
+                    mainActivity.finish()
                 }
                 R.id.currency ->{
                     mainActivity.curr = "$"

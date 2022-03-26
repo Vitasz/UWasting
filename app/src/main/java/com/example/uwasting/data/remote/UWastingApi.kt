@@ -24,7 +24,7 @@ interface UWastingApi {
     fun registrateUser(@Query("login") email:String,
                             @Query("password") password:String,
                             @Query("name") name:String,
-                            @Query("surname")surname:String): Single<Boolean>
+                            @Query("surname")surname:String): Single<User>
 
     @GET("/СhangeNameSurname")
     @Headers("Content-Type: application/json")

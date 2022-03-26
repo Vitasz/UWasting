@@ -2,6 +2,7 @@
 
 package com.example.uwasting.activities
 
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -18,6 +19,7 @@ import com.example.uwasting.data.OperationsList
 import com.example.uwasting.data.User
 import com.example.uwasting.data.remote.UWastingApi
 import com.example.uwasting.fragments.TabFragment
+import com.example.uwasting.preferences.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -32,46 +34,21 @@ import kotlin.collections.ArrayList
 // Главная активность
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
-    var language = "strings-ru"
-    val user: User = User()
+    lateinit var user:User
     private val compositeDisposable = CompositeDisposable()
     lateinit var uwastingApi: UWastingApi
+    lateinit var myPreference: MyPreference
     private lateinit var totalOperations: OperationsList
     lateinit var currentOperations: OperationsList
     var period = 30
     var curr = "$"
     var ue = 1
     var index = 0f
-
-    override fun onResume() {
-
-        changeLanguage()
-        super.onResume()
+    override fun attachBaseContext(newBase: Context?) {
+        myPreference = MyPreference(newBase!!)
+        val lang = myPreference.getLanguage()
+        super.attachBaseContext(MyContextWrapper.wrap(newBase, lang))
     }
-
-    private fun changeLanguage(){
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        Toast.makeText(applicationContext, language, Toast.LENGTH_SHORT).show()
-        if(language=="strings-ru"){
-            Toast.makeText(applicationContext,"Russian",Toast.LENGTH_SHORT).show()
-            language("")
-        }else if(language=="strings-en"){
-            Toast.makeText(applicationContext,"English",Toast.LENGTH_SHORT).show()
-            language("strings-en")
-        }
-    }
-
-
-    private fun language(language: String){
-        val locale = Locale(language)
-        Locale.setDefault(locale)
-        val resources = resources
-        val configuration = resources.configuration
-        configuration.locale = locale
-        resources.updateConfiguration(configuration, resources.displayMetrics)
-
-    }
-
     // Обновление операций
     @RequiresApi(Build.VERSION_CODES.O)
     fun updateCurrentOperations(){
@@ -99,13 +76,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val arguments = intent.extras
-        arguments!!.let {
-            user.name = it.getString("UserName", "NOT FOUND")
-            user.surname = it.getString("UserSurName", "NOT FOUND")
-            user.email = it.getString("UserEmail", "NOT FOUND")
-            user.id = it.getInt("UserId", -1)
-        }
+        myPreference=MyPreference(this)
+        user = myPreference.getUser()
         configureRetrofit()
         getOperations()
 

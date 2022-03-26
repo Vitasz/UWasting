@@ -68,12 +68,8 @@ class PasswordFragment : Fragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    val intent = Intent(startingActivity, MainActivity::class.java)
-                    intent.putExtra("UserName", user.name)
-                    intent.putExtra("UserSurName", user.surname)
-                    intent.putExtra("UserId", user.id)
-                    intent.putExtra("UserEmail", user.email)
-                    startingActivity.startActivity(intent)
+                    startingActivity.myPreference.setUser(it)
+                    startActivity(Intent(startingActivity, MainActivity::class.java))
                 }, {
                     val text = getString(R.string.registration_error)
                     val toast = Toast.makeText(startingActivity, text, Toast.LENGTH_LONG)

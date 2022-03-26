@@ -1,5 +1,6 @@
 package com.example.uwasting.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import com.example.uwasting.data.Constants
 import com.example.uwasting.data.User
 import com.example.uwasting.data.remote.UWastingApi
 import com.example.uwasting.fragments.StartFragment
+import com.example.uwasting.preferences.MyPreference
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class StartingActivity : AppCompatActivity() {
 
     var user: User = User()
-
+    lateinit var myPreference:MyPreference
     lateinit var uwastingApi: UWastingApi
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +27,14 @@ class StartingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         configureRetrofit()
         setContentView(R.layout.activity_start)
+        myPreference = MyPreference(this)
+        user = myPreference.getUser()
+        if (user.id!=-1){
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+
+
         setFragment(StartFragment())
 
     }

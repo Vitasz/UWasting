@@ -1,19 +1,21 @@
 package com.example.uwasting.fragments
 
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.activities.StartingActivity
+import com.example.uwasting.data.User
 import com.example.uwasting.data.remote.UWastingApi
+import com.example.uwasting.preferences.MyPreference
 import com.google.android.material.appbar.MaterialToolbar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -65,13 +67,12 @@ class SignInFragment : Fragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    Log.e("USER: ", it.toString())
-                    val intent = Intent(startingActivity, MainActivity::class.java)
-                    intent.putExtra("UserName", it.name)
-                    intent.putExtra("UserSurName", it.surname)
-                    intent.putExtra("UserId", it.id)
-                    intent.putExtra("UserEmail", it.email)
-                    startingActivity.startActivity(intent)
+                    //Сохранение пользователя
+                    startingActivity.myPreference.setUser(it)
+
+                    //Переход в приложение
+                    startActivity(Intent(startingActivity, MainActivity::class.java))
+                    startingActivity.finish()
                 }, {
                     val text = getString(R.string.user_not_found)
                     val t = Toast.makeText(startingActivity, text, Toast.LENGTH_LONG)

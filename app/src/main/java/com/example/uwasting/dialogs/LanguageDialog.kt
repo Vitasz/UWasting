@@ -2,13 +2,15 @@ package com.example.uwasting.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.RadioButton
 import androidx.fragment.app.DialogFragment
 import com.example.uwasting.R
-import com.example.uwasting.activities.BaseActivity
 import com.example.uwasting.activities.MainActivity
-import java.util.*
+import com.example.uwasting.activities.SettingsActivity
+import com.example.uwasting.preferences.MyPreference
+
 
 class LanguageDialog: DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -17,14 +19,19 @@ class LanguageDialog: DialogFragment() {
         val view = activity?.layoutInflater?.inflate(R.layout.dialog_language, null)
         val btnRus = view?.findViewById<RadioButton>(R.id.radioBtnRus)
         val btnEng = view?.findViewById<RadioButton>(R.id.radioBtnEng)
-
+        val myPreference = MyPreference(mainActivity)
         btnRus?.setOnClickListener {
-            mainActivity.language = "strings-ru"
+
+            val myIntent = Intent(mainActivity, SettingsActivity::class.java)
+            myIntent.putExtra("language", "ru")
+            startActivity(myIntent)
             this.dismiss()
         }
 
         btnEng?.setOnClickListener {
-            mainActivity.language = "strings-en"
+            val myIntent = Intent(mainActivity, SettingsActivity::class.java)
+            myIntent.putExtra("language", "en")
+            startActivity(myIntent)
             this.dismiss()
         }
 
