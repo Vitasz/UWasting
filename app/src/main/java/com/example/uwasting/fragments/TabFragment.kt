@@ -1,21 +1,24 @@
+@file:Suppress("NAME_SHADOWING")
+
 package com.example.uwasting.fragments
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.activities.StartingActivity
-import android.widget.TextView
 import com.example.uwasting.adapters.ViewPagerAdapter
 import com.example.uwasting.data.Constants
+import com.example.uwasting.dialogs.LanguageDialog
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
@@ -65,6 +68,12 @@ class TabFragment : Fragment() {
                     viewPager.adapter = viewPagerAdapter
 
                 }
+
+                R.id.language ->{
+                    val dialog = LanguageDialog()
+                    dialog.show(parentFragmentManager, "language")
+                }
+
             }
             true
         }

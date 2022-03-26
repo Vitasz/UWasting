@@ -1,8 +1,12 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.uwasting.activities
 
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -22,18 +26,51 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
+import kotlin.collections.ArrayList
 
 // Главная активность
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
+    var language = "strings-ru"
     val user: User = User()
     private val compositeDisposable = CompositeDisposable()
     lateinit var uwastingApi: UWastingApi
-    lateinit var totalOperations: OperationsList
+    private lateinit var totalOperations: OperationsList
     lateinit var currentOperations: OperationsList
     var period = 30
     var curr = "$"
     var ue = 1
     var index = 0f
+
+    override fun onResume() {
+
+        changeLanguage()
+        super.onResume()
+    }
+
+    private fun changeLanguage(){
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        Toast.makeText(applicationContext, language, Toast.LENGTH_SHORT).show()
+        if(language=="strings-ru"){
+            Toast.makeText(applicationContext,"Russian",Toast.LENGTH_SHORT).show()
+            language("")
+        }else if(language=="strings-en"){
+            Toast.makeText(applicationContext,"English",Toast.LENGTH_SHORT).show()
+            language("strings-en")
+        }
+    }
+
+
+    private fun language(language: String){
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        val resources = resources
+        val configuration = resources.configuration
+        configuration.locale = locale
+        resources.updateConfiguration(configuration, resources.displayMetrics)
+
+    }
 
     // Обновление операций
     @RequiresApi(Build.VERSION_CODES.O)
