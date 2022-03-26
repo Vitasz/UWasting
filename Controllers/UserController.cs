@@ -12,9 +12,16 @@ namespace Server.Controllers
     {
         [Route("/RegistrateUser")]
         [HttpGet]
-        public bool RegistrateUser(string login, string password, string name, string surname)
+        public IActionResult RegistrateUser(string login, string password, string name, string surname)
         {
-            return Database.Registration.Registrate(login, password, name, surname, 0);
+            (int id, string email, string name, string surname) tmp = Database.Registration.Registrate(login, password, name, surname, 0);
+            if (tmp.id == -1) return BadRequest();
+            User user = new User();
+            user.name = tmp.name;
+            user.surname = tmp.surname;
+            user.email = tmp.email;
+            user.id = tmp.id;
+            return Ok(user);
         }
 
         [Route("/GetByLoginAndPassword")]

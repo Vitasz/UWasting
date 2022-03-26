@@ -25,12 +25,12 @@ namespace Database
 
             return cmd.ExecuteReader().HasRows;
         }
-        public static bool Registrate(string login, string password, string name, string surname, int age)
+        public static (int id, string email, string Name, string Surname) Registrate(string login, string password, string name, string surname, int age)
         {
             using var myCon = new NpgsqlConnection(Globaldata.connect);
             myCon.Open();
             if (CheckingUser(login))
-              return false;
+              return (-1, "", "", "");
             var cmd = new NpgsqlCommand("INSERT INTO \"Users\" (\"Login\", \"Password\", \"Name\", \"Surname\") VALUES (@log, @pass, @name, @surname)", myCon)
             {
                 Parameters =
@@ -42,7 +42,28 @@ namespace Database
                 }
             };
             cmd.ExecuteNonQuery();
-            return true;
+            cmd = new NpgsqlCommand("SELECT \"id\", \"Login\", \"Name\", \"Surname\" FROM \"Users\" WHERE \"Login\" = @log AND \"Password\" = @pass", myCon)
+            {
+                Parameters =
+                {
+                    new("@log", login),
+                    new("@pass", password)
+                }
+            };
+            using (var reader = cmd.ExecuteReader())
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        int UserId = Convert.ToInt32(reader[0]);
+                        string email = reader[1].ToString(), Name = reader[2].ToString(), Surname = reader[3].ToString();
+                        return (UserId, email, Name, Surname);
+                    }
+                }
+
+            }
+            return (-1, "", "", "");
         }
         public static bool ChangeNameSurname(int id, string name, string surname)
         {
