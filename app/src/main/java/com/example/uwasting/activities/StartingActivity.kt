@@ -1,11 +1,12 @@
 package com.example.uwasting.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.uwasting.R
 import com.example.uwasting.data.Constants
+import com.example.uwasting.data.OnBackButtonListener
 import com.example.uwasting.data.User
 import com.example.uwasting.data.remote.UWastingApi
 import com.example.uwasting.fragments.StartFragment
@@ -16,6 +17,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 class StartingActivity : AppCompatActivity() {
 
     var user: User = User()
@@ -25,8 +27,9 @@ class StartingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        configureRetrofit()
         setContentView(R.layout.activity_start)
+        configureRetrofit()
+        //setContentView(R.layout.activity_start)
         myPreference = MyPreference(this)
         user = myPreference.getUser()
         if (user.id!=-1){
@@ -34,8 +37,8 @@ class StartingActivity : AppCompatActivity() {
             finish()
         }
 
-
         setFragment(StartFragment())
+
 
     }
 
@@ -61,8 +64,10 @@ class StartingActivity : AppCompatActivity() {
 
     // Переключение фрагмента
     fun setFragment(fragment: Fragment) {
+
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).
         addToBackStack(fragment.tag).commit()
+
     }
 
     // Предыдущий фрагмент
@@ -70,4 +75,23 @@ class StartingActivity : AppCompatActivity() {
         supportFragmentManager.popBackStack()
     }
 
+    override fun onBackPressed() {
+        val backStackCount = supportFragmentManager.backStackEntryCount
+
+        // Находим текущий Фрагмент и вызваем его метод: onBackPressed()
+
+        // Находим текущий Фрагмент и вызваем его метод: onBackPressed()
+        if (backStackCount > 0) {
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+            if (currentFragment is OnBackButtonListener) {
+                val actionResult = currentFragment.onBackPressed()
+
+                if (actionResult) {
+                    return
+                }
+            }
+        }
+
+        super.onBackPressed()
+    }
 }

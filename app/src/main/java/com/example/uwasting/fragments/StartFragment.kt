@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.example.uwasting.R
 import com.example.uwasting.activities.StartingActivity
+import com.example.uwasting.data.OnBackButtonListener
 
 
-class StartFragment : Fragment() {
+class StartFragment : Fragment(), OnBackButtonListener {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,4 +36,7 @@ class StartFragment : Fragment() {
         return view
     }
 
+    override fun onBackPressed(): Boolean {
+        return true
+    }
 }

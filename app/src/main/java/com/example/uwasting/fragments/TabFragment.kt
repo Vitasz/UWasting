@@ -18,6 +18,7 @@ import com.example.uwasting.activities.MainActivity
 import com.example.uwasting.activities.StartingActivity
 import com.example.uwasting.adapters.ViewPagerAdapter
 import com.example.uwasting.data.Constants
+import com.example.uwasting.data.OnBackButtonListener
 import com.example.uwasting.data.User
 import com.example.uwasting.dialogs.LanguageDialog
 import com.google.android.material.appbar.MaterialToolbar
@@ -26,7 +27,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 // Фрагмент с переключением доходов/расходов
-class TabFragment : Fragment() {
+class TabFragment : Fragment(), OnBackButtonListener {
 
     @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     override fun onCreateView(
@@ -106,6 +107,10 @@ class TabFragment : Fragment() {
 
 
         return view
+    }
+
+    override fun onBackPressed(): Boolean {
+        return true
     }
 
 }

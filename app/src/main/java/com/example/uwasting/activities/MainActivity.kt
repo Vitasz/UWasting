@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.uwasting.R
 import com.example.uwasting.data.Constants
+import com.example.uwasting.data.OnBackButtonListener
 import com.example.uwasting.data.OperationsList
 import com.example.uwasting.data.User
 import com.example.uwasting.data.remote.UWastingApi
@@ -119,5 +120,25 @@ class MainActivity : AppCompatActivity() {
     // Предыдущий фрагмент
     fun prevFragment() {
         supportFragmentManager.popBackStack()
+    }
+    //Нажатие кнопки назад
+    override fun onBackPressed() {
+        val backStackCount = supportFragmentManager.backStackEntryCount
+
+        // Находим текущий Фрагмент и вызваем его метод: onBackPressed()
+
+        // Находим текущий Фрагмент и вызваем его метод: onBackPressed()
+        if (backStackCount > 0) {
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+            if (currentFragment is OnBackButtonListener) {
+                val actionResult = currentFragment.onBackPressed()
+
+                if (actionResult) {
+                    return
+                }
+            }
+        }
+
+        super.onBackPressed()
     }
 }
