@@ -2,6 +2,7 @@ package com.example.uwasting.data
 
 import android.graphics.Color
 import com.example.uwasting.R
+import com.example.uwasting.activities.MainActivity
 
 class Categories {
     val expenses = listOf(

@@ -72,8 +72,8 @@ class CategoryFragment(private var category: Category, private var income:Boolea
 
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
         listOperations = mainActivity.currentOperations.selectByCategory(category)
-        if (income)listOperations=OperationsList(listOperations.selectOperationsIncomes())
-        else listOperations=OperationsList(listOperations.selectOperationsExpenses())
+        if (income) listOperations = OperationsList(listOperations.selectOperationsIncomes())
+        else listOperations = OperationsList(listOperations.selectOperationsExpenses())
         recyclerView = view.findViewById(R.id.operations_list)
         recyclerView.layoutManager = LinearLayoutManager(mainActivity)
 

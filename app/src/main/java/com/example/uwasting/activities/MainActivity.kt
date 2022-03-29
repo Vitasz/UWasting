@@ -1,13 +1,14 @@
-@file:Suppress("DEPRECATION")
+@file:Suppress("DEPRECATION", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 
 package com.example.uwasting.activities
 
+import MyContextWrapper
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.widget.Toast
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -19,18 +20,19 @@ import com.example.uwasting.data.OnBackButtonListener
 import com.example.uwasting.data.OperationsList
 import com.example.uwasting.data.User
 import com.example.uwasting.data.remote.UWastingApi
+import com.example.uwasting.fragments.CREATE_FILE_INCOMES
 import com.example.uwasting.fragments.TabFragment
-import com.example.uwasting.preferences.*
+import com.example.uwasting.preferences.MyPreference
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVPrinter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
-import kotlin.collections.ArrayList
 
 // Главная активность
 @Suppress("DEPRECATION")
@@ -56,9 +58,44 @@ class MainActivity : AppCompatActivity() {
         currentOperations = OperationsList(ArrayList(totalOperations.selectOperations(period)))
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val operations = currentOperations.selectOperationsIncomes()
+        if (requestCode == CREATE_FILE_INCOMES && resultCode == RESULT_OK) {
+            val selectedFile = data?.data //The uri with the location of the file
+            if (selectedFile != null) {
+                val writer = contentResolver.openOutputStream(selectedFile)?.bufferedWriter()
+                val csvPrinter = CSVPrinter(writer, CSVFormat.DEFAULT
+                    .withHeader("OperationId", "Category", "Amount", "Date"))
+
+                for (operation in operations) {
+                    val operationData = listOf(
+                        operation.id,
+                        operation.category,
+                        operation.amount,
+                        operation.date)
+
+                    csvPrinter.printRecord(operationData)
+                }
+
+                csvPrinter.flush()
+                csvPrinter.close()
+
+
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                intent.setDataAndType(selectedFile,"*/*")
+                startActivity(Intent.createChooser(intent, "Open"));
+            } else {
+                Log.e("TAG: ", "cock")
+            }
+        }
+    }
+
     // Получение операций пользователя
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getOperations(){
+    fun getOperations() {
         uwastingApi.let {
             compositeDisposable.add(uwastingApi.getOperations(user.id)
                 .subscribeOn(Schedulers.io())
@@ -68,7 +105,10 @@ class MainActivity : AppCompatActivity() {
                     updateCurrentOperations()
 
                     setFragment(TabFragment())
-                }, {
+                }, {user.id = -1
+                    myPreference.setUser(user)
+                    startActivity(Intent(this, StartingActivity::class.java))
+                    finish()
                 }))
         }
     }
@@ -77,7 +117,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        myPreference=MyPreference(this)
+        myPreference = MyPreference(this)
         user = myPreference.getUser()
         configureRetrofit()
         getOperations()

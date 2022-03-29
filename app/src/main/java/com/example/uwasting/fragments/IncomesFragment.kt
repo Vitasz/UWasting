@@ -1,9 +1,13 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.uwasting.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.DocumentsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +48,8 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.math.pow
 import kotlin.math.round
+
+const val CREATE_FILE_INCOMES = 111
 
 interface UpdateFragment{
     fun update()
@@ -145,10 +151,14 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
             mainActivity.setFragment(NewIncomeFragment())
         }
 
-
         exportToCSVBtn.setOnClickListener {
-            mainActivity.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, 123)
-            exportToCSV()
+
+            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "application/csv"
+                putExtra(Intent.EXTRA_TITLE, "incomes.csv")
+            }
+            mainActivity.startActivityForResult(intent, CREATE_FILE_INCOMES)
         }
 
         return view
@@ -191,35 +201,6 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
         pieChart.data = data
         pieChart.invalidate()
         pieChart.animateY(1000, Easing.EaseInOutQuad)
-    }
-
-    // Экспорт в CSV
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun exportToCSV(){
-        val filename = "incomes.csv"
-        val path = context?.getExternalFilesDir(null)
-        val fileOut = File(path, filename)
-        fileOut.delete()
-        fileOut.createNewFile()
-        val stringPath = path.toString()
-
-        val operations = mainActivity.currentOperations.selectOperationsIncomes()
-        val writer = Files.newBufferedWriter(Paths.get("$stringPath/$filename"))
-        val csvPrinter = CSVPrinter(writer, CSVFormat.DEFAULT
-            .withHeader("OperationId", "Category", "Amount", "Date"))
-
-        for (operation in operations) {
-            val operationData = listOf(
-                operation.id,
-                operation.category,
-                operation.amount,
-                operation.date)
-
-            csvPrinter.printRecord(operationData)
-        }
-
-        csvPrinter.flush()
-        csvPrinter.close()
     }
 
     @SuppressLint("SetTextI18n")

@@ -1,7 +1,6 @@
 package com.example.uwasting.preferences
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import com.example.uwasting.data.User
 
 const val PREFERENCE_NAME = "SharedPreferenceExample"
