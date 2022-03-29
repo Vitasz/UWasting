@@ -49,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:background="?android:attr/selectableItemBackground"
+                android:inputType="number"
                 android:hint="@string/sum" />
         </com.google.android.material.textfield.TextInputLayout>
 

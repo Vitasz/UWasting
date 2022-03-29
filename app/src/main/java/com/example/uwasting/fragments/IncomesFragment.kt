@@ -50,6 +50,7 @@ import kotlin.math.pow
 import kotlin.math.round
 
 const val CREATE_FILE_INCOMES = 111
+const val CREATE_FILE_EXPENSES = 112
 
 interface UpdateFragment{
     fun update()
@@ -155,7 +156,7 @@ class IncomesFragment : Fragment(), OnItemClickListener, UpdateFragment {
 
             val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                 addCategory(Intent.CATEGORY_OPENABLE)
-                type = "application/csv"
+                type = "text/csv"
                 putExtra(Intent.EXTRA_TITLE, "incomes.csv")
             }
             mainActivity.startActivityForResult(intent, CREATE_FILE_INCOMES)

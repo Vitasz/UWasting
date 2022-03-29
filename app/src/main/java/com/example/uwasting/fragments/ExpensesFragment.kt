@@ -2,6 +2,7 @@ package com.example.uwasting.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -101,33 +102,12 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
 
         // Экспорт расходов в CSV файл
         exportToCSVBtn.setOnClickListener {
-            mainActivity.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, 123)
-
-            val filename = "expenses.csv"
-            val path: File? = context?.getExternalFilesDir(null)
-            val fileOut = File(path, filename)
-            fileOut.delete()
-            fileOut.createNewFile()
-            val stringPath = path.toString()
-
-            val operations = mainActivity.currentOperations.selectOperationsExpenses()
-            val writer = Files.newBufferedWriter(Paths.get("$stringPath/$filename"))
-            val csvPrinter = CSVPrinter(writer, CSVFormat.DEFAULT
-                .withHeader("OperationId", "Category", "Amount", "Date"))
-
-            for (operation in operations) {
-                val operationData = listOf(
-                    operation.id,
-                    operation.category,
-                    operation.amount,
-                    operation.date)
-
-                csvPrinter.printRecord(operationData)
+            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "text/csv"
+                putExtra(Intent.EXTRA_TITLE, "expenses.csv")
             }
-
-            csvPrinter.flush()
-            csvPrinter.close()
-
+            mainActivity.startActivityForResult(intent, CREATE_FILE_EXPENSES)
         }
 
         return view
