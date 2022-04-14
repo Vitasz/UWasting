@@ -15,7 +15,8 @@ namespace Server.Controllers
         [HttpGet]
         public IActionResult AddOperation(int value, string category, DateTime date, int id)
         {
-            if (Database.Operations.AddOperation(value, category, date, id)) return Ok(true);
+            int ans = Database.Operations.AddOperation(value, category, date, id);
+            if (ans != -1) return Ok(ans);
             else return BadRequest();
         }
         [Route("/DeleteOperation")]

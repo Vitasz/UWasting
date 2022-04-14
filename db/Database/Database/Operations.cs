@@ -10,7 +10,7 @@ namespace Database
 {
     public static class Operations
     {
-        public static bool AddOperation(int value, string category, DateTime date, int UserId)
+        public static int AddOperation(int value, string category, DateTime date, int UserId)
         {
             using var myCon = new NpgsqlConnection(Globaldata.connect);
             myCon.Open();
@@ -25,9 +25,11 @@ namespace Database
                     new("@id", UserId)
                 }
             };
-
+              
             cmd.ExecuteNonQuery();
-            return true;
+            List<(int id, int Value, string Category, DateTime Date)> tmp = LoadOperations(UserId);
+
+            return tmp[tmp.Count-1].id;
         }
         public static bool DeleteOperation(int OperationId)
         {
