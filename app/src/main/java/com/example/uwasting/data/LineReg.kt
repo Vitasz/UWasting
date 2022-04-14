@@ -1,116 +1,33 @@
 package com.example.uwasting.data
 
-import kotlin.math.pow
-import kotlin.math.sqrt
-import kotlin.random.Random
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
+import org.nield.kotlinstatistics.*
+import java.sql.Date
+import java.time.LocalDate
+import java.time.LocalDate.now
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.math.exp
 
 // Линейная регрессия
-class LineReg(private var income:ArrayList<Int>, private var expense:ArrayList<Int> ) {
-    private var split = 0.6
-    private val random = Random(1)
-    init{
-        while(income.size<expense.size)income.add(0)
-        while(income.size>expense.size)expense.add(0)
-    }
+class LineReg(private var expenses:ArrayList<Operation> ){
+    @RequiresApi(Build.VERSION_CODES.O)
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
+    @RequiresApi(Build.VERSION_CODES.O)
+    public fun evaluateAlgorithm():Double {
+        if (expenses.size == 0)return 0.0
+        if (expenses.size == 1) return expenses[0].amount.toDouble() * 30
 
-    // Расчёт значения
-    fun evaluateAlgorithm(): Float {
-        val trainTest = trainTestSplit(income, expense)
-        val train = trainTest.first
-        val test = trainTest.second
-        val testSet = ArrayList<Pair<Int, Int>>()
-        for (i in test) {
-            val iCopy = Pair(i.first, i.second)
-            testSet.add(iCopy)
-        }
-        val predicted = simpleLinearRegression(train, testSet)
-        val actual = ArrayList<Int>()
-        for (i in test) actual.add(i.second)
-        return rmseMetric(actual, predicted)
-    }
-
-    // Среднее занчение
-    private fun mean(values:ArrayList<Int>):Float{
-        var sum =0
-        for (i in values)sum+=i
-        return sum.toFloat()/values.size
-    }
-
-    // Ковариация
-    private fun covariance(income:ArrayList<Int>, incomeMean:Float,
-                   expense:ArrayList<Int>, expenseMean:Float):Float{
-        var covar = 0f
-        for (i in 0 until income.size){
-            covar+=(income[i]-incomeMean)*(expense[i]-expenseMean)
-        }
-        return covar
-    }
-
-    // Вариация
-    private fun variance(values: ArrayList<Int>, mean:Float):Float{
-        var sum =0f
-        for (i in values)
-            sum+=(i-mean).pow(2)
+        val r = expenses.simpleRegression(
+            xSelector = { (LocalDate.parse(it.date.substring(0, 10), formatter)).dayOfYear},
+            ySelector = {it.amount}
+        )
+        var sum = 0.0
+        for (i in 0..30)
+            sum+= r.predict((now()).dayOfYear.toDouble())
         return sum
-    }
-
-    // Получение коэффициентов прямой
-    private fun coefficients(expense: ArrayList<Int>, income:ArrayList<Int>):Pair<Float, Float> {
-        val incomeMean = mean(income)
-        val expenseMean = mean(expense)
-
-        val b1 = covariance(income, incomeMean, expense, expenseMean) / variance(expense, expenseMean)
-        val b0 = incomeMean - b1*expenseMean
-        return Pair(b0, b1)
-    }
-
-    //
-    private fun trainTestSplit(income:ArrayList<Int>, expense:ArrayList<Int>):
-    Pair<ArrayList<Pair<Int,Int>>, ArrayList<Pair<Int,Int>>>{
-        val expenseIncomeCopy = ArrayList<Pair<Int,Int>>()
-        for (i in 0 until income.size){
-            expenseIncomeCopy.add(Pair(expense[i], income[i]))
-        }
-
-        val train = ArrayList<Pair<Int,Int>>()
-        val trainSize = split*income.size
-
-        while (train.size<trainSize){
-            val index  =random.nextInt(0, expenseIncomeCopy.size)
-            train.add(expenseIncomeCopy[index])
-            expenseIncomeCopy.removeAt(index)
-        }
-        return Pair(train, expenseIncomeCopy)
-    }
-
-    // Получение погрешности
-    private fun rmseMetric(actual:ArrayList<Int>, predicted:ArrayList<Float>): Float {
-        var sumError = 0f
-        for (i in 0 until actual.size){
-            val predictionError = predicted[i]-actual[i]
-            sumError+=predictionError.pow(2)
-        }
-        val meanError = sumError/actual.size.toFloat()
-        return sqrt(meanError)
-    }
-
-    // Прогноз
-    private fun simpleLinearRegression(train:ArrayList<Pair<Int,Int>>, test:ArrayList<Pair<Int,Int>>):
-    ArrayList<Float>{
-        val predictions = ArrayList<Float>()
-        val income = ArrayList<Int>()
-        val expense = ArrayList<Int>()
-        for (i in train){
-            income.add(i.second)
-            expense.add(i.first)
-        }
-        val b = coefficients(expense, income)
-        val b0 = b.first
-        val b1 = b.second
-        for (i in test){
-            val yHat = b0+b1*i.first
-            predictions.add(yHat)
-        }
-        return predictions
     }
 }

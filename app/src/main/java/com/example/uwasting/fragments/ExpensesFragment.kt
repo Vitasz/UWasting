@@ -17,11 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uwasting.R
 import com.example.uwasting.activities.MainActivity
-import com.example.uwasting.data.Category
+import com.example.uwasting.data.*
 
-import com.example.uwasting.data.CategoryRecyclerView
-import com.example.uwasting.data.LineReg
-import com.example.uwasting.data.OnItemClickListener
 import com.example.uwasting.dialogs.PeriodDialog
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -48,20 +45,21 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
     private lateinit var forecastView:TextView
 
     // Обновить операции
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     fun updateOperations(){
         loadPieChartData()
         totalExpensesTxt.text = (round(mainActivity.currentOperations.getTotalSumExpenses().toFloat()/mainActivity.ue*100)/100.0).toString()+mainActivity.curr
         val expenses = mainActivity.currentOperations.selectOperationsExpenses()
-        val expensesRight = ArrayList<Int>()
-        for (i in expenses)expensesRight.add(abs(i.amount))
-        val incomes = mainActivity.currentOperations.selectOperationsIncomes()
-        val incomesRight = ArrayList<Int>()
-        for (i in incomes)incomesRight.add(abs(i.amount))
+        val expensesRight = ArrayList<Operation>()
+        val expensesRightData = ArrayList<String>()
+        for (i in expenses){
+            expensesRight.add(i)
+        }
 
-        val lineReg = LineReg(incomesRight, expensesRight)
+        val lineReg = LineReg(expensesRight)
         val pred = lineReg.evaluateAlgorithm()
-        forecastView.text = mainActivity.getString(R.string.monthly_forecast)+": -"+ String.format("%.2f", pred/mainActivity.ue)+mainActivity.curr
+        forecastView.text = mainActivity.getString(R.string.monthly_forecast)+": "+ String.format("%.2f", pred/mainActivity.ue)+mainActivity.curr
 
         recyclerView.layoutManager = LinearLayoutManager(mainActivity)
         recyclerView.adapter = CategoryRecyclerView(mainActivity.currentOperations.combineByCategoryExpenses(), this, mainActivity)
