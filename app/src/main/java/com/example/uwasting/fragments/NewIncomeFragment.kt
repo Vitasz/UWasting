@@ -20,7 +20,9 @@ import com.google.android.material.textfield.TextInputEditText
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.util.*
 
 interface SetCategory{
     fun setCategory(category:String)
@@ -85,12 +87,15 @@ class NewIncomeFragment : Fragment(), SetCategory {
         return view
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
     var callBack = DatePickerDialog.OnDateSetListener {view, year, monthOfYear, dayOfMonth ->
         curYear = year
         curMonth = monthOfYear+1
         curDay = dayOfMonth
-        dateTxt.setText("$curMonth-$curDay-$curYear")
+        val format = SimpleDateFormat("MM-dd-yyyy")
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.set(curYear, curMonth, curDay)
+        dateTxt.setText(format.format(calendar.getTime()))
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -101,8 +106,12 @@ class NewIncomeFragment : Fragment(), SetCategory {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    if (it) {
-                        mainActivity.getOperations()
+                    if (it!=-1){
+                        val year = date.split('-')[2]
+                        val month = date.split('-')[0]
+                        val day = date.split('-')[1]
+
+                        mainActivity.currentOperations.addOperation(amount, category, year+'-'+month+'-'+day, it)
                         mainActivity.prevFragment()
                     }
                 }, {

@@ -5,7 +5,6 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +20,9 @@ import com.google.android.material.textfield.TextInputEditText
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.util.*
 
 
 // Фрагмент с добавлением расхода
@@ -42,14 +43,17 @@ class NewExpenseFragment : Fragment(), SetCategory {
     fun sendOperation(amount:Int, category:String, date:String){
         val mainActivity = activity as MainActivity
 
-
         mainActivity.uwastingApi.let {
             compositeDisposable.add(mainActivity.uwastingApi.addOperation(-amount, category, date, mainActivity.user.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    if (it){
-                        mainActivity.getOperations()
+                    if (it!=-1){
+                        val year = date.split('-')[2]
+                        val month = date.split('-')[0]
+                        val day = date.split('-')[1]
+
+                        mainActivity.currentOperations.addOperation(-amount, category, year+'-'+month+'-'+day, it)
                         mainActivity.prevFragment()
 
                     }
@@ -61,13 +65,17 @@ class NewExpenseFragment : Fragment(), SetCategory {
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
     var myCallBack =
         OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             myYear = year
             myMonth = monthOfYear+1
             myDay = dayOfMonth
-            datetxt.setText("$myMonth-$myDay-$myYear")
+            val format = SimpleDateFormat("MM-dd-yyyy")
+            val calendar: Calendar = Calendar.getInstance()
+            calendar.set(myYear, myMonth, myDay)
+
+            datetxt.setText(format.format(calendar.getTime()))
         }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -98,7 +106,6 @@ class NewExpenseFragment : Fragment(), SetCategory {
         }
 
         datetxt.setOnClickListener{
-            Log.d("HERE", "HERE")
             DatePickerDialog(mainActivity, myCallBack,myYear, myMonth,myDay).show()
 
         }

@@ -48,7 +48,7 @@ interface UWastingApi {
 
     @GET("/AddOperation")
     @Headers("Content-Type: application/json")
-    fun addOperation(@Query("value")value:Int, @Query("category")category: String, @Query("date") date: String, @Query("id")id:Int):Single<Boolean>
+    fun addOperation(@Query("value")value:Int, @Query("category")category: String, @Query("date") date: String, @Query("id")id:Int):Single<Int>
 
     @GET("/DeleteOperation")
     @Headers("Content-Type: application/json")

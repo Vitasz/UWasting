@@ -27,8 +27,11 @@ class OperationDialog(context: Context, private var id: Int, private var amount:
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        mainActivity.getOperations()
-                        this.dismiss()
+                        if (it) {
+                            mainActivity.currentOperations.removeOperation(id)
+                            onSetBaseOperation.onSet()
+                            this.dismiss()
+                        }
                     }, {
                     }))
             }

@@ -138,4 +138,15 @@ class OperationsList(var item: ArrayList<Operation>) {
         }
         return -1
     }
+    fun removeOperation(id:Int){
+        for (i in list){
+            if (i.id==id) {
+                list.remove(i)
+                break
+            }
+        }
+    }
+    fun addOperation(amount:Int, category:String, date:String, id:Int){
+        list.add(Operation(amount, category, date, id))
+    }
 }

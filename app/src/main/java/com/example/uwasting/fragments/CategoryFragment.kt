@@ -52,15 +52,23 @@ class CategoryFragment(private var category: Category, private var income:Boolea
     lateinit var listOperations:OperationsList
     lateinit var recyclerView:RecyclerView
     lateinit var mainActivity: MainActivity
-
+    fun setListOperations(){
+        listOperations = mainActivity.currentOperations.selectByCategory(category)
+        if (income) listOperations = OperationsList(listOperations.selectOperationsIncomes())
+        else listOperations = OperationsList(listOperations.selectOperationsExpenses())
+        if (listOperations.list.size == 0) mainActivity.prevFragment()
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     fun setValues(){
+
         recyclerView.adapter = OperationsRecyclerView(listOperations.sortByDate(), this, mainActivity)
         val barDataSet = BarDataSet(getEntries(listOperations), "")
         barDataSet.colors = listOf(category.color)
         val barData = BarData(barDataSet)
         barData.barWidth = 0.5f
         barChart.data = barData
+        barChart.xAxis.valueFormatter = ValueFormatter(ArrayList(listOperations.combineByDateIncomesAndExpenses().keys))
+        barChart.invalidate()
     }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -69,11 +77,10 @@ class CategoryFragment(private var category: Category, private var income:Boolea
     ): View? {
         val view = inflater.inflate(R.layout.fragment_category, container, false)
         mainActivity = activity as MainActivity
+        setListOperations()
 
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
-        listOperations = mainActivity.currentOperations.selectByCategory(category)
-        if (income) listOperations = OperationsList(listOperations.selectOperationsIncomes())
-        else listOperations = OperationsList(listOperations.selectOperationsExpenses())
+
         recyclerView = view.findViewById(R.id.operations_list)
         recyclerView.layoutManager = LinearLayoutManager(mainActivity)
 
@@ -84,9 +91,9 @@ class CategoryFragment(private var category: Category, private var income:Boolea
         //Настройка диаграммы
         barChart.xAxis.granularity = 1f
         barChart.description.isEnabled = false
-        barChart.xAxis.valueFormatter = ValueFormatter(ArrayList(listOperations.combineByDateIncomesAndExpenses().keys))
         barChart.legend.isEnabled = false
-        barChart.animateY( 300)
+        barChart.animateY(300)
+
 
         //Загрузка данных
         setValues()
@@ -138,6 +145,7 @@ class CategoryFragment(private var category: Category, private var income:Boolea
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onSet() {
+        setListOperations()
         setValues()
     }
 
