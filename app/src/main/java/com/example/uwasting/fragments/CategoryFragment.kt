@@ -125,12 +125,11 @@ class CategoryFragment(private var category: Category, private var income:Boolea
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemClick(item: Triple<LocalDate, Category, Int>) {
         val mainActivity = activity as MainActivity
-        Log.d("Operation id:", mainActivity.currentOperations.findOperation(item.first.toString(), item.third, item.second).toString())
         val operationDialog = context?.let { it1 ->
                 OperationDialog(
                     it1,
                     mainActivity.currentOperations.findOperation(
-                        item.first.toString(),
+                        item.first,
                         item.third,
                         item.second
                     ),

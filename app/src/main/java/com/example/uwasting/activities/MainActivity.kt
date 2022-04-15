@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -16,11 +15,13 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.uwasting.R
 import com.example.uwasting.data.*
+import com.example.uwasting.data.LocalDateDeserializer
 import com.example.uwasting.data.remote.UWastingApi
 import com.example.uwasting.fragments.CREATE_FILE_EXPENSES
 import com.example.uwasting.fragments.CREATE_FILE_INCOMES
 import com.example.uwasting.fragments.TabFragment
 import com.example.uwasting.preferences.MyPreference
+import com.google.gson.GsonBuilder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -31,6 +32,8 @@ import org.apache.commons.csv.CSVPrinter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDate
+
 
 // Главная активность
 @Suppress("DEPRECATION")
@@ -132,7 +135,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Натсройка подключения к серверу
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun configureRetrofit() {
+        val gson = GsonBuilder().registerTypeAdapter(LocalDate::class.java, LocalDateDeserializer()).create()
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -143,7 +148,7 @@ class MainActivity : AppCompatActivity() {
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.APIUrl)
             .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 

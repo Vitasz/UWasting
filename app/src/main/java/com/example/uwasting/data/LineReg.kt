@@ -15,22 +15,20 @@ import kotlin.math.exp
 // Линейная регрессия
 class LineReg(private var expenses:ArrayList<Operation> ){
     @RequiresApi(Build.VERSION_CODES.O)
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
-    @RequiresApi(Build.VERSION_CODES.O)
-    public fun evaluateAlgorithm():Double {
+    fun evaluateAlgorithm():Double {
 
-        val dateAmount: MutableMap<Int,Int> =mutableMapOf()
+        val dateAmount: MutableMap<Long,Int> =mutableMapOf()
         for(i in expenses) {
 
-            val nowDay = (LocalDate.parse(i.date.substring(0, 10), formatter)).dayOfYear
+            val nowDay = i.date.toEpochDay()
             if (!dateAmount.containsKey(nowDay)){
-                dateAmount.put(nowDay, i.amount)
+                dateAmount[nowDay] = i.amount
             }
             else{
                 dateAmount[nowDay] = dateAmount[nowDay]!!+i.amount
             }
         }
-        val tmp = ArrayList<Pair<Int,Int>>()
+        val tmp = ArrayList<Pair<Long,Int>>()
         for (i in dateAmount) tmp.add(Pair(i.key, i.value))
         if (tmp.size == 0)return 0.0
         if (tmp.size == 1) return tmp[0].second.toDouble() * 30
@@ -41,7 +39,7 @@ class LineReg(private var expenses:ArrayList<Operation> ){
         var sum = 0.0
         for (i in 0..30)
 
-            sum+= r.predict((now()).dayOfYear.toDouble()+i)
+            sum+= r.predict((now()).toEpochDay().toDouble()+i)
         return sum
     }
 }

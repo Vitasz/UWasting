@@ -1,11 +1,10 @@
 package com.example.uwasting.data
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.time.LocalTime
 import java.util.*
 
 // Список операций
@@ -77,12 +76,11 @@ class OperationsList(var item: ArrayList<Operation>) {
     fun sortByDate():ArrayList<Triple<LocalDate, Category, Int>>{
         val res = ArrayList<Triple<LocalDate, Category, Int>>()
         val categories = Categories()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
 
         for (i in list) {
             res.add(
                 Triple(
-                    LocalDate.parse(i.date.substring(0, 10), formatter),
+                    i.date,
                     categories.hasInCommon(i.category),
                     i.amount
                 )
@@ -96,9 +94,7 @@ class OperationsList(var item: ArrayList<Operation>) {
         val now = LocalDate.now()
         val tmp = ArrayList<Operation>()
         for (i in list) {
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
-            val date = LocalDate.parse(i.date.substring(0, 10), formatter)
-            if (now.minusDays(Period.toLong())<date)tmp.add(i)
+            if (now.minusDays(Period.toLong())<i.date)tmp.add(i)
         }
         return tmp
     }
@@ -130,9 +126,10 @@ class OperationsList(var item: ArrayList<Operation>) {
         }
         return tmp
     }
-    fun findOperation(date:String, amount:Int, category: Category):Int{
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun findOperation(date:LocalDate, amount:Int, category: Category):Int{
         for (i in list){
-            if (i.date.substring(0, 10)==date && i.amount==amount && i.category==category.name){
+            if (i.date == date && i.amount==amount && i.category==category.name){
                 return i.id
             }
         }
@@ -146,7 +143,8 @@ class OperationsList(var item: ArrayList<Operation>) {
             }
         }
     }
-    fun addOperation(amount:Int, category:String, date:String, id:Int){
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun addOperation(amount:Int, category:String, date:LocalDate, id:Int){
         list.add(Operation(amount, category, date, id))
     }
 }

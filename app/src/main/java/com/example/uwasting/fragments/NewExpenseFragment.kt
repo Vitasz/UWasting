@@ -22,6 +22,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -52,11 +53,8 @@ class NewExpenseFragment : Fragment(), SetCategory {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     if (it!=-1){
-                        val year = date.split('-')[2]
-                        val month = date.split('-')[0]
-                        val day = date.split('-')[1]
-
-                        mainActivity.totalOperations.addOperation(-amount, category, year+'-'+month+'-'+day, it)
+                        mainActivity.totalOperations.addOperation(-amount, category, LocalDate.parse(date,
+                            DateTimeFormatter.ofPattern("MM-dd-yyyy", Locale.ENGLISH))  , it)
                         mainActivity.updateCurrentOperations()
                         mainActivity.prevFragment()
 
