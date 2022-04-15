@@ -1,6 +1,7 @@
 package com.example.uwasting.data
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -92,12 +93,11 @@ class OperationsList(var item: ArrayList<Operation>) {
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun selectOperations(Period:Int):List<Operation>{
-        val now = LocalDateTime.now()
+        val now = LocalDate.now()
         val tmp = ArrayList<Operation>()
         for (i in list) {
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-            val t = i.date.replace('T', ' ')
-            val date = LocalDateTime.parse(t, formatter)
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
+            val date = LocalDate.parse(i.date.substring(0, 10), formatter)
             if (now.minusDays(Period.toLong())<date)tmp.add(i)
         }
         return tmp

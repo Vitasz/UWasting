@@ -52,7 +52,6 @@ class ExpensesFragment : Fragment(), OnItemClickListener, UpdateFragment {
         totalExpensesTxt.text = (round(mainActivity.currentOperations.getTotalSumExpenses().toFloat()/mainActivity.ue*100)/100.0).toString()+mainActivity.curr
         val expenses = mainActivity.currentOperations.selectOperationsExpenses()
         val expensesRight = ArrayList<Operation>()
-        val expensesRightData = ArrayList<String>()
         for (i in expenses){
             expensesRight.add(i)
         }

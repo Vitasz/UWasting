@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     private val compositeDisposable = CompositeDisposable()
     lateinit var uwastingApi: UWastingApi
     lateinit var myPreference: MyPreference
-    private lateinit var totalOperations: OperationsList
+    lateinit var totalOperations: OperationsList
     lateinit var currentOperations: OperationsList
     var period = 30
     var curr = "$"

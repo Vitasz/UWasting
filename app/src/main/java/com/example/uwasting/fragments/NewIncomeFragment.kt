@@ -43,6 +43,7 @@ class NewIncomeFragment : Fragment(), SetCategory {
     private lateinit var uwastingApi: UWastingApi
     lateinit var categoryText: TextInputEditText
     private var category:String =""
+    private var isSendingOperation = false
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,7 +91,7 @@ class NewIncomeFragment : Fragment(), SetCategory {
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     var callBack = DatePickerDialog.OnDateSetListener {view, year, monthOfYear, dayOfMonth ->
         curYear = year
-        curMonth = monthOfYear+1
+        curMonth = monthOfYear
         curDay = dayOfMonth
         val format = SimpleDateFormat("MM-dd-yyyy")
         val calendar: Calendar = Calendar.getInstance()
@@ -100,7 +101,9 @@ class NewIncomeFragment : Fragment(), SetCategory {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun addIncome(amount:Int, category:String, date: String){
+        if (isSendingOperation) return
         val mainActivity = activity as MainActivity
+        isSendingOperation = true
         uwastingApi.let {
             compositeDisposable.add(uwastingApi.addOperation(amount, category, date, mainActivity.user.id)
                 .subscribeOn(Schedulers.io())
@@ -111,13 +114,15 @@ class NewIncomeFragment : Fragment(), SetCategory {
                         val month = date.split('-')[0]
                         val day = date.split('-')[1]
 
-                        mainActivity.currentOperations.addOperation(amount, category, year+'-'+month+'-'+day, it)
+                        mainActivity.totalOperations.addOperation(amount, category, year+'-'+month+'-'+day, it)
+                        mainActivity.updateCurrentOperations()
                         mainActivity.prevFragment()
                     }
                 }, {
                     val text = getString(R.string.add_error)
                     val toast = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
                     toast.show()
+                    isSendingOperation = false
                 }))
         }
     }

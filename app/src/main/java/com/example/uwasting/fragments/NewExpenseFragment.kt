@@ -39,10 +39,13 @@ class NewExpenseFragment : Fragment(), SetCategory {
     lateinit var categoryEdit:TextInputEditText
     var compositeDisposable = CompositeDisposable()
     private var category:String =""
+    private var isSendingOperation = false
     @RequiresApi(Build.VERSION_CODES.O)
     fun sendOperation(amount:Int, category:String, date:String){
-        val mainActivity = activity as MainActivity
+        if (isSendingOperation) return
 
+        val mainActivity = activity as MainActivity
+        isSendingOperation = true
         mainActivity.uwastingApi.let {
             compositeDisposable.add(mainActivity.uwastingApi.addOperation(-amount, category, date, mainActivity.user.id)
                 .subscribeOn(Schedulers.io())
@@ -53,7 +56,8 @@ class NewExpenseFragment : Fragment(), SetCategory {
                         val month = date.split('-')[0]
                         val day = date.split('-')[1]
 
-                        mainActivity.currentOperations.addOperation(-amount, category, year+'-'+month+'-'+day, it)
+                        mainActivity.totalOperations.addOperation(-amount, category, year+'-'+month+'-'+day, it)
+                        mainActivity.updateCurrentOperations()
                         mainActivity.prevFragment()
 
                     }
@@ -61,6 +65,7 @@ class NewExpenseFragment : Fragment(), SetCategory {
                     val text = getString(R.string.add_error)
                     val toast = Toast.makeText(mainActivity, text, Toast.LENGTH_LONG)
                     toast.show()
+                    isSendingOperation = false
                 }))
         }
     }
@@ -69,7 +74,7 @@ class NewExpenseFragment : Fragment(), SetCategory {
     var myCallBack =
         OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             myYear = year
-            myMonth = monthOfYear+1
+            myMonth = monthOfYear
             myDay = dayOfMonth
             val format = SimpleDateFormat("MM-dd-yyyy")
             val calendar: Calendar = Calendar.getInstance()

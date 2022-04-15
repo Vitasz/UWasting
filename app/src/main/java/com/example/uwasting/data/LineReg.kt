@@ -40,6 +40,7 @@ class LineReg(private var expenses:ArrayList<Operation> ){
         )
         var sum = 0.0
         for (i in 0..30)
+
             sum+= r.predict((now()).dayOfYear.toDouble()+i)
         return sum
     }

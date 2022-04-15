@@ -17,23 +17,30 @@ import kotlin.math.abs
 @RequiresApi(Build.VERSION_CODES.O)
 class OperationDialog(context: Context, private var id: Int, private var amount:Int, private var mainActivity: MainActivity, private var onSetBaseOperation: OnSetBaseOperation): BottomSheetDialog(context) {
     private var compositeDisposable = CompositeDisposable()
+    private var isDeletingOperation = false
     init {
         setContentView(R.layout.dialog_operation)
         val deleteBtn = findViewById<Button>(R.id.delete_btn)
         val makeBase = findViewById<Button>(R.id.make_base_btn)
         deleteBtn?.setOnClickListener{
-            mainActivity.uwastingApi.let {
-                compositeDisposable.add(mainActivity.uwastingApi.deleteOperation(id)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        if (it) {
-                            mainActivity.currentOperations.removeOperation(id)
-                            onSetBaseOperation.onSet()
-                            this.dismiss()
-                        }
-                    }, {
-                    }))
+            if (!isDeletingOperation) {
+                isDeletingOperation = true
+                mainActivity.uwastingApi.let {
+                    compositeDisposable.add(mainActivity.uwastingApi.deleteOperation(id)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            if (it) {
+                                mainActivity.totalOperations.removeOperation(id)
+                                mainActivity.updateCurrentOperations()
+                                onSetBaseOperation.onSet()
+                                this.dismiss()
+                            }
+                        }, {
+                            isDeletingOperation = false
+                        })
+                    )
+                }
             }
         }
         makeBase?.setOnClickListener{
