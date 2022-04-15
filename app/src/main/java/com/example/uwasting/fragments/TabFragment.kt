@@ -71,7 +71,7 @@ class TabFragment : Fragment(), OnBackButtonListener {
                     mainActivity.finish()
                 }
                 R.id.currency ->{
-                    mainActivity.curr = "$"
+                    mainActivity.curr = "₽"
                     mainActivity.ue = 1
                     val viewPagerAdapter = ViewPagerAdapter(this)
                     viewPager.adapter = viewPagerAdapter
