@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var totalOperations: OperationsList
     lateinit var currentOperations: OperationsList
     var period = 30
-    var curr = "$"
+    var curr = "₽"
     var ue = 1
     var index = 0f
     override fun attachBaseContext(newBase: Context?) {
